@@ -8,18 +8,29 @@
     border-radius: 5px;
     height: 90%;
     margin: 5%;
-    background-color: #ADAEC0;
     box-shadow: 0 0 2px black;
 }
 
-.one {
+.content::selection {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.none {
+    background-color: #ADAEC0;
+}
+
+.blue {
+    background-color: rgba(0, 0, 255, 0.5);
+}
+
+.green {
     background-color: rgba(0, 128, 0, 0.5);
 }
 
-.two {
+.yellow {
     background-color: rgba(218, 165, 32, 0.5);
 }
 
-.three {
+.red {
     background-color: rgba(255, 0, 0, 0.5);
 }

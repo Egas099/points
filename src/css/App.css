@@ -2,14 +2,10 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
 .App__content {
-  max-width: 500px;
+  /* max-width: 500px; */
+  box-sizing: content-box;
   margin: 50px auto;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
+  /* border: 1px solid rgba(0, 0, 0, 0.1); */
+  /* box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2); */
 }
