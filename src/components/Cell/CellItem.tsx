@@ -30,7 +30,7 @@ const CellItem: FC<Props> = ({ cell }) => {
     }
 
     return (
-        <div className={styles.wrapper} draggable="false">
+        <div className={[styles.wrapper,state.mover === cell.player ? styles.mover : ''].join(' ')} draggable="false">
             <div
                 className={[styles.content, getColorClass(cell.player)].join(' ')}
                 onClick={click}

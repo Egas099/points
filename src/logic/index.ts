@@ -39,6 +39,10 @@ export const calcCellPositionById = (number: number) => [number % 10, Math.floor
 
 export const getNextMover = (player: Player) => Player[player + 1] ? ++player : 0;
 
+export const findPlayerOnGameField = (state: GameState, player: Player) => {
+    return state.field.find((row) => row.find((cell) => cell.player === player))
+}
+
 export const createField = (size: Vector2): Cell[][] => {
     return new Array(size.y).fill(1).map((a, i) => {
         return (new Array(size.x).fill(1).map((b, j) => createCell(i * 10 + j)))

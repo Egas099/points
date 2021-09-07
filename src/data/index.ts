@@ -7,12 +7,12 @@ export const spawnPoints: SpawnPoint[] = [
 
 export const fieldSize = { x: 5, y: 5 }
 
-// export const fieldTemplates = [
-//     {
-//         size: { x: 5, y: 5 },
-//         spawns: [
-//             { x: 1, y: 1, player: Player.blue },
-//             { x: 2, y: 2, player: Player.red },
-//         ]
-//     }
-// ]
+export const fieldTemplates = [
+    {
+        size: { x: 5, y: 5 },
+        spawns: [
+            { x: 1, y: 1, player: Player.blue },
+            { x: 2, y: 2, player: Player.red },
+        ]
+    }
+]

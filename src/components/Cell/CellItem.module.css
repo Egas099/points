@@ -5,10 +5,11 @@
 }
 
 .content {
-    border-radius: 5px;
+    border-radius: 25px;
     height: 90%;
     margin: 5%;
-    box-shadow: 0 0 2px black;
+    border: none;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0), -1px -1px 2px rgba(255, 255, 255 ), 3px 3px 7px rgba(255, 255, 255, 0.7) inset, -5px -5px 10px rgba(0, 0, 0, 0.3) inset;
 }
 
 .content::selection {
@@ -16,11 +17,15 @@
 }
 
 .none {
-    background-color: #ADAEC0;
+    background-color: #d8d8d8;
+}
+
+.red {
+    background-color: rgb(255, 128, 128);
 }
 
 .blue {
-    background-color: rgba(0, 0, 255, 0.5);
+    background-color: rgb(118, 118, 255);
 }
 
 .green {
@@ -31,6 +36,6 @@
     background-color: rgba(218, 165, 32, 0.5);
 }
 
-.red {
-    background-color: rgba(255, 0, 0, 0.5);
+.mover {
+    background-color: rgba(255, 174, 0, 0.3);
 }
