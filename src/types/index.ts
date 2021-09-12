@@ -1,6 +1,7 @@
 export enum Player {
     red,
-    // orange,
-    // green,
+    orange,
+    yellow,
+    green,
     blue,
 }

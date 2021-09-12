@@ -9,6 +9,8 @@ type Cell = {
 interface GameState {
     field: Cell[][],
     mover: Player;
+    moveBlock: boolean;
+    players: Player[];
 }
 
 interface SpawnPoint {

@@ -10,7 +10,10 @@ function App() {
     const dispatch = useDispatch()
     const state = useTypedSelector(state => state.game)
 
-    useEffect(() => checkCellsToOverflow(state, dispatch), [state, dispatch])
+    useEffect(() => {
+        if (state.moveBlock)
+            checkCellsToOverflow(state, dispatch)
+    }, [state.moveBlock])
 
     return (
         <div className="App">

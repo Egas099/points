@@ -4,9 +4,10 @@ export enum GameActionType {
     CELL_CAPTURE = 'CELL_CAPTURE',
     CELL_INCREMENT = 'CELL_INCREMENT',
     CELL_ZEROING = 'CELL_ZEROING',
+    BLOCK_MOVING = 'BLOCK_MOVING',
+    ALLOW_MOVING = 'ALLOW_MOVING',
     NEXT_MOVER = 'NEXT_MOVER',
     RESTART_GAME = 'RESTART_GAME',
-    CHANGE_TITLE = 'CHANGE_TITLE',
 }
 
 /**
@@ -25,6 +26,16 @@ export interface CellZeroing {
     type: GameActionType.CELL_ZEROING;
     payload: number;
 }
+
+export interface BlockMoving {
+    type: GameActionType.BLOCK_MOVING;
+    payload: undefined;
+}
+
+export interface AllowMoving {
+    type: GameActionType.ALLOW_MOVING;
+    payload: undefined;
+}
 export interface NextMover {
     type: GameActionType.NEXT_MOVER;
     payload: undefined;
@@ -34,17 +45,13 @@ export interface RestartGame {
     payload: undefined;
 }
 
-export interface ChangeTitle {
-    type: GameActionType.CHANGE_TITLE;
-    payload: string;
-}
-
 export type GameActions = CellZeroing
     | RestartGame
-    | ChangeTitle
     | CellIncrement
     | NextMover
-    | CellCapture;
+    | CellCapture
+    | BlockMoving
+    | AllowMoving;
 
 export interface playerMoving {
     cellId: number;

@@ -1,21 +1,37 @@
 import { Dispatch } from 'react';
 import { fieldSize } from '../data';
-import { cellCapture, cellIncrement, cellZeroing } from '../store/gameReducer';
+import { allowMoving, cellCapture, cellIncrement, cellZeroing, nextMover } from '../store/gameReducer';
 import { Player } from '../types';
 
 export const checkCellsToOverflow = (state: GameState, dispatch: Dispatch<any>) => {
-    state.field.forEach((row) => {
-        row.forEach((cell) => {
-            if (cell.count > 3)
-                cloneCell(state, dispatch, cell)
-        })
-    })
+    const cell = findOverflowCells(state.field);
+
+    if (cell) {
+        cloneCell(state, dispatch, cell)
+        setTimeout(() => checkCellsToOverflow(state, dispatch), 0)
+    }
+    else {
+        dispatch(nextMover());
+        dispatch(allowMoving())
+    }
+}
+
+const findOverflowCells = (field: Cell[][]): Cell | undefined => {
+    for (const row of field) {
+        const cell = row.find((cell) => cell.count > 3);
+        if (cell) return cell;
+    }
 }
 
 const cloneCell = (state: GameState, dispatch: Dispatch<any>, cell: Cell) => {
     const player = cell.player;
     const [x, y] = calcCellPositionById(cell.id);
+    const count = cell.count;
+
     dispatch(cellZeroing(state.field[y][x].id));
+
+    if (count === 5)
+        cellIncAndCapture(dispatch, state.field[y][x].id, player)
 
     if (y + 1 < fieldSize.y)
         cellIncAndCapture(dispatch, state.field[y + 1][x].id, player)
@@ -39,8 +55,12 @@ export const calcCellPositionById = (number: number) => [number % 10, Math.floor
 
 export const getNextMover = (player: Player) => Player[player + 1] ? ++player : 0;
 
-export const findPlayerOnGameField = (state: GameState, player: Player) => {
-    return state.field.find((row) => row.find((cell) => cell.player === player))
+export const playerIsExistOnGameField = (field: Cell[][], player: Player) => {
+    for (const row of field) {
+        const cell = row.find((cell) => cell.player === player);
+        if (cell) return true
+    }
+    return false;
 }
 
 export const createField = (size: Vector2): Cell[][] => {
