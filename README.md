@@ -1,4 +1,4 @@
-# See [demo](egas099.github.io/points/)
+# See [demo](https://egas099.github.io/points/)
 
 # Getting Started with Create React App
 
