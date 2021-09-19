@@ -38,7 +38,7 @@ export interface AllowMoving {
 }
 export interface NextMover {
     type: GameActionType.NEXT_MOVER;
-    payload: undefined;
+    payload: Cell[][];
 }
 export interface RestartGame {
     type: GameActionType.RESTART_GAME;

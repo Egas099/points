@@ -3,14 +3,18 @@
 type Cell = {
     id: number;
     count: number;
-    player: Player | undefined;
+    player: Player | null;
 }
 
 interface GameState {
-    field: Cell[][],
+    state: States;
     mover: Player;
     moveBlock: boolean;
     players: Player[];
+    moveNumber: number;
+}
+interface GameField {
+    field: Cell[][],
 }
 
 interface SpawnPoint {

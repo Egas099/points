@@ -1,29 +1,40 @@
 import { Dispatch } from 'react';
 import { fieldSize } from '../data';
-import { allowMoving, cellCapture, cellIncrement, cellZeroing, nextMover } from '../store/gameReducer';
+import { RootState } from '../store';
+import { cellCapture, cellIncrement, cellZeroing } from '../store/gameFieldReducer';
+import { allowMoving, blockMoving, nextMover } from '../store/gameStateReducer';
 import { Player } from '../types';
 
-export const checkCellsToOverflow = (state: GameState, dispatch: Dispatch<any>) => {
-    const cell = findOverflowCells(state.field);
+const checkCellsToOverflow = (state: GameField, dispatch: Dispatch<any>) => {
+    const cell = findOverflowCell(state.field);
 
     if (cell) {
         cloneCell(state, dispatch, cell)
         setTimeout(() => checkCellsToOverflow(state, dispatch), 0)
     }
     else {
-        dispatch(nextMover());
+        dispatch(nextMover(state.field));
         dispatch(allowMoving())
     }
 }
 
-const findOverflowCells = (field: Cell[][]): Cell | undefined => {
+const findOverflowCell = (field: Cell[][]): Cell | undefined => {
     for (const row of field) {
         const cell = row.find((cell) => cell.count > 3);
         if (cell) return cell;
     }
 }
 
-const cloneCell = (state: GameState, dispatch: Dispatch<any>, cell: Cell) => {
+export const findAllCellByPlayer = (field: Cell[][], player: Player): Cell[] => {
+    const responce = [];
+    for (const row of field) {
+        const cell = row.find((cell) => cell.player === player);
+        if (cell) responce.push(cell);
+    }
+    return responce;
+}
+
+const cloneCell = (state: GameField, dispatch: Dispatch<any>, cell: Cell) => {
     const player = cell.player;
     const [x, y] = calcCellPositionById(cell.id);
     const count = cell.count;
@@ -78,4 +89,17 @@ export const placeSpawnPoint = (field: Cell[][], spawnPoints: SpawnPoint[]) => {
         newField[spawn.y][spawn.x].count = 3;
     });
     return newField;
+}
+
+/** */
+export const playerMove = (state: RootState, dispatch: Dispatch<any>, cell: Cell) => {
+    if (state.gameState.moveBlock) return;
+    console.log("mover: ", state.gameState.mover);
+    console.log("cell: ", cell);
+    if (state.gameState.mover === cell.player) {
+        dispatch(cellIncrement(cell.id))
+        dispatch(blockMoving())
+
+        checkCellsToOverflow(state.field, dispatch);
+    }
 }

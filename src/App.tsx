@@ -1,24 +1,37 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import GameField from './components/GameField/GameField';
-import './css/App.css';
+import { useEffect, useState } from 'react';
 import { useTypedSelector } from './hooks/useTypedSelector';
-import { checkCellsToOverflow } from './logic';
-import { restartGame } from './store/gameReducer';
+import GameField from './components/GameField/GameField';
+import ModalWimdow from './components/ModalWindow/AlertPopup';
+import './css/App.css';
+import { useDispatch } from 'react-redux';
+import { restartGame } from './store/gameFieldReducer';
+import { findAllCellByPlayer, playerMove } from './logic';
 
 function App() {
     const dispatch = useDispatch()
-    const state = useTypedSelector(state => state.game)
+    const [showM, setShowM] = useState<boolean>(false);
+    const state = useTypedSelector(state => state)
+    const gameState = useTypedSelector(state => state.gameState)
+    const field = useTypedSelector(state => state.field.field)
+    const [title, setTitle] = useState("User win")
 
+
+    function autoMove() {
+        if (gameState.moveBlock) return;
+        const cell = findAllCellByPlayer(field, gameState.mover)
+        if (cell.length > 0) playerMove(state, dispatch, cell[Math.floor(Math.random() * cell.length)]);
+    }
     useEffect(() => {
-        if (state.moveBlock)
-            checkCellsToOverflow(state, dispatch)
-    }, [state.moveBlock])
+        if (!gameState.moveBlock) {
+            setTimeout(autoMove, 10);
+        }
+    }, [gameState.moveBlock])
 
     return (
         <div className="App">
             <div className="App__content">
-                <GameField field={state.field}></GameField>
+                <ModalWimdow show={showM} title={title} text="" callback={() => setShowM(false)} />
+                <GameField field={field}></GameField>
                 <button onClick={() => dispatch(restartGame())}>Restart</button>
             </div>
         </div>

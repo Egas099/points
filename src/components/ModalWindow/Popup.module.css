@@ -1,0 +1,46 @@
+.mask {
+    --modal-width: 300px;
+    --modal-height: 100px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrapper {
+    max-width: var(--modal-width);
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: #E6EAED;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.2) inset;
+}
+
+.content {
+    box-sizing: border-box;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header {}
+
+.main {
+    flex-grow: 1;
+    margin: 0 2em;
+}
+
+.button {
+    margin: 5px;
+    background-color: rgb(138, 196, 196);
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 60px;
+    height: 25px;
+}

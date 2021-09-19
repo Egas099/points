@@ -1,9 +1,9 @@
 import { FC } from 'react'
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { blockMoving, cellIncrement, nextMover } from '../../store/gameReducer';
+import { playerMove } from '../../logic';
 import { Player } from '../../types';
-import styles from './CellItem.module.css';
+import stl from './CellItem.module.css';
 
 interface Props {
     cell: Cell;
@@ -11,51 +11,34 @@ interface Props {
 
 const CellItem: FC<Props> = ({ cell }) => {
     const dispatch = useDispatch();
-    const state = useTypedSelector(state => state.game)
+    const rootState = useTypedSelector(state => state)
+    const gameState = useTypedSelector(state => state.gameState)
 
-    const getColorClass = (player: Player) => {
-        switch (player) {
-            case undefined: return styles.none;
-            case Player.red: return styles.red;
-            case Player.orange: return styles.orange;
-            case Player.yellow: return styles.yellow;
-            case Player.green: return styles.green;
-            case Player.blue: return styles.blue;
+    const getColorClass = (player: Player) => Player[player] ? stl[Player[player]] : stl.none;
+
+    const createPoints = (count: number) => {
+        switch (count) {
+            case 0: return '';
+            case 1: return <>•</>
+            case 2: return <>•&nbsp;•</>
+            case 3: return <>•<br />•&nbsp;•</>
+            case 4: return <>•&nbsp;•<br />•&nbsp;•</>
+            case 5: return <>•&nbsp;•<br />•<br />•&nbsp;•</>
             default: return '';
         }
     }
 
-    const click = () => {
-        if (state.moveBlock) return;
-        if (state.mover === cell.player) {
-            dispatch(cellIncrement(cell.id))
-
-            dispatch(blockMoving())
-        }
-    }
-    const createPoints = (count: number) => {
-        switch (count) {
-            case 0:
-                return '';
-            case 3:
-                return <><span>•</span><br /><span>•</span><span>•</span></>
-            case 4:
-                return <><span>•</span><span>•</span><br /><span>•</span><span>•</span></>
-            default:
-                return new Array(count).fill(' • ').join(' ');
-        }
-    }
-
     return (
-        <div className={[styles.wrapper, state.mover === cell.player && !state.moveBlock ? styles.mover : ''].join(' ')} draggable="false">
+        <div className={
+            [stl.wrapper, gameState.mover === cell.player && !gameState.moveBlock ? stl.mover + " " + stl.pointer : ''].join(' ')} draggable="false">
             <div
-                className={[styles.content, getColorClass(cell.player)].join(' ')}
-                onClick={click}
+                className={[stl.content, , getColorClass(cell.player)].join(' ')}
+                onClick={() => playerMove(rootState, dispatch, cell)}
                 draggable="false"
             >
-                <p>
+                <span>
                     {createPoints(cell.count)}
-                </p>
+                </span>
             </div>
         </div>
     )

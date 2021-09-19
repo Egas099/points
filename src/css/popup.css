@@ -1,0 +1,33 @@
+.popup-enter {
+    transform: scale(0.9);
+}
+
+.popup-enter-active {
+    transform: translateX(0);
+    transition: transform 300ms;
+}
+
+.popup-exit {}
+
+.popup-exit-active {
+    transform: scale(0.9);
+    transition: transform 300ms;
+}
+
+.mask-enter {
+    opacity: 0;
+}
+
+.mask-enter-active {
+    opacity: 1;
+    transition: opacity 300ms;
+}
+
+.mask-exit {
+    opacity: 1;
+}
+
+.mask-exit-active {
+    opacity: 0;
+    transition: opacity 300ms;
+}
