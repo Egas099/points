@@ -4,8 +4,10 @@ import GameField from './components/GameField/GameField';
 import ModalWimdow from './components/ModalWindow/AlertPopup';
 import './css/App.css';
 import { useDispatch } from 'react-redux';
-import { restartGame } from './store/gameFieldReducer';
-import { findAllCellByPlayer, playerMove } from './logic';
+import botSimpleMove from './logic/AI/simple';
+import botNormalMove from './logic/AI/normal';
+import { Player } from './types';
+import * as aC from './store/actionCreator'
 
 function App() {
     const dispatch = useDispatch()
@@ -13,26 +15,35 @@ function App() {
     const state = useTypedSelector(state => state)
     const gameState = useTypedSelector(state => state.gameState)
     const field = useTypedSelector(state => state.field.field)
+    // eslint-disable-next-line
     const [title, setTitle] = useState("User win")
 
-
-    function autoMove() {
-        if (gameState.moveBlock) return;
-        const cell = findAllCellByPlayer(field, gameState.mover)
-        if (cell.length > 0) playerMove(state, dispatch, cell[Math.floor(Math.random() * cell.length)]);
-    }
     useEffect(() => {
         if (!gameState.moveBlock) {
-            setTimeout(autoMove, 10);
+            if (gameState.mover === Player.blue) {
+                setTimeout(() => botNormalMove(state, dispatch), 0);
+            } else {
+                setTimeout(() => botSimpleMove(state, dispatch), 0);
+            }
         }
+        // eslint-disable-next-line
     }, [gameState.moveBlock])
+
+    function swithMoving() {
+        if (gameState.moveBlock) {
+            dispatch(aC.allowMoving())
+        } else {
+            dispatch(aC.blockMoving())
+        }
+    }
 
     return (
         <div className="App">
             <div className="App__content">
                 <ModalWimdow show={showM} title={title} text="" callback={() => setShowM(false)} />
                 <GameField field={field}></GameField>
-                <button onClick={() => dispatch(restartGame())}>Restart</button>
+                <button onClick={() => dispatch(aC.restartGame())}>Restart</button>
+                <button onClick={() => swithMoving()}>Next</button>
             </div>
         </div>
     );

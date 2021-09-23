@@ -56,8 +56,5 @@ span::selection {
 
 .mover {
     background-color: rgba(255, 174, 0, 0.3);
-}
-
-.pointer {
     cursor: pointer;
 }

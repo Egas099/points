@@ -27,12 +27,17 @@ const CellItem: FC<Props> = ({ cell }) => {
             default: return '';
         }
     }
+    if (cell.count === 0) {
+        return (<div className={stl.wrapper} draggable="false"></div>)
 
+    }
     return (
         <div className={
-            [stl.wrapper, gameState.mover === cell.player && !gameState.moveBlock ? stl.mover + " " + stl.pointer : ''].join(' ')} draggable="false">
+            [stl.wrapper, gameState.mover === cell.player && !gameState.moveBlock ? stl.mover : ''].join(' ')}
+            draggable="false"
+        >
             <div
-                className={[stl.content, , getColorClass(cell.player)].join(' ')}
+                className={[stl.content, getColorClass(cell.player)].join(' ')}
                 onClick={() => playerMove(rootState, dispatch, cell)}
                 draggable="false"
             >
