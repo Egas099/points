@@ -1,5 +1,5 @@
 import { fieldSize, spawnPoints } from '../data';
-import { calculate, create } from '../logic/functions';
+import { calc, create } from '../logic/functions';
 import { CellZeroing, GameActions, GameActionType, CellIncrement, CellCapture } from './types';
 
 const defaultState = (): GameField => ({
@@ -23,31 +23,30 @@ export const gameFieldReducer = (state = defaultState(), action: GameActions): G
 };
 
 function actionCellCapture(state: GameField, action: CellCapture) {
-    let newState = { ...state };
-    const [x, y] = calculate.cellPositionById(action.payload.cellId);
+    let newState = { field: [...state.field] };
+    const [x, y] = calc.cellPositionById(action.payload.cellId);
 
-    newState.field[y][x].player = action.payload.player;
+    newState.field[x][y].player = action.payload.player;
 
     return newState;
 }
 
 function actionCellIncrement(state: GameField, action: CellIncrement) {
+    let newState = { field: [...state.field] };
+    const [x, y] = calc.cellPositionById(action.payload);
 
-    let newState = { ...state };
-    const [x, y] = calculate.cellPositionById(action.payload);
-
-    newState.field[y][x].count += 1;
+    newState.field[x][y].count += 1;
 
     return newState;
 }
 
 
 function actionCellZeroing(state: GameField, action: CellZeroing) {
-    let newState: GameField = { ...state };
-    const [x, y] = calculate.cellPositionById(action.payload);
+    let newState = { field: [...state.field] };
+    const [x, y] = calc.cellPositionById(action.payload);
 
-    newState.field[y][x].count = 0;
-    newState.field[y][x].player = null;
+    newState.field[x][y].count = 0;
+    newState.field[x][y].player = null;
 
     return newState;
 }

@@ -15,12 +15,22 @@ export const find = {
             if (cell.length > 0) responce = responce.concat(cell);
         }
         return responce;
-    }
+    },
 }
 
-export const calculate = {
+export const calc = {
     nextMover: (player: Player) => Player[player + 1] ? ++player : 0,
-    cellPositionById: (number: number) => [number % fieldSize.x, Math.floor(number / fieldSize.x)],
+    cellPositionById: (number: number) => [Math.floor(number / fieldSize.x), number % fieldSize.x],
+    amountCellWithPoints: (cells: Cell[], count: number) => cells.reduce((acum, cur) => cur.count === count ? acum + 1 : acum, 0),
+    amountEmptyNeighs: (field: Cell[][], cell: Cell) => {
+        const [x, y] = calc.cellPositionById(cell.id);
+        let count = 0;
+        count += trying(() => field[x + 1][y].player === null ? 1 : 0, 0);
+        count += trying(() => field[x][y + 1].player === null ? 1 : 0, 0);
+        count += trying(() => field[x - 1][y].player === null ? 1 : 0, 0);
+        count += trying(() => field[x][y - 1].player === null ? 1 : 0, 0);
+        return count;
+    }
 }
 
 export const create = {
@@ -41,4 +51,16 @@ export const create = {
 }
 export const isExist = {
     playerOnField: (field: Cell[][], player: Player) => field.some((row) => row.some((cell) => cell.player === player) ? true : false)
+}
+
+export const random = {
+    elemetFrom: (array: Array<any>) => array[Math.floor(Math.random() * array.length)],
+}
+
+export const filter = {
+    cellsByCount: (cells: Cell[], count: number) => cells.filter(cell => cell.count === count),
+}
+
+function trying(func: Function, onCatch: any) {
+    try { return func() } catch (e) { return onCatch }
 }

@@ -27,10 +27,10 @@ const CellItem: FC<Props> = ({ cell }) => {
             default: return '';
         }
     }
-    if (cell.count === 0) {
-        return (<div className={stl.wrapper} draggable="false"></div>)
 
     }
+
+    if (cell.count === 0) (<div className={stl.wrapper} draggable="false"></div>)
     return (
         <div className={
             [stl.wrapper, gameState.mover === cell.player && !gameState.moveBlock ? stl.mover : ''].join(' ')}

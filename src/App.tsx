@@ -4,10 +4,10 @@ import GameField from './components/GameField/GameField';
 import ModalWimdow from './components/ModalWindow/AlertPopup';
 import './css/App.css';
 import { useDispatch } from 'react-redux';
-import botSimpleMove from './logic/AI/simple';
-import botNormalMove from './logic/AI/normal';
 import { Player } from './types';
 import * as aC from './store/actionCreator'
+import { c1, c2, c3, c4 } from './logic/AI/simple';
+import { playerMove } from './logic';
 
 function App() {
     const dispatch = useDispatch()
@@ -20,10 +20,21 @@ function App() {
 
     useEffect(() => {
         if (!gameState.moveBlock) {
-            if (gameState.mover === Player.blue) {
-                setTimeout(() => botNormalMove(state, dispatch), 0);
-            } else {
-                setTimeout(() => botSimpleMove(state, dispatch), 0);
+            switch (gameState.mover) {
+                case Player.red:
+                    setTimeout(() => playerMove(state, dispatch, c1(state)), 0);
+                    break;
+                case Player.orange:
+                    setTimeout(() => playerMove(state, dispatch, c2(state)), 0);
+                    break;
+                case Player.green:
+                    setTimeout(() => playerMove(state, dispatch, c3(state)), 0);
+                    break;
+                case Player.blue:
+                    setTimeout(() => playerMove(state, dispatch, c4(state)), 0);
+                    break;
+                default:
+                    break;
             }
         }
         // eslint-disable-next-line
