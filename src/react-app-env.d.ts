@@ -7,9 +7,9 @@ type Cell = {
 }
 
 interface GameState {
-    state: States;
     mover: Player;
     moveBlock: boolean;
+    endGame: boolean;
     players: Player[];
     moveNumber: number;
 }

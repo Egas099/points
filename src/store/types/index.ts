@@ -4,15 +4,26 @@ export enum GameActionType {
     CELL_CAPTURE = 'CELL_CAPTURE',
     CELL_INCREMENT = 'CELL_INCREMENT',
     CELL_ZEROING = 'CELL_ZEROING',
+    CELL_CLONING = 'CELL_CLONING',
+    NEW_MOVE = 'NEW_MOVE',
     BLOCK_MOVING = 'BLOCK_MOVING',
     ALLOW_MOVING = 'ALLOW_MOVING',
     NEXT_MOVER = 'NEXT_MOVER',
     RESTART_GAME = 'RESTART_GAME',
+    PLAYER_MOVE = 'PLAYER_MOVE',
 }
 
 /**
  * Interfaces of actions
  */
+export interface PlayerMove {
+    type: GameActionType.PLAYER_MOVE;
+    payload: Cell;
+}
+export interface NewMove {
+    type: GameActionType.NEW_MOVE;
+    payload: Cell[][];
+}
 
 export interface CellCapture {
     type: GameActionType.CELL_CAPTURE;
@@ -25,6 +36,11 @@ export interface CellIncrement {
 export interface CellZeroing {
     type: GameActionType.CELL_ZEROING;
     payload: number;
+}
+
+export interface CellCloning {
+    type: GameActionType.CELL_CLONING;
+    payload: Cell;
 }
 
 export interface BlockMoving {
@@ -46,10 +62,13 @@ export interface RestartGame {
 }
 
 export type GameActions = CellZeroing
+    | PlayerMove
+    | NewMove
     | RestartGame
     | CellIncrement
-    | NextMover
     | CellCapture
+    | CellCloning
+    | NextMover
     | BlockMoving
     | AllowMoving;
 

@@ -1,9 +1,10 @@
 import { FC } from 'react'
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { playerMove } from '../../logic';
+// import { playerMove } from '../../logic';
 import { Player } from '../../types';
 import stl from './CellItem.module.css';
+import * as aC from '../../store/actionCreator'
 
 interface Props {
     cell: Cell;
@@ -11,7 +12,6 @@ interface Props {
 
 const CellItem: FC<Props> = ({ cell }) => {
     const dispatch = useDispatch();
-    const rootState = useTypedSelector(state => state)
     const gameState = useTypedSelector(state => state.gameState)
 
     const getColorClass = (player: Player) => Player[player] ? stl[Player[player]] : stl.none;
@@ -28,6 +28,10 @@ const CellItem: FC<Props> = ({ cell }) => {
         }
     }
 
+    function move() {
+        if (!gameState.moveBlock && gameState.mover === cell.player) {
+            dispatch(aC.playerMove(cell))
+        }
     }
 
     if (cell.count === 0) (<div className={stl.wrapper} draggable="false"></div>)
@@ -38,14 +42,14 @@ const CellItem: FC<Props> = ({ cell }) => {
         >
             <div
                 className={[stl.content, getColorClass(cell.player)].join(' ')}
-                onClick={() => playerMove(rootState, dispatch, cell)}
+                onClick={() => move()}
                 draggable="false"
             >
                 <span>
                     {createPoints(cell.count)}
                 </span>
             </div>
-        </div>
+        </div >
     )
 }
 

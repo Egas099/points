@@ -54,7 +54,15 @@ export const isExist = {
 }
 
 export const random = {
-    elemetFrom: (array: Array<any>) => array[Math.floor(Math.random() * array.length)],
+    elemetFrom: (object: Array<any> | Object | any): any => {
+        if (Array.isArray(object))
+            return object[Math.floor(Math.random() * object.length)]
+
+        else if (Object.prototype.toString.call(object))
+            return object[random.elemetFrom(Object.keys(object))];
+
+        throw new Error("The argument is not an array or object.");
+    },
 }
 
 export const filter = {

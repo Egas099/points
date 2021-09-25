@@ -4,57 +4,103 @@ import GameField from './components/GameField/GameField';
 import ModalWimdow from './components/ModalWindow/AlertPopup';
 import './css/App.css';
 import { useDispatch } from 'react-redux';
-import { Player } from './types';
 import * as aC from './store/actionCreator'
-import { c1, c2, c3, c4 } from './logic/AI/simple';
-import { playerMove } from './logic';
+import * as bots from './logic/AI/simple';
+import { checkCellsToOverflow } from './logic';
+import { random } from './logic/functions';
+import { Player } from './types';
 
 function App() {
     const dispatch = useDispatch()
     const [showM, setShowM] = useState<boolean>(false);
     const state = useTypedSelector(state => state)
-    const gameState = useTypedSelector(state => state.gameState)
-    const field = useTypedSelector(state => state.field.field)
     // eslint-disable-next-line
     const [title, setTitle] = useState("User win")
+    const [winCount, setWinCount] = useState(100)
+    const [winStatistic, setWinStatistic] = useState({
+        red: 0,
+        orange: 0,
+        green: 0,
+        blue: 0,
+    })
 
     useEffect(() => {
-        if (!gameState.moveBlock) {
-            switch (gameState.mover) {
+        if (state.gameState.moveBlock)
+            checkCellsToOverflow(state.field, dispatch)
+        // eslint-disable-next-line
+    }, [state.gameState.moveBlock])
+
+    useEffect(() => {
+        if (state.gameState.moveBlock === false) {
+            switch (state.gameState.mover) {
                 case Player.red:
-                    setTimeout(() => playerMove(state, dispatch, c1(state)), 0);
+                    setTimeout(() => botMove(bots.c1(state)), 0);
                     break;
                 case Player.orange:
-                    setTimeout(() => playerMove(state, dispatch, c2(state)), 0);
+                    setTimeout(() => botMove(bots.c2(state)), 0);
                     break;
                 case Player.green:
-                    setTimeout(() => playerMove(state, dispatch, c3(state)), 0);
+                    setTimeout(() => botMove(bots.c3(state)), 0);
                     break;
                 case Player.blue:
-                    setTimeout(() => playerMove(state, dispatch, c4(state)), 0);
+                    setTimeout(() => botMove(bots.c4(state)), 0);
                     break;
                 default:
+                    setTimeout(() => botMove(random.elemetFrom(Object(bots))(state)), 0);
                     break;
             }
         }
         // eslint-disable-next-line
-    }, [gameState.moveBlock])
+    }, [state.gameState.moveNumber])
 
-    function swithMoving() {
-        if (gameState.moveBlock) {
-            dispatch(aC.allowMoving())
-        } else {
-            dispatch(aC.blockMoving())
+    useEffect(() => {
+        if (state.gameState.endGame) {
+            const newWinStatistic = { ...winStatistic }
+            switch (state.gameState.mover) {
+                case Player.red:
+                    newWinStatistic.red++;
+                    break;
+                case Player.orange:
+                    newWinStatistic.orange++;
+                    break;
+                case Player.green:
+                    newWinStatistic.green++;
+                    break;
+                case Player.blue:
+                    newWinStatistic.blue++;
+                    break;
+            }
+            setWinStatistic(newWinStatistic);
+            // setTitle(`${Player[state.gameState.players[0]]} игрок одержал победу за ${state.gameState.moveNumber} ходов`);
+            // setShowM(true)
+            if (winCount > 1) {
+                dispatch(aC.restartGame());
+            }
+            setWinCount(winCount - 1);
+        }
+        // eslint-disable-next-line
+    }, [state.gameState.endGame])
+
+    function botMove(cell: Cell) {
+        if (cell) {
+            dispatch(aC.playerMove(cell))
         }
     }
 
+    function test() {
+
+    }
+    function hideModal() {
+        setShowM(false)
+        dispatch(aC.restartGame());
+    }
     return (
         <div className="App">
             <div className="App__content">
-                <ModalWimdow show={showM} title={title} text="" callback={() => setShowM(false)} />
-                <GameField field={field}></GameField>
+                <ModalWimdow show={showM} title={title} text="" callback={() => hideModal()} />
+                <GameField field={state.field}></GameField>
                 <button onClick={() => dispatch(aC.restartGame())}>Restart</button>
-                <button onClick={() => swithMoving()}>Next</button>
+                <button onClick={() => test()}>Action</button>
             </div>
         </div>
     );
