@@ -9,13 +9,13 @@ import { Player } from '../types';
 // ];
 
 export const spawnPoints: SpawnPoint[] = [
-    { x: 0, y: 0, player: Player.red },
-    { x: 4, y: 0, player: Player.orange },
+    { x: 1, y: 1, player: Player.red },
+    { x: 4, y: 1, player: Player.orange },
     { x: 4, y: 4, player: Player.green },
-    { x: 0, y: 4, player: Player.blue },
+    { x: 1, y: 4, player: Player.blue },
     // { x: 3, y: 3, player: Player.yellow },
 ];
-export const fieldSize = { x: 5, y: 5 }
+export const fieldSize = { x: 11, y: 11 }
 // export const fieldSize = { x: 15, y: 15 }
 
 // export const fieldTemplates = [

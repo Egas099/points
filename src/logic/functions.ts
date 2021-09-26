@@ -30,6 +30,24 @@ export const calc = {
         count += trying(() => field[x - 1][y].player === null ? 1 : 0, 0);
         count += trying(() => field[x][y - 1].player === null ? 1 : 0, 0);
         return count;
+    },
+    maxNeighsCount: (field: Cell[][], cell: Cell) => {
+        const [x, y] = calc.cellPositionById(cell.id);
+        return Math.max(
+            trying(() => field[x + 1][y].count, 0),
+            trying(() => field[x][y + 1].count, 0),
+            trying(() => field[x - 1][y].count, 0),
+            trying(() => field[x][y - 1].count, 0)
+        )
+    },
+    maxNeighsEnemiesCount: (field: Cell[][], cell: Cell) => {
+        const [x, y] = calc.cellPositionById(cell.id);
+        return Math.max(
+            trying(() => field[x + 1][y].player != cell.player ? field[x + 1][y].count : 0, 0),
+            trying(() => field[x][y + 1].player != cell.player ? field[x][y + 1].count : 0, 0),
+            trying(() => field[x - 1][y].player != cell.player ? field[x - 1][y].count : 0, 0),
+            trying(() => field[x][y - 1].player != cell.player ? field[x][y - 1].count : 0, 0)
+        )
     }
 }
 

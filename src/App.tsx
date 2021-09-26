@@ -7,8 +7,9 @@ import { useDispatch } from 'react-redux';
 import * as aC from './store/actionCreator'
 import * as bots from './logic/AI/simple';
 import { checkCellsToOverflow } from './logic';
-import { random } from './logic/functions';
+import { calc, random } from './logic/functions';
 import { Player } from './types';
+import { b1, b2 } from './logic/AI/normal';
 
 function App() {
     const dispatch = useDispatch()
@@ -34,7 +35,8 @@ function App() {
         if (state.gameState.moveBlock === false) {
             switch (state.gameState.mover) {
                 case Player.red:
-                    setTimeout(() => botMove(bots.c1(state)), 0);
+                    // console.log(calc.cellPositionById(b1(state).id));
+                    setTimeout(() => botMove(bots.c4(state)), 0);
                     break;
                 case Player.orange:
                     setTimeout(() => botMove(bots.c2(state)), 0);
@@ -43,7 +45,7 @@ function App() {
                     setTimeout(() => botMove(bots.c3(state)), 0);
                     break;
                 case Player.blue:
-                    setTimeout(() => botMove(bots.c4(state)), 0);
+                    setTimeout(() => botMove(b2(state)), 0);
                     break;
                 default:
                     setTimeout(() => botMove(random.elemetFrom(Object(bots))(state)), 0);
@@ -88,7 +90,7 @@ function App() {
     }
 
     function test() {
-
+        dispatch(aC.allowMoving())
     }
     function hideModal() {
         setShowM(false)
