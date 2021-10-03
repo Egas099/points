@@ -1,4 +1,4 @@
-import { fieldSize } from "../data";
+import { gameSettings } from "../data";
 import { Player } from "../types";
 
 export const find = {
@@ -20,42 +20,32 @@ export const find = {
 
 export const calc = {
     nextMover: (player: Player) => Player[player + 1] ? ++player : 0,
-    cellPositionById: (number: number) => [Math.floor(number / fieldSize.x), number % fieldSize.x],
-    amountCellWithPoints: (cells: Cell[], count: number) => cells.reduce((acum, cur) => cur.count === count ? acum + 1 : acum, 0),
+
+    cellPositionById: (number: number) =>
+        [Math.floor(number / gameSettings.template.size[0]), number % gameSettings.template.size[0]],
+
+    amountCellWithPoints: (cells: Cell[], count: number) =>
+        cells.reduce((acum, cur) => cur.count === count ? acum + 1 : acum, 0),
+
     amountEmptyNeighs: (field: Cell[][], cell: Cell) => {
-        const [x, y] = calc.cellPositionById(cell.id);
-        let count = 0;
-        count += trying(() => field[x + 1][y].player === null ? 1 : 0, 0);
-        count += trying(() => field[x][y + 1].player === null ? 1 : 0, 0);
-        count += trying(() => field[x - 1][y].player === null ? 1 : 0, 0);
-        count += trying(() => field[x][y - 1].player === null ? 1 : 0, 0);
-        return count;
+        return getNeighbors(field, cell).reduce((acum, cur) => cur.player === null ? acum + 1 : acum, 0);;
     },
     maxNeighsCount: (field: Cell[][], cell: Cell) => {
-        const [x, y] = calc.cellPositionById(cell.id);
-        return Math.max(
-            trying(() => field[x + 1][y].count, 0),
-            trying(() => field[x][y + 1].count, 0),
-            trying(() => field[x - 1][y].count, 0),
-            trying(() => field[x][y - 1].count, 0)
-        )
+        return Math.max(...getNeighbors(field, cell).map(c => c.count))
     },
     maxNeighsEnemiesCount: (field: Cell[][], cell: Cell) => {
-        const [x, y] = calc.cellPositionById(cell.id);
         return Math.max(
-            trying(() => field[x + 1][y].player != cell.player ? field[x + 1][y].count : 0, 0),
-            trying(() => field[x][y + 1].player != cell.player ? field[x][y + 1].count : 0, 0),
-            trying(() => field[x - 1][y].player != cell.player ? field[x - 1][y].count : 0, 0),
-            trying(() => field[x][y - 1].player != cell.player ? field[x][y - 1].count : 0, 0)
+            ...getNeighbors(field, cell).map(c => c.player !== cell.player ? c.count : 0)
         )
     }
 }
 
 export const create = {
-    cell: (id: number) => ({ id: id, count: 0, player: null }),
+    cell: (id: number) => ({ id: id, count: 0, player: null, allow: true }),
+    emptyCell: (id: number) => ({ id: id, count: 0, player: null, allow: false }),
     field: (size: Vector2): Cell[][] => {
-        return new Array(size.y).fill(1).map((a, i) => {
-            return (new Array(size.x).fill(1).map((b, j) => create.cell(i * size.x + j)))
+        return new Array(size[1]).fill(1).map((a, i) => {
+            return (new Array(size[0]).fill(1).map((b, j) => create.cell(i * size[0] + j)))
         })
     },
     spawnPoint: (field: Cell[][], spawnPoints: SpawnPoint[]) => {
@@ -65,10 +55,27 @@ export const create = {
             newField[spawn.y][spawn.x].count = 3;
         });
         return newField;
+    },
+    fieldByTemplate(fieldTemplate: FieldTemplate) {
+        const [sizeX, sizeY] = fieldTemplate.size;
+        const newField = create.field(fieldTemplate.size);
+
+        for (let i = 0; i < sizeX; i++) {
+            for (let j = 0; j < sizeY; j++) {
+                if (fieldTemplate.field[i][j]) {
+                    newField[i][j] = create.cell(i * sizeX + j);
+                } else {
+                    newField[i][j] = create.emptyCell(i * sizeX + j);
+                }
+            }
+        }
+
+        return newField;
     }
 }
 export const isExist = {
-    playerOnField: (field: Cell[][], player: Player) => field.some((row) => row.some((cell) => cell.player === player) ? true : false)
+    playerOnField: (field: Cell[][], player: Player) =>
+        field.some((row) => row.some((cell) => cell.player === player) ? true : false)
 }
 
 export const random = {
@@ -89,4 +96,20 @@ export const filter = {
 
 function trying(func: Function, onCatch: any) {
     try { return func() } catch (e) { return onCatch }
+}
+function getNeighbors(field: Cell[][], cell: Cell): Cell[] {
+    const [x, y] = calc.cellPositionById(cell.id);
+    return [
+        trying(() => field[x + 1][y], null),
+        trying(() => field[x][y + 1], null),
+        trying(() => field[x - 1][y], null),
+        trying(() => field[x][y - 1], null),
+    ].filter(e => e);
+}
+export function cellIsExist(field: Cell[][], pos: Vector2) {
+    const [x, y] = pos;
+    if (trying(() => field[x][y].allow, undefined))
+        return true;
+    else
+        return false;
 }

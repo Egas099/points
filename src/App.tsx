@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useTypedSelector } from './hooks/useTypedSelector';
+import './css/App.css';
 import GameField from './components/GameField/GameField';
 import ModalWimdow from './components/ModalWindow/AlertPopup';
-import './css/App.css';
-import { useDispatch } from 'react-redux';
 import * as aC from './store/actionCreator'
-import * as bots from './logic/AI/simple';
-import { checkCellsToOverflow } from './logic';
-import { calc, random } from './logic/functions';
-import { Player } from './types';
-import { b1, b2 } from './logic/AI/normal';
+import { botMoving, checkCellsToOverflow } from './logic';
+import { Player, PlayerStatus } from './types';
+import PlayersForm from './components/PlayersForm/PlayersForm';
+import AI from './logic/AI'
+import { gameSettings } from './data';
+import { givenState } from './store/gameFieldReducer';
 
 function App() {
+    const BOT_MOVING_INTERVAL = 100;
     const dispatch = useDispatch()
     const [showM, setShowM] = useState<boolean>(false);
     const state = useTypedSelector(state => state)
@@ -26,34 +28,15 @@ function App() {
     })
 
     useEffect(() => {
-        if (state.gameState.moveBlock)
+        if (state.gameState.gameStarted && state.gameState.moveBlock) {
             checkCellsToOverflow(state.field, dispatch)
-        // eslint-disable-next-line
-    }, [state.gameState.moveBlock])
+        }
+    }, [state.gameState.gameStarted, state.gameState.moveBlock])
 
     useEffect(() => {
-        if (state.gameState.moveBlock === false) {
-            switch (state.gameState.mover) {
-                case Player.red:
-                    // console.log(calc.cellPositionById(b1(state).id));
-                    setTimeout(() => botMove(bots.c4(state)), 0);
-                    break;
-                case Player.orange:
-                    setTimeout(() => botMove(bots.c2(state)), 0);
-                    break;
-                case Player.green:
-                    setTimeout(() => botMove(bots.c3(state)), 0);
-                    break;
-                case Player.blue:
-                    setTimeout(() => botMove(b2(state)), 0);
-                    break;
-                default:
-                    setTimeout(() => botMove(random.elemetFrom(Object(bots))(state)), 0);
-                    break;
-            }
-        }
-        // eslint-disable-next-line
-    }, [state.gameState.moveNumber])
+        setTimeout(() => move(botMoving(state)), BOT_MOVING_INTERVAL);
+        // eslint - disable - next - line
+    }, [state.gameState.moveNumber, state.gameState.gameStarted])
 
     useEffect(() => {
         if (state.gameState.endGame) {
@@ -83,12 +66,6 @@ function App() {
         // eslint-disable-next-line
     }, [state.gameState.endGame])
 
-    function botMove(cell: Cell) {
-        if (cell) {
-            dispatch(aC.playerMove(cell))
-        }
-    }
-
     function test() {
         dispatch(aC.allowMoving())
     }
@@ -96,13 +73,44 @@ function App() {
         setShowM(false)
         dispatch(aC.restartGame());
     }
+    function move(cell: Cell | undefined) {
+        if (
+            cell &&
+            state.gameState.gameStarted &&
+            !state.gameState.moveBlock &&
+            state.gameState.mover === cell.player
+        ) {
+            dispatch(aC.playerMove(cell))
+        }
+    }
+    function gameStarting(form: PlayerProfile[]) {
+        const filteredSpawns = gameSettings.template.spawns.filter(
+            (spawn, i) => form[i].status !== PlayerStatus.none
+        )
+        gameSettings.playersProfiles = form;
+        dispatch(aC.startGame({ ...gameSettings.template, spawns: filteredSpawns }));
+    }
+    function createPlayersForm(): PlayerProfile[] {
+        return gameSettings.template.spawns.map((spawn) => {
+            return {
+                player: spawn.player,
+                status: PlayerStatus.none,
+            }
+        })
+    }
     return (
         <div className="App">
             <div className="App__content">
                 <ModalWimdow show={showM} title={title} text="" callback={() => hideModal()} />
-                <GameField field={state.field}></GameField>
-                <button onClick={() => dispatch(aC.restartGame())}>Restart</button>
-                <button onClick={() => test()}>Action</button>
+                {!state.gameState.gameStarted
+                    ? <PlayersForm onSubmit={gameStarting} form={createPlayersForm()}>
+                        <GameField field={givenState(gameSettings.template)} onMove={() => { }} />
+                    </PlayersForm>
+                    : <>
+                        <GameField field={state.field} onMove={move} />
+                        <button className='btn' onClick={() => dispatch(aC.restartGame())}>Restart</button>
+                    </>
+                }
             </div>
         </div>
     );

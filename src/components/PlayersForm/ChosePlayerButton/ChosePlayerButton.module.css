@@ -1,0 +1,11 @@
+.wrapper {}
+
+.content {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px black solid;
+    box-shadow: 0 0 3px black;
+    margin: 5px 0;
+    font-size: 150%;
+}

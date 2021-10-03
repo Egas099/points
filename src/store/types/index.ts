@@ -9,6 +9,7 @@ export enum GameActionType {
     BLOCK_MOVING = 'BLOCK_MOVING',
     ALLOW_MOVING = 'ALLOW_MOVING',
     NEXT_MOVER = 'NEXT_MOVER',
+    START_GAME = 'START_GAME',
     RESTART_GAME = 'RESTART_GAME',
     PLAYER_MOVE = 'PLAYER_MOVE',
 }
@@ -60,10 +61,14 @@ export interface RestartGame {
     type: GameActionType.RESTART_GAME;
     payload: undefined;
 }
-
+export interface StartGame {
+    type: GameActionType.START_GAME;
+    payload: FieldTemplate;
+}
 export type GameActions = CellZeroing
     | PlayerMove
     | NewMove
+    | StartGame
     | RestartGame
     | CellIncrement
     | CellCapture

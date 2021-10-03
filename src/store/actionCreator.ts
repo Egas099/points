@@ -12,3 +12,4 @@ export const newMove = (payload: Cell[][]): GameActions => ({ type: GameActionTy
 export const playerMove = (payload: Cell): GameActions => ({ type: GameActionType.PLAYER_MOVE, payload: payload });
 
 export const restartGame = (): GameActions => ({ type: GameActionType.RESTART_GAME, payload: undefined });
+export const startGame = (payload: FieldTemplate): GameActions => ({ type: GameActionType.START_GAME, payload: payload });

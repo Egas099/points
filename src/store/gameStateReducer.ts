@@ -3,20 +3,13 @@ import { Player } from '../types';
 import { GameActions, GameActionType } from './types';
 
 const defaultState = (): GameState => ({
-    mover: Player.red,
-    moveBlock: false,
+    gameStarted: false,
+    moveBlock: true,
     endGame: false,
+    mover: 0,
     moveNumber: 0,
-    players: getPlayers(),
+    players: [],
 })
-
-const getPlayers = () => [
-    Player.red,
-    Player.orange,
-    Player.yellow,
-    Player.green,
-    Player.blue
-]
 
 export const gameStateReducer = (state = defaultState(), action: GameActions): GameState => {
     switch (action.type) {
@@ -30,6 +23,8 @@ export const gameStateReducer = (state = defaultState(), action: GameActions): G
             return actionNextMover(state, action.payload);
         case GameActionType.PLAYER_MOVE:
             return { ...state, moveBlock: true };
+        case GameActionType.START_GAME:
+            return actionStartGame(state, action.payload)
         case GameActionType.RESTART_GAME:
             return defaultState();
         default:
@@ -45,7 +40,7 @@ function actionNextMover(state: GameState, field: Cell[][]) {
     return { ...state, mover: newMover, players: leftPlayers };
 }
 function actionNewMove(state: GameState, field: Cell[][]) {
-    if (state.moveBlock) {
+    if (state.moveBlock && state.gameStarted && !state.endGame) {
         const newState = {
             ...actionNextMover(state, field),
             moveNumber: state.moveNumber + 1,
@@ -59,4 +54,8 @@ function actionNewMove(state: GameState, field: Cell[][]) {
     } else {
         return state;
     }
+}
+function actionStartGame(state: GameState, templete: FieldTemplate) {
+    const players: Player[] = templete.spawns.map((spawn) => spawn.player);
+    return { ...state, moveBlock: false, gameStarted: true, mover: players[0], players: players };
 }

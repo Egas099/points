@@ -4,12 +4,14 @@ type Cell = {
     id: number;
     count: number;
     player: Player | null;
+    allow: boolean;
 }
 
 interface GameState {
     mover: Player;
     moveBlock: boolean;
     endGame: boolean;
+    gameStarted: boolean;
     players: Player[];
     moveNumber: number;
 }
@@ -23,7 +25,16 @@ interface SpawnPoint {
     player: Player;
 }
 
-interface Vector2 {
-    x: number;
-    y: number;
+type Vector2 = [x, y]
+type x = number;
+type y = number;
+
+interface FieldTemplate {
+    size: Vector2;
+    spawns: SpawnPoint[];
+    field: number[][];
+}
+interface PlayerProfile {
+    player: Player;
+    status: PlayerStatus;
 }
