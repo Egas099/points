@@ -5,7 +5,7 @@ import { getColorByPlayer } from '../../../data';
 
 interface Props {
     cell: Cell;
-    onMove: Function;
+    onMove?: Function;
 }
 
 const CellItem: FC<Props> = ({ cell, onMove }) => {
@@ -35,7 +35,7 @@ const CellItem: FC<Props> = ({ cell, onMove }) => {
             {cell.allow &&
                 <div
                     className={[stl.content, getColorByPlayer(cell.player)].join(' ')}
-                    onClick={() => onMove(cell)}
+                    onClick={onMove && (() => onMove(cell))}
                     draggable="false"
                 >
                     <span>

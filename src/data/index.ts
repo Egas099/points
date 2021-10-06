@@ -1,18 +1,7 @@
 import { Player } from '../types';
 import colors from '../css/colors.module.css';
 import AI from '../logic/AI';
-// export const spawnPoints: SpawnPoint[] = [
-//     { x: 1, y: 1, player: Player.red },
-//     { x: 13, y: 1, player: Player.orange },
-//     { x: 13, y: 13, player: Player.green },
-//     { x: 1, y: 13, player: Player.blue },
-//     { x: 7, y: 7, player: Player.yellow },
-// ];
-
-// export const fieldSize: Vector2 = [9, 9]
-// export const fieldSize = { x: 15, y: 15 }
-
-
+import { random } from '../logic/functions';
 
 export const fieldTemplates: FieldTemplate[] = [
     {
@@ -149,10 +138,10 @@ export const gameSettings: GameSettings = {
     template: fieldTemplates[0],
     playersProfiles: [],
     bots: {
-        red: AI.getBot('normal'),
-        orange: AI.getBot('simple'),
-        green: AI.getBot('simple'),
-        blue: AI.getBot('simple'),
+        red: AI.getBot(random.elemetFrom(['normal', 'simple'])),
+        orange: AI.getBot(random.elemetFrom(['normal', 'simple'])),
+        green: AI.getBot(random.elemetFrom(['normal', 'simple'])),
+        blue: AI.getBot(random.elemetFrom(['normal', 'simple'])),
     }
 }
 

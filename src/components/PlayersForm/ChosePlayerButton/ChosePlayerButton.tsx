@@ -5,34 +5,37 @@ import stl from './ChosePlayerButton.module.css'
 
 interface Props {
     player: Player;
-    playerStatus: [PlayerStatus, Dispatch<SetStateAction<PlayerStatus>>]
+    playerStatus: [PlayerStatus, Dispatch<SetStateAction<PlayerStatus>>];
+    position: "up" | "down";
 }
 
-const ChosePlayerButton: FC<Props> = ({ player, playerStatus }) => {
-    const next = (player: PlayerStatus): PlayerStatus => {
-        if (typeof PlayerStatus[player + 1] === "string")
-            return player + 1;
-        return PlayerStatus.none;
-    }
+const ChosePlayerButton: FC<Props> = ({ player, playerStatus, position }) => {
+    const [status, setStatus] = [...playerStatus];
 
-    const getIcon = (pStatus: PlayerStatus) => {
-        switch (pStatus) {
+    function getIcon() {
+        switch (status) {
             case PlayerStatus.none:
                 return "?"
             case PlayerStatus.user:
-                return "☺"
+                return "🙂"
             default:
-                return "♠"
+                return `🤖`
         }
     }
+    function nextStatus() {
+        if (typeof PlayerStatus[status + 1] === "string")
+            return setStatus(status + 1);
+        return setStatus(PlayerStatus.none);
+    }
+    const getColorStyle = () => (status !== PlayerStatus.none) ? getColorByPlayer(player) : '';
 
     return (
-        <div>
+        <div className={[stl[position], stl.wrapper].join(' ')}>
             <button
-                className={[stl.content, getColorByPlayer(player)].join(' ')}
-                onClick={() => playerStatus[1](next(playerStatus[0]))}
+                className={[stl.content, getColorStyle()].join(' ')}
+                onClick={() => nextStatus()}
             >
-                {getIcon(playerStatus[0])}
+                {getIcon()}
             </button>
         </div>
     )

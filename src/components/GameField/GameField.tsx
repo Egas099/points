@@ -4,7 +4,7 @@ import styles from './GameField.module.css'
 
 interface Props {
     field: Cell[][],
-    onMove: Function;
+    onMove?: Function;
 }
 
 const GameField: FC<Props> = ({ field, onMove }) => {

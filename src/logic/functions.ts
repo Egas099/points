@@ -106,6 +106,11 @@ function getNeighbors(field: Cell[][], cell: Cell): Cell[] {
         trying(() => field[x][y - 1], null),
     ].filter(e => e);
 }
+
+export function upFirst(str: string) {
+    return str[0].toUpperCase() + str.slice(1, str.length);
+}
+
 export function cellIsExist(field: Cell[][], pos: Vector2) {
     const [x, y] = pos;
     if (trying(() => field[x][y].allow, undefined))

@@ -8,9 +8,10 @@ interface Props {
     callback: Function;
     title: string;
     text?: string;
+    buttonText?: string;
 }
 
-const ModalWimdow: FC<Props> = ({ show, title, text, callback }) => {
+const ModalWimdow: FC<Props> = ({ show, title, text, callback, buttonText }) => {
     return (
         <CSSTransition unmountOnExit in={show} timeout={500} classNames="mask">
             <div className={stl.mask} >
@@ -21,9 +22,11 @@ const ModalWimdow: FC<Props> = ({ show, title, text, callback }) => {
                                 <h2>
                                     {title}
                                 </h2>
-                                {text ? <p>{text}</p> : <></>}
+                                {text && <p>{text}</p>}
                             </div>
-                            <button className={stl.button} onClick={() => callback()}>Ok</button>
+                            <button className='btn' onClick={() => callback()}>
+                                {buttonText ? buttonText : "Ok"}
+                            </button>
                         </div>
                     </div>
                 </CSSTransition>
