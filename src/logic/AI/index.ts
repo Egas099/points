@@ -2,8 +2,7 @@ import { random } from "../functions";
 import * as simple from "./simple";
 import * as normal from "./normal";
 
-
-export default {
+const AI = {
     getBot: function (difficulty: string) {
         switch (difficulty) {
             case "simple":
@@ -14,3 +13,4 @@ export default {
         }
     }
 }
+export default AI;

@@ -1,5 +1,5 @@
 import { gameSettings } from "../data";
-import { Player } from "../types";
+import { Player, PlayerStatus } from "../types";
 
 export const find = {
     overflowingCell: (field: Cell[][]) => {
@@ -71,6 +71,14 @@ export const create = {
         }
 
         return newField;
+    },
+    createPlayersForm(): PlayerProfile[] {
+        return gameSettings.template.spawns.map((spawn) => {
+            return {
+                player: spawn.player,
+                status: PlayerStatus.none,
+            }
+        })
     }
 }
 export const isExist = {

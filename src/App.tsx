@@ -10,7 +10,7 @@ import { Player, PlayerStatus } from './types';
 import PlayersForm from './components/PlayersForm/PlayersForm';
 import { gameSettings } from './data';
 import { givenState } from './store/gameFieldReducer';
-import { upFirst } from './logic/functions';
+import { create, upFirst } from './logic/functions';
 
 function App() {
     const BOT_MOVING_INTERVAL = 0;
@@ -18,44 +18,22 @@ function App() {
     const [showM, setShowM] = useState<boolean>(false);
     const state = useTypedSelector(state => state)
     const [timer, setTimer] = useState<NodeJS.Timeout>(setTimeout(() => 0, 0))
-    // eslint-disable-next-line
     const [title, setTitle] = useState("User win")
-    const [winStatistic, setWinStatistic] = useState({
-        red: 0,
-        orange: 0,
-        green: 0,
-        blue: 0,
-    })
 
     useEffect(() => {
         if (state.gameState.gameStarted && state.gameState.moveBlock) {
             checkCellsToOverflow(state.field, dispatch)
         }
+        // eslint-disable-next-line
     }, [state.gameState.gameStarted, state.gameState.moveBlock])
 
     useEffect(() => {
         setTimer(setTimeout(() => move(botMoving(state)), BOT_MOVING_INTERVAL));
-        // eslint - disable - next - line
+        // eslint-disable-next-line
     }, [state.gameState.moveNumber, state.gameState.gameStarted])
 
     useEffect(() => {
         if (state.gameState.endGame) {
-            const newWinStatistic = { ...winStatistic }
-            switch (state.gameState.mover) {
-                case Player.red:
-                    newWinStatistic.red++;
-                    break;
-                case Player.orange:
-                    newWinStatistic.orange++;
-                    break;
-                case Player.green:
-                    newWinStatistic.green++;
-                    break;
-                case Player.blue:
-                    newWinStatistic.blue++;
-                    break;
-            }
-            setWinStatistic(newWinStatistic);
             setTitle(
                 `${upFirst(Player[state.gameState.players[0]])}
                 одержал победу за ${state.gameState.moveNumber} ходов`
@@ -90,14 +68,7 @@ function App() {
     function gameRestarting() {
         dispatch(aC.restartGame())
     }
-    function createPlayersForm(): PlayerProfile[] {
-        return gameSettings.template.spawns.map((spawn) => {
-            return {
-                player: spawn.player,
-                status: PlayerStatus.none,
-            }
-        })
-    }
+   
     return (
         <div className="App">
             <div className="App__content">
@@ -109,7 +80,7 @@ function App() {
                 />
                 {!state.gameState.gameStarted
                     ?
-                    <PlayersForm onSubmit={gameStarting} form={createPlayersForm()}>
+                    <PlayersForm onSubmit={gameStarting} form={create.createPlayersForm()}>
                         <GameField field={givenState(gameSettings.template)} onMove={() => { }} />
                     </PlayersForm>
                     :
