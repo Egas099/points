@@ -1,16 +1,10 @@
 .App {
-  text-align: center;
-  background-color: #E6EAED;
-  height: 100vh;
   align-items: center;
   justify-content: center;
   display: flex;
+  flex-direction: column;
+  text-align: center;
+  background-color: #E6EAED;
+  height: 100vh;
+  color: rgb(45 45 45);
 }
-
-.App__content {
-  /* max-width: 500px; */
-  box-sizing: content-box;
-  /* border: 1px solid rgba(0, 0, 0, 0.1); */
-  /* box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2); */
-}
-

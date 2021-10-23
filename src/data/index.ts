@@ -1,11 +1,8 @@
 import { Player } from '../types';
-import colors from '../css/colors.module.css';
 import AI from '../logic/AI';
-import { random } from '../logic/functions';
 
 export const fieldTemplates: FieldTemplate[] = [
     {
-        size: [9, 9],
         field: [
             [1, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -25,7 +22,6 @@ export const fieldTemplates: FieldTemplate[] = [
         ]
     },
     {
-        size: [9, 9],
         field: [
             [0, 0, 0, 0, 0, 0, 0, 0, 0],
             [0, 1, 1, 1, 1, 1, 1, 1, 0],
@@ -45,7 +41,6 @@ export const fieldTemplates: FieldTemplate[] = [
         ]
     },
     {
-        size: [9, 9],
         field: [
             [0, 1, 1, 1, 1, 1, 1, 1, 0],
             [1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -65,7 +60,6 @@ export const fieldTemplates: FieldTemplate[] = [
         ]
     },
     {
-        size: [9, 9],
         field: [
             [1, 1, 1, 1, 0, 1, 1, 1, 1],
             [1, 1, 1, 1, 0, 1, 1, 1, 1],
@@ -85,7 +79,6 @@ export const fieldTemplates: FieldTemplate[] = [
         ]
     },
     {
-        size: [9, 9],
         field: [
             [1, 1, 1, 1, 0, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -105,7 +98,6 @@ export const fieldTemplates: FieldTemplate[] = [
         ]
     },
     {
-        size: [9, 9],
         field: [
             [1, 1, 1, 1, 0, 1, 1, 1, 1],
             [1, 1, 1, 1, 0, 1, 1, 1, 1],
@@ -126,38 +118,16 @@ export const fieldTemplates: FieldTemplate[] = [
     },
 ]
 
-export const profileData: PlayerData[] = []
-
-interface PlayerData {
-    name: string;
-    player: Player;
-    isUser: boolean;
-}
-
 export const gameSettings: GameSettings = {
     template: fieldTemplates[0],
     playersProfiles: [],
     bots: {
-        red: AI.getBot(random.elemetFrom(['normal', 'simple'])),
-        orange: AI.getBot(random.elemetFrom(['normal', 'simple'])),
-        green: AI.getBot(random.elemetFrom(['normal', 'simple'])),
-        blue: AI.getBot(random.elemetFrom(['normal', 'simple'])),
+        red: AI.getBot('normal'),
+        orange: AI.getBot('normal'),
+        green: AI.getBot('normal'),
+        blue: AI.getBot('normal'),
     }
 }
 
-export function getColorByPlayer(player: Player) {
-    return colors[Player[player]];
-}
 
-interface GameSettings {
-    template: FieldTemplate,
-    playersProfiles: PlayerProfile[],
-    bots: Bots,
-}
 
-interface Bots {
-    red: Function;
-    orange: Function;
-    green: Function;
-    blue: Function;
-}

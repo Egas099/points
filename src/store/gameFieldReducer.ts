@@ -3,7 +3,12 @@ import { Player } from '../types';
 import { GameActions, GameActionType, CellCloning, playerMoving } from './types';
 
 const defaultState = (): Cell[][] => []
-export const givenState = (templete: FieldTemplate): Cell[][] => create.spawnPoint(create.fieldByTemplate(templete), templete.spawns)
+export const givenState = (templete: FieldTemplate):
+    Cell[][] => create.spawnPoint(
+        create.fieldByTemplate(templete),
+        templete.spawns
+    )
+
 export const gameFieldReducer = (state = defaultState(), action: GameActions): Cell[][] => {
     switch (action.type) {
         case GameActionType.START_GAME:

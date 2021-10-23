@@ -1,9 +1,10 @@
 import { Dispatch } from 'react';
-import { find} from './functions';
+import { find, random } from './functions';
 import * as aC from '../store/actionCreator'
 import { RootState } from '../store';
 import { gameSettings } from '../data';
 import { Player, PlayerStatus } from '../types';
+import AI from './AI';
 
 export const checkCellsToOverflow = (field: Cell[][], dispatch: Dispatch<any>) => {
     const cell = find.overflowingCell(field);
@@ -44,3 +45,8 @@ export function botMoving(state: RootState): Cell | undefined {
 function findStatusByPlayer(player: Player) {
     return gameSettings.playersProfiles.find(prf => prf.player === player)?.status;
 }
+
+function chooseTemplate() {
+    
+}
+

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import stl from './CellItem.module.css';
-import { getColorByPlayer } from '../../../data';
+import { getColorByPlayer } from '../../../logic/functions';
 
 interface Props {
     cell: Cell;

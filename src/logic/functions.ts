@@ -1,5 +1,6 @@
-import { gameSettings } from "../data";
 import { Player, PlayerStatus } from "../types";
+import colors from '../css/colors.module.css';
+import { FIELD_HEIGHT, FIELD_WIDTH } from "../data/constants";
 
 export const find = {
     overflowingCell: (field: Cell[][]) => {
@@ -22,7 +23,7 @@ export const calc = {
     nextMover: (player: Player) => Player[player + 1] ? ++player : 0,
 
     cellPositionById: (number: number) =>
-        [Math.floor(number / gameSettings.template.size[0]), number % gameSettings.template.size[0]],
+        [Math.floor(number / FIELD_WIDTH), number % FIELD_WIDTH],
 
     amountCellWithPoints: (cells: Cell[], count: number) =>
         cells.reduce((acum, cur) => cur.count === count ? acum + 1 : acum, 0),
@@ -43,9 +44,9 @@ export const calc = {
 export const create = {
     cell: (id: number) => ({ id: id, count: 0, player: null, allow: true }),
     emptyCell: (id: number) => ({ id: id, count: 0, player: null, allow: false }),
-    field: (size: Vector2): Cell[][] => {
-        return new Array(size[1]).fill(1).map((a, i) => {
-            return (new Array(size[0]).fill(1).map((b, j) => create.cell(i * size[0] + j)))
+    emptyField: (width: number, height: number): Cell[][] => {
+        return new Array(height).fill(1).map((a, i) => {
+            return (new Array(width).fill(1).map((b, j) => create.cell(i * width + j)))
         })
     },
     spawnPoint: (field: Cell[][], spawnPoints: SpawnPoint[]) => {
@@ -57,8 +58,8 @@ export const create = {
         return newField;
     },
     fieldByTemplate(fieldTemplate: FieldTemplate) {
-        const [sizeX, sizeY] = fieldTemplate.size;
-        const newField = create.field(fieldTemplate.size);
+        const [sizeX, sizeY] = [FIELD_WIDTH, FIELD_HEIGHT];
+        const newField = create.emptyField(sizeX, sizeY);
 
         for (let i = 0; i < sizeX; i++) {
             for (let j = 0; j < sizeY; j++) {
@@ -69,11 +70,10 @@ export const create = {
                 }
             }
         }
-
         return newField;
     },
-    createPlayersForm(): PlayerProfile[] {
-        return gameSettings.template.spawns.map((spawn) => {
+    createPlayersForm(spawns: SpawnPoint[]): PlayerProfile[] {
+        return spawns.map((spawn) => {
             return {
                 player: spawn.player,
                 status: PlayerStatus.none,
@@ -112,7 +112,7 @@ function getNeighbors(field: Cell[][], cell: Cell): Cell[] {
         trying(() => field[x][y + 1], null),
         trying(() => field[x - 1][y], null),
         trying(() => field[x][y - 1], null),
-    ].filter(e => e);
+    ].filter(Boolean);
 }
 
 export function upFirst(str: string) {
@@ -125,4 +125,8 @@ export function cellIsExist(field: Cell[][], pos: Vector2) {
         return true;
     else
         return false;
+}
+
+export function getColorByPlayer(player: Player) {
+    return colors[Player[player]];
 }

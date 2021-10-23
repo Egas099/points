@@ -30,11 +30,23 @@ type x = number;
 type y = number;
 
 interface FieldTemplate {
-    size: Vector2;
     spawns: SpawnPoint[];
     field: number[][];
 }
 interface PlayerProfile {
     player: Player;
     status: PlayerStatus;
+}
+
+interface GameSettings {
+    template: FieldTemplate,
+    playersProfiles: PlayerProfile[],
+    bots: Bots,
+}
+
+interface Bots {
+    red: Function;
+    orange: Function;
+    green: Function;
+    blue: Function;
 }
