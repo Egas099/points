@@ -6,8 +6,14 @@ import {
     Route,
 } from "react-router-dom";
 import Home from './pages/Home';
+import { init as socketInit } from './socketWorker';
+import { useEffect } from 'react';
 
 function App() {
+
+    useEffect(() => {
+        socketInit();
+    })
 
     return (
         <div className="App">
@@ -17,6 +23,9 @@ function App() {
                         <Game />
                     </Route>
                     <Route path="/" exact>
+                        <Home />
+                    </Route>
+                    <Route path="/">
                         <Home />
                     </Route>
                 </Switch>

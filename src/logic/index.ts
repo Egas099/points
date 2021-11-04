@@ -1,10 +1,9 @@
 import { Dispatch } from 'react';
-import { find, random } from './functions';
+import { find } from './functions';
 import * as aC from '../store/actionCreator'
 import { RootState } from '../store';
 import { gameSettings } from '../data';
 import { Player, PlayerStatus } from '../types';
-import AI from './AI';
 
 export const checkCellsToOverflow = (field: Cell[][], dispatch: Dispatch<any>) => {
     const cell = find.overflowingCell(field);

@@ -10,6 +10,7 @@ import { Player, PlayerStatus } from '../types';
 import { create, upFirst } from '../logic/functions';
 import { gameSettings } from '../data';
 import { givenState } from '../store/gameFieldReducer';
+import { emit } from '../socketWorker';
 
 const Game: FC = () => {
     const BOT_MOVING_INTERVAL = 0;
@@ -54,6 +55,7 @@ const Game: FC = () => {
             !state.gameState.moveBlock &&
             state.gameState.mover === cell.player
         ) {
+            emit("playerMove", cell)
             dispatch(actionCreator.playerMove(cell))
         }
     }
