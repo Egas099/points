@@ -1,0 +1,15 @@
+{
+  "name": "points-game-module",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "",
+    "scripts": {
+        "start": "npm run start_client | npm run start_server",
+        "start_server": "cd server & npm run start",
+        "start_client": "cd client & npm run start"
+    },
+    "keywords": [],
+    "author": "",
+    "dependencies": {
+    }
+}
