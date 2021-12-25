@@ -1,7 +1,7 @@
 import { Dispatch, FC, SetStateAction } from 'react'
 import { Player, PlayerStatus } from '../../../types'
 import stl from './ChosePlayerButton.module.css'
-import { getColorByPlayer } from '../../../logic/functions';
+import { getColorByPlayer } from '../../../logic/common';
 
 interface Props {
     player: Player;

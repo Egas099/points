@@ -7,10 +7,11 @@ import PlayersForm from '../components/PlayersForm/PlayersForm';
 import * as actionCreator from '../store/actionCreator'
 import { botMoving, checkCellsToOverflow } from '../logic';
 import { Player, PlayerStatus } from '../types';
-import { create, upFirst } from '../logic/functions';
+import { upFirst } from '../logic/common';
 import { gameSettings } from '../data';
 import { givenState } from '../store/gameFieldReducer';
 import { emit } from '../socketWorker';
+import { createPlayersForm } from '../logic/create';
 
 const Game: FC = () => {
     const BOT_MOVING_INTERVAL = 0;
@@ -80,7 +81,7 @@ const Game: FC = () => {
             />
             {!state.gameState.gameStarted
                 ?
-                <PlayersForm onSubmit={gameStarting} form={create.createPlayersForm(gameSettings.template.spawns)}>
+                <PlayersForm onSubmit={gameStarting} form={createPlayersForm(gameSettings.template.spawns)}>
                     <GameField field={givenState(gameSettings.template)} onMove={() => { }} />
                 </PlayersForm>
                 :

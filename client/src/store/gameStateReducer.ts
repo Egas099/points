@@ -1,4 +1,4 @@
-import { isExist } from '../logic/functions';
+import { isExist } from '../logic/common';
 import { Player } from '../types';
 import { GameActions, GameActionType } from './types';
 

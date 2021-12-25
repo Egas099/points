@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { find } from './functions';
+import { find } from './common';
 import * as aC from '../store/actionCreator'
 import { RootState } from '../store';
 import { gameSettings } from '../data';
@@ -44,8 +44,3 @@ export function botMoving(state: RootState): Cell | undefined {
 function findStatusByPlayer(player: Player) {
     return gameSettings.playersProfiles.find(prf => prf.player === player)?.status;
 }
-
-function chooseTemplate() {
-    
-}
-

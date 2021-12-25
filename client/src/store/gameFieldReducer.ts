@@ -1,11 +1,13 @@
-import { calc, create, cellIsExist } from '../logic/functions';
+import { cellPositionById } from '../logic/calculate';
+import { cellIsExist } from '../logic/common';
+import { spawnPoint, fieldByTemplate } from '../logic/create';
 import { Player } from '../types';
 import { GameActions, GameActionType, CellCloning, playerMoving } from './types';
 
 const defaultState = (): Cell[][] => []
 export const givenState = (templete: FieldTemplate):
-    Cell[][] => create.spawnPoint(
-        create.fieldByTemplate(templete),
+    Cell[][] => spawnPoint(
+        fieldByTemplate(templete),
         templete.spawns
     )
 
@@ -35,7 +37,7 @@ export const gameFieldReducer = (state = defaultState(), action: GameActions): C
 function actionCellCapture(state: Cell[][], captureInfo: playerMoving) {
     if (!state.length) return state;
 
-    const [x, y] = calc.cellPositionById(captureInfo.cellId);
+    const [x, y] = cellPositionById(captureInfo.cellId);
     const newState = Array.from(state);
 
     newState[x][y] = { ...state[x][y], player: captureInfo.player };
@@ -47,7 +49,7 @@ function actionCellIncrement(state: Cell[][], cellId: number) {
     if (!state.length) return state;
 
     const newState = Array.from(state);
-    const [x, y] = calc.cellPositionById(cellId);
+    const [x, y] = cellPositionById(cellId);
 
     newState[x][y] = { ...state[x][y], count: newState[x][y].count + 1 };
 
@@ -59,7 +61,7 @@ function actionCellZeroing(state: Cell[][], cellId: number) {
     if (!state.length) return state;
 
     const newState = Array.from(state);
-    const [x, y] = calc.cellPositionById(cellId);
+    const [x, y] = cellPositionById(cellId);
 
     newState[x][y] = { ...state[x][y], count: 0, player: null };
 
@@ -71,7 +73,7 @@ function actionCloneCell(state: Cell[][], action: CellCloning) {
 
     const newState = Array.from(state);
     const cell = action.payload;
-    const [x, y] = calc.cellPositionById(cell.id);
+    const [x, y] = cellPositionById(cell.id);
 
     if (cell.count === 5) {
         newState[x][y] = { ...newState[x][y], count: 1 }

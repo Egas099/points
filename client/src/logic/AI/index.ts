@@ -1,4 +1,4 @@
-import { random } from "../functions";
+import { random } from "../common";
 import * as simple from "./simple";
 import * as normal from "./normal";
 

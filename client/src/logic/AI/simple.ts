@@ -1,5 +1,6 @@
 import { RootState } from "../../store";
-import { calc, filter, find, random } from "../functions";
+import { amountEmptyNeighs } from "../calculate";
+import { filter, find, random } from "../common";
 
 /**
  * Random movement
@@ -35,8 +36,8 @@ export const c2 = (state: RootState) => {
         cells = filteredCells;
 
     for (let i = 4; i > 0; i--) {
-        if (cells.some(cell => calc.amountEmptyNeighs(state.field, cell) === i)) {
-            cells = cells.filter((cell) => calc.amountEmptyNeighs(state.field, cell) === i);
+        if (cells.some(cell => amountEmptyNeighs(state.field, cell) === i)) {
+            cells = cells.filter((cell) => amountEmptyNeighs(state.field, cell) === i);
             break;
         }
     }
