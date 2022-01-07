@@ -1,0 +1,29 @@
+.main-menu__wrapper {
+    border: 10px rgba(0, 0, 0, 0.02) solid;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu__btn {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: block;
+    width: 50vw;
+    max-width: 150px;
+    padding: 5px 30px;
+    margin: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 3px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    background-color: rgb(143, 207, 207);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    text-decoration: none;
+    color: rgb(45 45 45);
+}
+
+.menu__btn:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    background-color: rgb(130, 202, 202);
+}

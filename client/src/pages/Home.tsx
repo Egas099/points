@@ -1,15 +1,17 @@
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
-
+import MainMenu from '../components/MainMenu/MainMenu'
+import '../css/home.css'
 interface Props {
 
 }
 
 const Home: FC<Props> = ({ }) => {
     return (
-        <div>
+        <div className="home page">
             <h2>The Points</h2>
-            <Link className="menu__btn" to="/play">Play!</Link>
+            <div className="menu__wrapper center-content">
+                <MainMenu />
+            </div>
         </div>
     )
 }

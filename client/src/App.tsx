@@ -4,29 +4,33 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
+    Redirect,
 } from "react-router-dom";
 import Home from './pages/Home';
-import { init as socketInit } from './socketWorker';
-import { useEffect } from 'react';
+import About from './pages/About';
+
+const MENU_PATH = '/menu';
 
 function App() {
-
-    useEffect(() => {
-        socketInit();
-    })
-
     return (
         <div className="App">
             <Router>
                 <Switch>
-                    <Route path="/play" exact>
-                        <Game />
+                    <Route path="/about" exact>
+                        <About />
                     </Route>
-                    <Route path="/" exact>
+
+                    <Route path="/single" exact>
+                        <Game type="single" />
+                    </Route>
+                    <Route path="/multiplayer" exact>
+                        <Game type="multiplayer" />
+                    </Route>
+                    <Route path={`${MENU_PATH}/`}>
                         <Home />
                     </Route>
-                    <Route path="/">
-                        <Home />
+                    <Route>
+                        <Redirect to={`${MENU_PATH}/`} />
                     </Route>
                 </Switch>
             </Router>

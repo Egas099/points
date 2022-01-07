@@ -12,8 +12,22 @@ import { gameSettings } from '../data';
 import { givenState } from '../store/gameFieldReducer';
 import { emit } from '../socketWorker';
 import { createPlayersForm } from '../logic/create';
+import { init as socketInit } from '../socketWorker';
 
-const Game: FC = () => {
+interface GameProps {
+    type: "single" | "multiplayer"
+}
+
+const Game: FC<GameProps> = ({ type }) => {
+    useEffect(() => {
+        if (type === "multiplayer") {
+            console.log("Подключение к серверу");
+            socketInit();
+        } else {
+            console.log("Одиночная игра");
+        }
+    })
+
     const BOT_MOVING_INTERVAL = 0;
     const dispatch = useDispatch()
     const [showM, setShowM] = useState<boolean>(false);
