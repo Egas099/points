@@ -1,3 +1,4 @@
+import { RootState } from ".";
 import { GameActions, GameActionType, playerMoving } from "./types";
 
 export const cellIncrement = (payload: number): GameActions => ({ type: GameActionType.CELL_INCREMENT, payload: payload });
@@ -11,5 +12,6 @@ export const allowMoving = (): GameActions => ({ type: GameActionType.ALLOW_MOVI
 export const newMove = (payload: Cell[][]): GameActions => ({ type: GameActionType.NEW_MOVE, payload: payload });
 export const playerMove = (payload: Cell): GameActions => ({ type: GameActionType.PLAYER_MOVE, payload: payload });
 
+export const loadGame = (payload: RootState): GameActions => ({ type: GameActionType.LOAD_GAME, payload: payload });
 export const restartGame = (): GameActions => ({ type: GameActionType.RESTART_GAME, payload: undefined });
 export const startGame = (payload: FieldTemplate): GameActions => ({ type: GameActionType.START_GAME, payload: payload });

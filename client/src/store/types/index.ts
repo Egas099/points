@@ -1,3 +1,4 @@
+import { RootState } from '..';
 import { Player } from '../../types';
 
 export enum GameActionType {
@@ -11,6 +12,7 @@ export enum GameActionType {
     NEXT_MOVER = 'NEXT_MOVER',
     START_GAME = 'START_GAME',
     RESTART_GAME = 'RESTART_GAME',
+    LOAD_GAME = 'LOAD_GAME',
     PLAYER_MOVE = 'PLAYER_MOVE',
 }
 
@@ -61,6 +63,10 @@ export interface RestartGame {
     type: GameActionType.RESTART_GAME;
     payload: undefined;
 }
+export interface LoadGame {
+    type: GameActionType.LOAD_GAME;
+    payload: RootState;
+}
 export interface StartGame {
     type: GameActionType.START_GAME;
     payload: FieldTemplate;
@@ -70,6 +76,7 @@ export type GameActions = CellZeroing
     | NewMove
     | StartGame
     | RestartGame
+    | LoadGame
     | CellIncrement
     | CellCapture
     | CellCloning

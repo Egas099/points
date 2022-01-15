@@ -27,6 +27,8 @@ export const gameStateReducer = (state = defaultState(), action: GameActions): G
             return actionStartGame(state, action.payload)
         case GameActionType.RESTART_GAME:
             return defaultState();
+        case GameActionType.LOAD_GAME:
+            return action.payload.gameState;
         default:
             return state;
     }

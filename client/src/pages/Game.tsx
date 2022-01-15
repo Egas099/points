@@ -13,9 +13,17 @@ import { givenState } from '../store/gameFieldReducer';
 import { emit } from '../socketWorker';
 import { createPlayersForm } from '../logic/create';
 import { init as socketInit } from '../socketWorker';
+import { APP_VERSION } from '../data/constants';
+import { RootState } from '../store';
 
 interface GameProps {
     type: "single" | "multiplayer"
+}
+
+interface Save {
+    date: number,
+    appVersion: string,
+    state: RootState
 }
 
 const Game: FC<GameProps> = ({ type }) => {
@@ -84,7 +92,20 @@ const Game: FC<GameProps> = ({ type }) => {
     function gameRestarting() {
         dispatch(actionCreator.restartGame())
     }
-
+    const createSave = (): Save => ({
+        date: Date.now(),
+        appVersion: APP_VERSION,
+        state: state
+    })
+    function gameSaving() {
+        localStorage.setItem('saves', JSON.stringify(createSave()));
+    }
+    function loadGame() {
+        const save: Save = JSON.parse(localStorage.getItem('saves') || "{}");
+        if (save.state) {
+            dispatch(actionCreator.loadGame(save.state));
+        }
+    }
     return (
         <>
             <ModalWimdow
@@ -95,11 +116,15 @@ const Game: FC<GameProps> = ({ type }) => {
             />
             {!state.gameState.gameStarted
                 ?
-                <PlayersForm onSubmit={gameStarting} form={createPlayersForm(gameSettings.template.spawns)}>
-                    <GameField field={givenState(gameSettings.template)} onMove={() => { }} />
-                </PlayersForm>
+                <>
+                    <button className='btn' onClick={() => loadGame()}>Load</button>
+                    <PlayersForm onSubmit={gameStarting} form={createPlayersForm(gameSettings.template.spawns)}>
+                        <GameField field={givenState(gameSettings.template)} onMove={() => { }} />
+                    </PlayersForm>
+                </>
                 :
                 <>
+                    <button className='btn' onClick={() => gameSaving()}>Save</button>
                     <GameField field={state.field} onMove={move} />
                     <button className='btn' onClick={() => gameRestarting()}>Restart</button>
                 </>

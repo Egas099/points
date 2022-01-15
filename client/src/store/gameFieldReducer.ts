@@ -29,6 +29,8 @@ export const gameFieldReducer = (state = defaultState(), action: GameActions): C
             return actionCellIncrement(state, action.payload.id);
         case GameActionType.RESTART_GAME:
             return defaultState();
+        case GameActionType.LOAD_GAME:
+            return action.payload.field;
         default:
             return state;
     }
