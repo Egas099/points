@@ -15,12 +15,15 @@ import { createPlayersForm } from '../logic/create';
 import { init as socketInit } from '../socketWorker';
 import { APP_VERSION } from '../data/constants';
 import { RootState } from '../store';
+import MenuPopup from '../components/ModalWindow/MenuPopup';
+import MainMenu from '../components/MainMenu/MainMenu';
+import AI from '../logic/AI';
 
 interface GameProps {
     type: "single" | "multiplayer"
 }
 
-interface Save {
+export interface Save {
     date: number,
     appVersion: string,
     state: RootState
@@ -38,7 +41,8 @@ const Game: FC<GameProps> = ({ type }) => {
 
     const BOT_MOVING_INTERVAL = 0;
     const dispatch = useDispatch()
-    const [showM, setShowM] = useState<boolean>(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [showMenu, setShowMenu] = useState<boolean>(false);
     const state = useTypedSelector(state => state)
     const [timer, setTimer] = useState<NodeJS.Timeout>(setTimeout(() => 0, 0))
     const [title, setTitle] = useState("User win")
@@ -61,14 +65,14 @@ const Game: FC<GameProps> = ({ type }) => {
                 `${upFirst(Player[state.gameState.players[0]])}
                 одержал победу за ${state.gameState.moveNumber} ходов`
             );
-            setShowM(true)
+            setShowModal(true)
         }
         // eslint-disable-next-line
     }, [state.gameState.endGame])
 
     function hideModal() {
         clearTimeout(timer)
-        setShowM(false)
+        setShowModal(false)
         dispatch(actionCreator.restartGame());
     }
     function move(cell: Cell | undefined) {
@@ -87,6 +91,10 @@ const Game: FC<GameProps> = ({ type }) => {
             (spawn, i) => form[i].status !== PlayerStatus.none
         )
         gameSettings.playersProfiles = form;
+        gameSettings.botsImplementations.blue = AI.getBotImplementationById(gameSettings.bots.blue)
+        gameSettings.botsImplementations.red = AI.getBotImplementationById(gameSettings.bots.red)
+        gameSettings.botsImplementations.green = AI.getBotImplementationById(gameSettings.bots.green)
+        gameSettings.botsImplementations.orange = AI.getBotImplementationById(gameSettings.bots.orange)
         dispatch(actionCreator.startGame({ ...gameSettings.template, spawns: filteredSpawns }));
     }
     function gameRestarting() {
@@ -98,10 +106,16 @@ const Game: FC<GameProps> = ({ type }) => {
         state: state
     })
     function gameSaving() {
-        localStorage.setItem('saves', JSON.stringify(createSave()));
+        let saves = JSON.parse(localStorage.getItem('saves') || "[]")
+        if (Array.isArray(saves)) {
+            saves.push(createSave())
+        } else {
+            saves = [createSave()];
+        }
+        localStorage.setItem('saves', JSON.stringify(saves));
     }
     function loadGame() {
-        const save: Save = JSON.parse(localStorage.getItem('saves') || "{}");
+        const save: Save = JSON.parse(localStorage.getItem('saves') || "[]")[0] || [];
         if (save.state) {
             dispatch(actionCreator.loadGame(save.state));
         }
@@ -109,11 +123,14 @@ const Game: FC<GameProps> = ({ type }) => {
     return (
         <>
             <ModalWimdow
-                show={showM}
+                show={showModal}
                 title={title}
                 buttonText="Restart"
                 callback={() => hideModal()}
             />
+            <MenuPopup show={showMenu}>
+                <MainMenu></MainMenu>
+            </MenuPopup>
             {!state.gameState.gameStarted
                 ?
                 <>
@@ -124,6 +141,7 @@ const Game: FC<GameProps> = ({ type }) => {
                 </>
                 :
                 <>
+                    <button className='btn' onClick={() => setShowMenu(!showMenu)}>Menu</button>
                     <button className='btn' onClick={() => gameSaving()}>Save</button>
                     <GameField field={state.field} onMove={move} />
                     <button className='btn' onClick={() => gameRestarting()}>Restart</button>

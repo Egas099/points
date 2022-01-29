@@ -4,6 +4,7 @@ import * as aC from '../store/actionCreator'
 import { RootState } from '../store';
 import { gameSettings } from '../data';
 import { Player, PlayerStatus } from '../types';
+import AI from './AI';
 
 export const checkCellsToOverflow = (field: Cell[][], dispatch: Dispatch<any>) => {
     const cell = find.overflowingCell(field);
@@ -22,19 +23,19 @@ export function botMoving(state: RootState): Cell | undefined {
         switch (state.gameState.mover) {
             case Player.red:
                 if (findStatusByPlayer(Player.red) === PlayerStatus.android)
-                    return bots.red(state);
+                    return gameSettings.botsImplementations.red(state)
                 break;
             case Player.orange:
                 if (findStatusByPlayer(Player.orange) === PlayerStatus.android)
-                    return bots.orange(state);
+                    return gameSettings.botsImplementations.orange(state);
                 break;
             case Player.green:
                 if (findStatusByPlayer(Player.green) === PlayerStatus.android)
-                    return bots.green(state);
+                    return gameSettings.botsImplementations.green(state);
                 break;
             case Player.blue:
                 if (findStatusByPlayer(Player.blue) === PlayerStatus.android)
-                    return bots.blue(state);
+                    return gameSettings.botsImplementations.blue(state);
                 break;
             default: break;
         }

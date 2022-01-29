@@ -24,14 +24,11 @@ export const isExist = {
 }
 
 export const random = {
-    elemetFrom: (object: Array<any> | Object | any): any => {
+    elemetFrom: (object: Array<any>): any => {
         if (Array.isArray(object))
             return object[Math.floor(Math.random() * object.length)]
 
-        else if (Object.prototype.toString.call(object))
-            return object[random.elemetFrom(Object.keys(object))];
-
-        throw new Error("The argument is not an array or object.");
+        throw new Error("The argument is not an array.");
     },
 }
 

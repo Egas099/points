@@ -119,13 +119,19 @@ export const fieldTemplates: FieldTemplate[] = [
 ]
 
 export const gameSettings: GameSettings = {
-    template: fieldTemplates[0],
+    template: fieldTemplates[3],
     playersProfiles: [],
     bots: {
-        red: AI.getBot('normal'),
-        orange: AI.getBot('normal'),
-        green: AI.getBot('normal'),
-        blue: AI.getBot('normal'),
+        red: AI.getRandonBot('normal'),
+        orange: AI.getRandonBot('normal'),
+        green: AI.getRandonBot('normal'),
+        blue: AI.getRandonBot('normal'),
+    },
+    botsImplementations: {
+        red: () => { },
+        orange: () => { },
+        green: () => { },
+        blue: () => { }
     }
 }
 

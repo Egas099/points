@@ -2,6 +2,10 @@
     border: 10px rgba(0, 0, 0, 0.02) solid;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .menu__btn {
@@ -11,7 +15,7 @@
     display: block;
     width: 50vw;
     max-width: 150px;
-    padding: 5px 30px;
+    padding: 5px;
     margin: 10px;
     font-size: 20px;
     font-weight: bold;

@@ -42,9 +42,17 @@ interface GameSettings {
     template: FieldTemplate,
     playersProfiles: PlayerProfile[],
     bots: Bots,
+    botsImplementations: BotsImplementations
 }
 
 interface Bots {
+    red: string;
+    orange: string;
+    green: string;
+    blue: string;
+}
+
+interface BotsImplementations {
     red: Function;
     orange: Function;
     green: Function;
