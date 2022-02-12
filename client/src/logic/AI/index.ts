@@ -1,13 +1,14 @@
-import { random } from "../common";
-import normalBots from "./normal";
-import simpleBots from "./simple";
+import { RootState } from '../../store';
+import { random } from '../common';
+import normalBots from './normal';
+import simpleBots from './simple';
 
-type Difficulty = 'simple' | 'normal'
+type Difficulty = 'simple' | 'normal';
 export interface BotProfile {
-    name: string,
-    implementation: Function,
-    description: string,
-    difficulty: Difficulty
+    name: string;
+    implementation: (state: RootState) => Cell;
+    description: string;
+    difficulty: Difficulty;
 }
 
 const AI = {
@@ -17,13 +18,20 @@ const AI = {
         ).name;
     },
     getBotById: function (id: string): BotProfile | undefined {
-        return AI_PROFILES.find(bot => bot.name === id)
+        return AI_PROFILES.find(bot => bot.name === id);
     },
-    getBotImplementationById: function (id: string): Function {
-        return  AI_PROFILES.find(bot => bot.name === id)?.implementation || emptyFunc
+    getBotImplementationById: function (
+        id: string
+    ): (state: RootState) => Cell {
+        const botImplementation = AI_PROFILES.find(
+            bot => bot.name === id
+        )?.implementation;
+
+        return botImplementation
+            ? botImplementation
+            : random.elemetFrom(AI_PROFILES).implementation;
     }
-}
+};
 export default AI;
 
-const AI_PROFILES: BotProfile[] = [simpleBots, normalBots].flat()
-const emptyFunc = () => {}
+const AI_PROFILES: BotProfile[] = [simpleBots, normalBots].flat();

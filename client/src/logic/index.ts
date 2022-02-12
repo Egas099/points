@@ -1,47 +1,38 @@
-import { Dispatch } from 'react';
-import { find } from './common';
+import { Dispatch } from 'react'
+import { find } from './common'
 import * as aC from '../store/actionCreator'
-import { RootState } from '../store';
-import { gameSettings } from '../data';
-import { Player, PlayerStatus } from '../types';
-import AI from './AI';
+import { RootState } from '../store'
+import { gameSettings } from '../data'
+import { Player } from '../types'
 
-export const checkCellsToOverflow = (field: Cell[][], dispatch: Dispatch<any>) => {
-    const cell = find.overflowingCell(field);
+export const checkCellsToOverflow = (
+    field: Cell[][],
+    dispatch: Dispatch<any>
+) => {
+    const cell = find.overflowingCell(field)
 
     if (cell) {
-        dispatch(aC.CellCloning(cell));
+        dispatch(aC.CellCloning(cell))
         setTimeout(() => checkCellsToOverflow(field, dispatch), 0)
     } else {
-
-        dispatch(aC.newMove(field));
+        dispatch(aC.newMove(field))
     }
 }
 export function botMoving(state: RootState): Cell | undefined {
-    if (!state.gameState.moveBlock && state.gameState.gameStarted) {
-        const bots = gameSettings.bots;
-        switch (state.gameState.mover) {
-            case Player.red:
-                if (findStatusByPlayer(Player.red) === PlayerStatus.android)
-                    return gameSettings.botsImplementations.red(state)
-                break;
-            case Player.orange:
-                if (findStatusByPlayer(Player.orange) === PlayerStatus.android)
-                    return gameSettings.botsImplementations.orange(state);
-                break;
-            case Player.green:
-                if (findStatusByPlayer(Player.green) === PlayerStatus.android)
-                    return gameSettings.botsImplementations.green(state);
-                break;
-            case Player.blue:
-                if (findStatusByPlayer(Player.blue) === PlayerStatus.android)
-                    return gameSettings.botsImplementations.blue(state);
-                break;
-            default: break;
-        }
+    const implementations = gameSettings.botsImplementations
+    switch (state.gameState.mover) {
+        case Player.red:
+            return implementations.red(state)
+        case Player.orange:
+            return implementations.orange(state)
+        case Player.green:
+            return implementations.green(state)
+        case Player.blue:
+            return implementations.blue(state)
     }
 }
 
-function findStatusByPlayer(player: Player) {
-    return gameSettings.playersProfiles.find(prf => prf.player === player)?.status;
+export function findStatusByPlayer(player: Player) {
+    return gameSettings.playersProfiles.find(prf => prf.player === player)
+        ?.status
 }

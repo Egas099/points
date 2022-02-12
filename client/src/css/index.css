@@ -1,45 +1,50 @@
 body {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
 }
 
 .btn {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  width: min-content;
-  font-size: 15px;
-  margin: 10px;
-  padding: 0 20px;
-  height: 30px;
-  border-radius: 3px;
-  border: 1px solid black;
-  background-color: rgb(113, 187, 187);
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  text-decoration: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: min-content;
+    font-size: 15px;
+    margin: 10px;
+    padding: 0 20px;
+    height: 30px;
+    border-radius: 3px;
+    border: 1px solid black;
+    background-color: rgb(113, 187, 187);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    text-decoration: none;
 }
 
 .btn:hover {
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
-  background-color: rgb(130, 202, 202);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    background-color: rgb(130, 202, 202);
 }
 
 .page {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 .center-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

@@ -12,13 +12,13 @@ export const fieldTemplates: FieldTemplate[] = [
             [1, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1]
         ],
         spawns: [
             { x: 1, y: 1, player: Player.red },
             { x: 7, y: 1, player: Player.orange },
             { x: 1, y: 7, player: Player.blue },
-            { x: 7, y: 7, player: Player.green },
+            { x: 7, y: 7, player: Player.green }
         ]
     },
     {
@@ -31,13 +31,13 @@ export const fieldTemplates: FieldTemplate[] = [
             [0, 1, 1, 1, 1, 1, 1, 1, 0],
             [0, 1, 1, 1, 1, 1, 1, 1, 0],
             [0, 1, 1, 1, 1, 1, 1, 1, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0]
         ],
         spawns: [
             { x: 2, y: 2, player: Player.red },
             { x: 6, y: 2, player: Player.orange },
             { x: 2, y: 6, player: Player.blue },
-            { x: 6, y: 6, player: Player.green },
+            { x: 6, y: 6, player: Player.green }
         ]
     },
     {
@@ -50,13 +50,13 @@ export const fieldTemplates: FieldTemplate[] = [
             [1, 1, 1, 0, 0, 0, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [0, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 1, 1, 1, 1, 1, 0]
         ],
         spawns: [
             { x: 1, y: 1, player: Player.red },
             { x: 7, y: 1, player: Player.orange },
             { x: 1, y: 7, player: Player.blue },
-            { x: 7, y: 7, player: Player.green },
+            { x: 7, y: 7, player: Player.green }
         ]
     },
     {
@@ -69,13 +69,13 @@ export const fieldTemplates: FieldTemplate[] = [
             [1, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 0, 1, 1, 1, 1],
             [1, 1, 1, 1, 0, 1, 1, 1, 1],
-            [1, 1, 1, 1, 0, 1, 1, 1, 1],
+            [1, 1, 1, 1, 0, 1, 1, 1, 1]
         ],
         spawns: [
             { x: 1, y: 1, player: Player.red },
             { x: 7, y: 1, player: Player.orange },
             { x: 1, y: 7, player: Player.blue },
-            { x: 7, y: 7, player: Player.green },
+            { x: 7, y: 7, player: Player.green }
         ]
     },
     {
@@ -88,13 +88,13 @@ export const fieldTemplates: FieldTemplate[] = [
             [1, 1, 1, 1, 0, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 0, 1, 1, 1, 1],
+            [1, 1, 1, 1, 0, 1, 1, 1, 1]
         ],
         spawns: [
             { x: 1, y: 1, player: Player.red },
             { x: 7, y: 1, player: Player.orange },
             { x: 1, y: 7, player: Player.blue },
-            { x: 7, y: 7, player: Player.green },
+            { x: 7, y: 7, player: Player.green }
         ]
     },
     {
@@ -107,16 +107,16 @@ export const fieldTemplates: FieldTemplate[] = [
             [1, 1, 1, 1, 1, 1, 1, 1, 1],
             [1, 1, 1, 1, 0, 1, 1, 1, 1],
             [1, 1, 1, 1, 0, 1, 1, 1, 1],
-            [1, 1, 1, 1, 0, 1, 1, 1, 1],
+            [1, 1, 1, 1, 0, 1, 1, 1, 1]
         ],
         spawns: [
             { x: 1, y: 1, player: Player.red },
             { x: 7, y: 1, player: Player.orange },
             { x: 1, y: 7, player: Player.blue },
-            { x: 7, y: 7, player: Player.green },
+            { x: 7, y: 7, player: Player.green }
         ]
-    },
-]
+    }
+];
 
 export const gameSettings: GameSettings = {
     template: fieldTemplates[3],
@@ -125,15 +125,12 @@ export const gameSettings: GameSettings = {
         red: AI.getRandonBot('normal'),
         orange: AI.getRandonBot('normal'),
         green: AI.getRandonBot('normal'),
-        blue: AI.getRandonBot('normal'),
+        blue: AI.getRandonBot('normal')
     },
     botsImplementations: {
-        red: () => { },
-        orange: () => { },
-        green: () => { },
-        blue: () => { }
+        red: () => undefined,
+        orange: () => undefined,
+        green: () => undefined,
+        blue: () => undefined
     }
-}
-
-
-
+};

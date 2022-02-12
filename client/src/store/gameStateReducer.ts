@@ -8,15 +8,22 @@ const defaultState = (): GameState => ({
     endGame: false,
     mover: 0,
     moveNumber: 0,
-    players: [],
-})
+    players: []
+});
 
-export const gameStateReducer = (state = defaultState(), action: GameActions): GameState => {
+export const gameStateReducer = (
+    state = defaultState(),
+    action: GameActions
+): GameState => {
     switch (action.type) {
         case GameActionType.BLOCK_MOVING:
             return { ...state, moveBlock: true };
         case GameActionType.ALLOW_MOVING:
-            return { ...state, moveBlock: false, moveNumber: state.moveNumber + 1 };
+            return {
+                ...state,
+                moveBlock: false,
+                moveNumber: state.moveNumber + 1
+            };
         case GameActionType.NEW_MOVE:
             return actionNewMove(state, action.payload);
         case GameActionType.NEXT_MOVER:
@@ -24,7 +31,7 @@ export const gameStateReducer = (state = defaultState(), action: GameActions): G
         case GameActionType.PLAYER_MOVE:
             return { ...state, moveBlock: true };
         case GameActionType.START_GAME:
-            return actionStartGame(state, action.payload)
+            return actionStartGame(state, action.payload);
         case GameActionType.RESTART_GAME:
             return defaultState();
         case GameActionType.LOAD_GAME:
@@ -35,10 +42,13 @@ export const gameStateReducer = (state = defaultState(), action: GameActions): G
 };
 
 function actionNextMover(state: GameState, field: Cell[][]) {
-    const leftPlayers = [...state.players].filter((player) => isExist.playerOnField(field, player));
+    const leftPlayers = [...state.players].filter(player =>
+        isExist.playerOnField(field, player)
+    );
     const currentMoverIndex = leftPlayers.indexOf(state.mover);
-    const nextMoverIndex = currentMoverIndex + 1 < leftPlayers.length ? currentMoverIndex + 1 : 0;
-    let newMover = leftPlayers[nextMoverIndex];
+    const nextMoverIndex =
+        currentMoverIndex + 1 < leftPlayers.length ? currentMoverIndex + 1 : 0;
+    const newMover = leftPlayers[nextMoverIndex];
     return { ...state, mover: newMover, players: leftPlayers };
 }
 function actionNewMove(state: GameState, field: Cell[][]) {
@@ -58,6 +68,12 @@ function actionNewMove(state: GameState, field: Cell[][]) {
     }
 }
 function actionStartGame(state: GameState, templete: FieldTemplate) {
-    const players: Player[] = templete.spawns.map((spawn) => spawn.player);
-    return { ...state, moveBlock: false, gameStarted: true, mover: players[0], players: players };
+    const players: Player[] = templete.spawns.map(spawn => spawn.player);
+    return {
+        ...state,
+        moveBlock: false,
+        gameStarted: true,
+        mover: players[0],
+        players: players
+    };
 }

@@ -27,11 +27,11 @@
 }
 
 .up::before {
-    content: "👇";
+    content: '👇';
     animation: go 1s ease-out infinite;
 }
 
 .down::after {
-    content: "👆";
+    content: '👆';
     animation: go 1s ease-out infinite;
 }

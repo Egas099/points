@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /// <reference types="react-scripts" />
 
 type Cell = {
@@ -57,4 +58,10 @@ interface BotsImplementations {
     orange: Function;
     green: Function;
     blue: Function;
+}
+
+interface Save {
+    date: number,
+    appVersion: string,
+    state: RootState
 }

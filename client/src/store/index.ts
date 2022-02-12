@@ -6,8 +6,8 @@ import { gameStateReducer } from './gameStateReducer';
 const rootReducer = combineReducers({
     field: gameFieldReducer,
     gameState: gameStateReducer
-})
+});
 
 export const store = createStore(rootReducer, composeWithDevTools());
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;

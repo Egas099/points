@@ -1,4 +1,4 @@
-import io, { Socket } from 'socket.io-client'
+import io, { Socket } from 'socket.io-client';
 import { SERVER_URL } from './data/constants';
 let socket: Socket | undefined;
 
@@ -7,17 +7,15 @@ export const init = () => {
     console.log('инициализирован');
 
     socket.on('connect', () => {
-        console.log("подключился");
-    })
+        console.log('подключился');
+    });
     socket.on('disconnect', () => {
-        console.log("отключился");
-    })
+        console.log('отключился');
+    });
     return socket;
 };
 export const emit = (event: string, data: any) => {
     socket && socket.emit(event, data);
-}
+};
 
 export default socket;
-
-

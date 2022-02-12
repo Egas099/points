@@ -13,7 +13,7 @@ export enum GameActionType {
     START_GAME = 'START_GAME',
     RESTART_GAME = 'RESTART_GAME',
     LOAD_GAME = 'LOAD_GAME',
-    PLAYER_MOVE = 'PLAYER_MOVE',
+    PLAYER_MOVE = 'PLAYER_MOVE'
 }
 
 /**
@@ -71,7 +71,8 @@ export interface StartGame {
     type: GameActionType.START_GAME;
     payload: FieldTemplate;
 }
-export type GameActions = CellZeroing
+export type GameActions =
+    | CellZeroing
     | PlayerMove
     | NewMove
     | StartGame

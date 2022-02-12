@@ -1,12 +1,11 @@
 export enum Player {
     red,
     orange,
-    yellow,
     green,
-    blue,
+    blue
 }
 export enum PlayerStatus {
     none,
     user,
-    android,
+    android
 }

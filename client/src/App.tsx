@@ -4,8 +4,8 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Redirect,
-} from "react-router-dom";
+    Redirect
+} from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 
@@ -34,7 +34,7 @@ function App() {
                     </Route>
                 </Switch>
             </Router>
-        </div >
+        </div>
     );
 }
 

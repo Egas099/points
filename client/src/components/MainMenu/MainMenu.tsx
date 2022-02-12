@@ -5,7 +5,7 @@ import MainMenuHome from './pages/MainMenuHome';
 import MainMenuLoad from './pages/MainMenuLoad';
 import MainMenuNewGame from './pages/MainMenuNewGame';
 import MainMenuSettings from './pages/MainMenuSettings';
-import './index.css'
+import './index.css';
 
 const MainMenu: FC = () => (
     <div className="main-menu__wrapper">
@@ -39,6 +39,6 @@ const MainMenu: FC = () => (
             </Route>
         </Switch>
     </div>
-)
+);
 
-export default MainMenu
+export default MainMenu;

@@ -2,7 +2,7 @@
     --cell-size: 40px;
     width: var(--cell-size);
     height: var(--cell-size);
-    background-color: #E6EAED;
+    background-color: #e6eaed;
     cursor: default;
 }
 
@@ -17,7 +17,10 @@
     border: none;
     line-height: 50%;
     cursor: inherit;
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7), -1px -1px 2px rgba(255, 255, 255), 3px 3px 7px rgba(255, 255, 255, 0.4) inset, -5px -5px 10px rgba(0, 0, 0, 0.2) inset;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7),
+        -1px -1px 2px rgba(255, 255, 255),
+        3px 3px 7px rgba(255, 255, 255, 0.4) inset,
+        -5px -5px 10px rgba(0, 0, 0, 0.2) inset;
 }
 
 span {

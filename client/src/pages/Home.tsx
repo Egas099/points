@@ -1,6 +1,6 @@
-import { FC } from 'react'
-import MainMenu from '../components/MainMenu/MainMenu'
-import '../css/home.css'
+import { FC } from 'react';
+import MainMenu from '../components/MainMenu/MainMenu';
+import '../css/home.css';
 
 const Home: FC = () => {
     return (
@@ -12,8 +12,7 @@ const Home: FC = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Home
-
+export default Home;

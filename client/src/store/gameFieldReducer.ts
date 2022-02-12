@@ -2,21 +2,24 @@ import { cellPositionById } from '../logic/calculate';
 import { cellIsExist } from '../logic/common';
 import { spawnPoint, fieldByTemplate } from '../logic/create';
 import { Player } from '../types';
-import { GameActions, GameActionType, CellCloning, playerMoving } from './types';
+import {
+    GameActions,
+    GameActionType,
+    CellCloning,
+    playerMoving
+} from './types';
 
-const defaultState = (): Cell[][] => []
-export const givenState = (templete: FieldTemplate):
-    Cell[][] => spawnPoint(
-        fieldByTemplate(templete),
-        templete.spawns
-    )
+const defaultState = (): Cell[][] => [];
+export const givenState = (templete: FieldTemplate): Cell[][] =>
+    spawnPoint(fieldByTemplate(templete), templete.spawns);
 
-export const gameFieldReducer = (state = defaultState(), action: GameActions): Cell[][] => {
+export const gameFieldReducer = (
+    state = defaultState(),
+    action: GameActions
+): Cell[][] => {
     switch (action.type) {
         case GameActionType.START_GAME:
-            return action.payload
-                ? givenState(action.payload)
-                : defaultState();
+            return action.payload ? givenState(action.payload) : defaultState();
         case GameActionType.CELL_CAPTURE:
             return actionCellCapture(state, action.payload);
         case GameActionType.CELL_INCREMENT:
@@ -58,7 +61,6 @@ function actionCellIncrement(state: Cell[][], cellId: number) {
     return newState;
 }
 
-
 function actionCellZeroing(state: Cell[][], cellId: number) {
     if (!state.length) return state;
 
@@ -78,9 +80,9 @@ function actionCloneCell(state: Cell[][], action: CellCloning) {
     const [x, y] = cellPositionById(cell.id);
 
     if (cell.count === 5) {
-        newState[x][y] = { ...newState[x][y], count: 1 }
+        newState[x][y] = { ...newState[x][y], count: 1 };
     } else {
-        newState[x][y] = { ...newState[x][y], count: 0, player: null }
+        newState[x][y] = { ...newState[x][y], count: 0, player: null };
     }
 
     if (cellIsExist(newState, [x + 1, y]))
@@ -99,6 +101,5 @@ function actionCloneCell(state: Cell[][], action: CellCloning) {
 }
 
 const cellIncAndCapture = (cell: Cell, player: Player): Cell => {
-
-    return { ...cell, player: player, count: cell.count + 1 }
-}
+    return { ...cell, player: player, count: cell.count + 1 };
+};
