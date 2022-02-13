@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Player, PlayerEntity } from '../../../types';
+import { Player, PlayerEntity } from '../../../data/enums';
 import stl from './ChosePlayerButton.module.css';
 import { getColorByPlayer } from '../../../logic/common';
 

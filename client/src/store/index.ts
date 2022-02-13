@@ -1,7 +1,7 @@
 import { combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { gameFieldReducer } from './gameFieldReducer';
-import { gameStateReducer } from './gameStateReducer';
+import { gameFieldReducer } from './reducers/gameFieldReducer';
+import { gameStateReducer } from './reducers/gameStateReducer';
 
 const rootReducer = combineReducers({
     field: gameFieldReducer,

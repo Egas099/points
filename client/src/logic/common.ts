@@ -1,4 +1,4 @@
-import { Player, PlayerEntity } from '../types';
+import { Player, PlayerEntity } from '../data/enums';
 import colors from '../css/colors.module.css';
 import { fieldTemplates } from '../data/templates';
 

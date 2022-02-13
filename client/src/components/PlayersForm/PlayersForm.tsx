@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import AI from '../../logic/AI';
-import { Player, PlayerEntity } from '../../types';
+import { Player, PlayerEntity } from '../../data/enums';
 import ChosePlayerButton from './ChosePlayerButton/ChosePlayerButton';
 import stl from './PlayersForm.module.css';
 

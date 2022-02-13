@@ -3,7 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { MENU_PATH, NEW_GAME_PATH } from './constants';
 import MainMenuHome from './pages/MainMenuHome';
 import MainMenuLoad from './pages/MainMenuLoad';
-import MainMenuNewGame from './pages/MainMenuNewGame';
+import MainMenuNewGame from './pages/MainMenuPlay';
 import MainMenuSettings from './pages/MainMenuSettings';
 import './index.css';
 
@@ -15,15 +15,15 @@ const MainMenu: FC = () => (
                     <Route path={`/${MENU_PATH}/${NEW_GAME_PATH}/`} exact>
                         <MainMenuNewGame />
                     </Route>
+                    <Route
+                        path={`/${MENU_PATH}/${NEW_GAME_PATH}/load`}
+                        component={MainMenuLoad}
+                    />
 
-                    <Route>
+                    {/* <Route>
                         <Redirect to={`/${MENU_PATH}/${NEW_GAME_PATH}/`} />
-                    </Route>
+                    </Route> */}
                 </Switch>
-            </Route>
-
-            <Route path={`/${MENU_PATH}/load`} exact>
-                <MainMenuLoad />
             </Route>
 
             <Route path={`/${MENU_PATH}/settings`} exact>

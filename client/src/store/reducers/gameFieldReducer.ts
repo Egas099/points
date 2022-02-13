@@ -1,13 +1,13 @@
-import { cellPositionById } from '../logic/calculate';
-import { cellIsExist, findTemplateById } from '../logic/common';
-import { spawnPoint, fieldByTemplate } from '../logic/create';
-import { Player} from '../types';
+import { cellPositionById } from '../../logic/calculate';
+import { cellIsExist, findTemplateById } from '../../logic/common';
+import { spawnPoint, fieldByTemplate } from '../../logic/create';
+import { Player} from '../../data/enums';
 import {
     GameActions,
     GameActionType,
     CellCloning,
     playerMoving
-} from './types';
+} from '../types';
 
 const defaultState = (): Cell[][] => [];
 

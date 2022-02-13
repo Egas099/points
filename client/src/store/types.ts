@@ -1,5 +1,5 @@
-import { RootState } from '..';
-import { Player } from '../../types';
+import { RootState } from '.';
+import { Player } from '../data/enums';
 
 export enum GameActionType {
     CELL_CAPTURE = 'CELL_CAPTURE',
@@ -15,6 +15,20 @@ export enum GameActionType {
     LOAD_GAME = 'LOAD_GAME',
     PLAYER_MOVE = 'PLAYER_MOVE'
 }
+
+export type GameActions =
+    | CellZeroing
+    | PlayerMove
+    | NewMove
+    | StartGame
+    | RestartGame
+    | LoadGame
+    | CellIncrement
+    | CellCapture
+    | CellCloning
+    | NextMover
+    | BlockMoving
+    | AllowMoving;
 
 /**
  * Interfaces of actions
@@ -71,19 +85,6 @@ export interface StartGame {
     type: GameActionType.START_GAME;
     payload: GameSettings;
 }
-export type GameActions =
-    | CellZeroing
-    | PlayerMove
-    | NewMove
-    | StartGame
-    | RestartGame
-    | LoadGame
-    | CellIncrement
-    | CellCapture
-    | CellCloning
-    | NextMover
-    | BlockMoving
-    | AllowMoving;
 
 export interface playerMoving {
     cellId: number;

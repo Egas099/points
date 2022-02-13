@@ -6,7 +6,7 @@ import ModalWimdow from '../components/ModalWindow/AlertPopup';
 import PlayersForm from '../components/PlayersForm/PlayersForm';
 import * as actionCreator from '../store/actionCreator';
 import { botMoving, checkCellsToOverflow, findProfileByPlayer } from '../logic';
-import { Player, PlayerEntity } from '../types';
+import { Player, PlayerEntity } from '../data/enums';
 import { filterEmptyPlayers, findTemplateById, upFirst } from '../logic/common';
 import { emit } from '../socketWorker';
 // import { init as socketInit } from '../socketWorker';
@@ -28,12 +28,12 @@ const Game: FC<GameProps> = ({ type }) => {
     // });
 
     const dispatch = useDispatch();
+    const savesStorage = useSaves();
+    const state = useTypedSelector(state => state);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showMenu, setShowMenu] = useState<boolean>(false);
-    const state = useTypedSelector(state => state);
     const [timer, setTimer] = useState<NodeJS.Timeout>(setTimeout(() => 0, 0));
     const [title, setTitle] = useState('User win');
-    const savesStorage = useSaves();
 
     useEffect(() => {
         if (state.gameState.gameStarted && state.gameState.moveBlock) {

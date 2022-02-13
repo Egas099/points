@@ -1,4 +1,4 @@
-import { Player } from '../types';
+import { Player } from './enums';
 
 export const fieldTemplates: FieldTemplate[] = [
     {

@@ -1,5 +1,5 @@
-import { isExist } from '../logic/common';
-import { GameActions, GameActionType } from './types';
+import { isExist } from "../../logic/common";
+import { GameActions, GameActionType } from "../types";
 
 const defaultState = (): GameState => ({
     gameStarted: false,
