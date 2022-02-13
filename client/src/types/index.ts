@@ -4,8 +4,8 @@ export enum Player {
     green,
     blue
 }
-export enum PlayerStatus {
-    none,
-    user,
+export enum PlayerEntity {
+    empty,
+    localPlayer,
     android
 }

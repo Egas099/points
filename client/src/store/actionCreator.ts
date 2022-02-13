@@ -47,7 +47,7 @@ export const restartGame = (): GameActions => ({
     type: GameActionType.RESTART_GAME,
     payload: undefined
 });
-export const startGame = (payload: FieldTemplate): GameActions => ({
+export const startGame = (payload: GameSettings): GameActions => ({
     type: GameActionType.START_GAME,
     payload: payload
 });

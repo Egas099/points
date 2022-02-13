@@ -1,7 +1,7 @@
 import { cellPositionById } from '../logic/calculate';
-import { cellIsExist } from '../logic/common';
+import { cellIsExist, findTemplateById } from '../logic/common';
 import { spawnPoint, fieldByTemplate } from '../logic/create';
-import { Player } from '../types';
+import { Player} from '../types';
 import {
     GameActions,
     GameActionType,
@@ -10,8 +10,20 @@ import {
 } from './types';
 
 const defaultState = (): Cell[][] => [];
-export const givenState = (templete: FieldTemplate): Cell[][] =>
-    spawnPoint(fieldByTemplate(templete), templete.spawns);
+
+export const createField = (gameSettings: GameSettings): Cell[][] => {
+
+    const template = findTemplateById(gameSettings.templateId);
+    const field = spawnPoint(
+        fieldByTemplate(template),
+        template.spawns.filter(s =>
+            gameSettings.playersProfiles.some(
+                profile => profile.player === s.player
+            )
+        )
+    );
+    return field;
+};
 
 export const gameFieldReducer = (
     state = defaultState(),
@@ -19,7 +31,9 @@ export const gameFieldReducer = (
 ): Cell[][] => {
     switch (action.type) {
         case GameActionType.START_GAME:
-            return action.payload ? givenState(action.payload) : defaultState();
+            return action.payload
+                ? createField(action.payload)
+                : defaultState();
         case GameActionType.CELL_CAPTURE:
             return actionCellCapture(state, action.payload);
         case GameActionType.CELL_INCREMENT:

@@ -5,32 +5,26 @@ import GameField from '../components/GameField/GameField';
 import ModalWimdow from '../components/ModalWindow/AlertPopup';
 import PlayersForm from '../components/PlayersForm/PlayersForm';
 import * as actionCreator from '../store/actionCreator';
-import { botMoving, checkCellsToOverflow, findStatusByPlayer } from '../logic';
-import { Player, PlayerStatus } from '../types';
-import { upFirst } from '../logic/common';
-import { gameSettings } from '../data';
-import { givenState } from '../store/gameFieldReducer';
+import { botMoving, checkCellsToOverflow, findProfileByPlayer } from '../logic';
+import { Player, PlayerEntity } from '../types';
+import { filterEmptyPlayers, findTemplateById, upFirst } from '../logic/common';
 import { emit } from '../socketWorker';
-import { createPlayersForm } from '../logic/create';
-import { init as socketInit } from '../socketWorker';
+// import { init as socketInit } from '../socketWorker';
 import { APP_VERSION, BOT_MOVING_INTERVAL } from '../data/constants';
 import MenuPopup from '../components/ModalWindow/MenuPopup';
 import MainMenu from '../components/MainMenu/MainMenu';
-import AI from '../logic/AI';
+import { createFieldByTemplateId } from '../logic/create';
 
 interface GameProps {
     type: 'single' | 'multiplayer';
 }
 
 const Game: FC<GameProps> = ({ type }) => {
-    useEffect(() => {
-        if (type === 'multiplayer') {
-            console.log('Подключение к серверу');
-            socketInit();
-        } else {
-            console.log('Одиночная игра');
-        }
-    });
+    // useEffect(() => {
+    //     if (type === 'multiplayer') {
+    //         socketInit();
+    //     }
+    // });
 
     const dispatch = useDispatch();
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -43,33 +37,31 @@ const Game: FC<GameProps> = ({ type }) => {
         if (state.gameState.gameStarted && state.gameState.moveBlock) {
             checkCellsToOverflow(state.field, dispatch);
         }
-        // eslint-disable-next-line
     }, [state.gameState.gameStarted, state.gameState.moveBlock]);
 
     useEffect(() => {
+        const profile = findProfileByPlayer(state.gameState);
+
         if (
-            findStatusByPlayer(state.gameState.mover) ===
-                PlayerStatus.android &&
+            profile?.entity.playerEntity === PlayerEntity.android &&
             !state.gameState.moveBlock &&
             state.gameState.gameStarted
         ) {
-            const botMove = botMoving(state);
+            const botMove = botMoving(state, profile?.entity.id);
             if (botMove) {
                 setTimer(setTimeout(() => move(botMove), BOT_MOVING_INTERVAL));
             }
         }
-        // eslint-disable-next-line
     }, [state.gameState.moveNumber, state.gameState.gameStarted]);
 
     useEffect(() => {
         if (state.gameState.endGame) {
             setTitle(
-                `${upFirst(Player[state.gameState.players[0]])}
+                `${upFirst(Player[state.gameState.players[0].player])}
                 одержал победу за ${state.gameState.moveNumber} ходов`
             );
             setShowModal(true);
         }
-        // eslint-disable-next-line
     }, [state.gameState.endGame]);
 
     function hideModal() {
@@ -88,31 +80,16 @@ const Game: FC<GameProps> = ({ type }) => {
             dispatch(actionCreator.playerMove(cell));
         }
     }
-    function gameStarting(form: PlayerProfile[]) {
-        const filteredSpawns = gameSettings.template.spawns.filter(
-            (spawn, i) => form[i].status !== PlayerStatus.none
-        );
-        gameSettings.playersProfiles = form;
-        gameSettings.botsImplementations.blue = AI.getBotImplementationById(
-            gameSettings.bots.blue
-        );
-        gameSettings.botsImplementations.red = AI.getBotImplementationById(
-            gameSettings.bots.red
-        );
-        gameSettings.botsImplementations.green = AI.getBotImplementationById(
-            gameSettings.bots.green
-        );
-        gameSettings.botsImplementations.orange = AI.getBotImplementationById(
-            gameSettings.bots.orange
-        );
+    function gameStarting(profiles: PlayerProfile[]) {
         dispatch(
             actionCreator.startGame({
-                ...gameSettings.template,
-                spawns: filteredSpawns
+                templateId: 0,
+                playersProfiles: filterEmptyPlayers(profiles)
             })
         );
     }
     function gameRestarting() {
+        clearTimeout(timer);
         dispatch(actionCreator.restartGame());
     }
     const createSave = (): Save => ({
@@ -154,9 +131,9 @@ const Game: FC<GameProps> = ({ type }) => {
                     </button>
                     <PlayersForm
                         onSubmit={gameStarting}
-                        form={createPlayersForm(gameSettings.template.spawns)}
+                        players={findTemplateById(0).spawns.map(s => s.player)}
                     >
-                        <GameField field={givenState(gameSettings.template)} />
+                        <GameField field={createFieldByTemplateId(0)} />
                     </PlayersForm>
                 </>
             ) : (

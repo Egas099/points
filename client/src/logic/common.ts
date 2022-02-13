@@ -1,5 +1,6 @@
-import { Player } from '../types';
+import { Player, PlayerEntity } from '../types';
 import colors from '../css/colors.module.css';
+import { fieldTemplates } from '../data';
 
 export const find = {
     overflowingCell: (field: Cell[][]) => {
@@ -59,4 +60,14 @@ export function cellIsExist(field: Cell[][], pos: Vector2) {
 
 export function getColorByPlayer(player: Player) {
     return colors[Player[player]];
+}
+
+export function findTemplateById(id: number) {
+    return fieldTemplates[id]
+}
+
+export function filterEmptyPlayers(profiles: PlayerProfile[]) {
+    return profiles.filter(
+        profile => profile.entity.playerEntity !== PlayerEntity.empty
+    );
 }

@@ -69,7 +69,7 @@ export interface LoadGame {
 }
 export interface StartGame {
     type: GameActionType.START_GAME;
-    payload: FieldTemplate;
+    payload: GameSettings;
 }
 export type GameActions =
     | CellZeroing

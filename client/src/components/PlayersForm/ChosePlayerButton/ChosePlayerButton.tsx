@@ -1,40 +1,36 @@
-import { Dispatch, FC, SetStateAction } from 'react';
-import { Player, PlayerStatus } from '../../../types';
+import { FC } from 'react';
+import { Player, PlayerEntity } from '../../../types';
 import stl from './ChosePlayerButton.module.css';
 import { getColorByPlayer } from '../../../logic/common';
 
 interface Props {
     player: Player;
-    playerStatus: [PlayerStatus, Dispatch<SetStateAction<PlayerStatus>>];
+    playerEntity: [PlayerEntity, () => void];
     position: 'up' | 'down';
 }
 
-const ChosePlayerButton: FC<Props> = ({ player, playerStatus, position }) => {
-    const [status, setStatus] = [...playerStatus];
+const ChosePlayerButton: FC<Props> = ({ player, playerEntity, position }) => {
+    const [entity, setEntity] = playerEntity;
 
     function getIcon() {
-        switch (status) {
-            case PlayerStatus.none:
+        switch (entity) {
+            case PlayerEntity.empty:
                 return '?';
-            case PlayerStatus.user:
+            case PlayerEntity.localPlayer:
                 return '🙂';
             default:
-                return `🤖`;
+                return '🤖';
         }
     }
-    function nextStatus() {
-        if (typeof PlayerStatus[status + 1] === 'string')
-            return setStatus(status + 1);
-        return setStatus(PlayerStatus.none);
-    }
+
     const getColorStyle = () =>
-        status !== PlayerStatus.none ? getColorByPlayer(player) : '';
+        entity !== PlayerEntity.empty ? getColorByPlayer(player) : '';
 
     return (
         <div className={[stl[position], stl.wrapper].join(' ')}>
             <button
                 className={[stl.content, getColorStyle()].join(' ')}
-                onClick={() => nextStatus()}
+                onClick={() => setEntity()}
             >
                 {getIcon()}
             </button>

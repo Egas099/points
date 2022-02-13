@@ -1,32 +1,49 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react';
-import { PlayerStatus } from '../../types';
+import { FC, useState } from 'react';
+import AI from '../../logic/AI';
+import { Player, PlayerEntity } from '../../types';
 import ChosePlayerButton from './ChosePlayerButton/ChosePlayerButton';
 import stl from './PlayersForm.module.css';
 
 interface Props {
     onSubmit: (form: PlayerProfile[]) => void;
-    form: PlayerProfile[];
+    players: Player[];
 }
 
-const PlayersForm: FC<Props> = ({ onSubmit, form, children }) => {
-    const playersStatuses: [
-        PlayerStatus,
-        Dispatch<SetStateAction<PlayerStatus>>
-    ][] = [];
-    playersStatuses.push(useState<PlayerStatus>(PlayerStatus.none));
-    playersStatuses.push(useState<PlayerStatus>(PlayerStatus.none));
-    playersStatuses.push(useState<PlayerStatus>(PlayerStatus.none));
-    playersStatuses.push(useState<PlayerStatus>(PlayerStatus.none));
+const PlayersForm: FC<Props> = ({ onSubmit, players, children }) => {
+    const [playersEntity, setPlayersEntity] = useState<PlayerEntity[]>([
+        PlayerEntity.empty,
+        PlayerEntity.empty,
+        PlayerEntity.empty,
+        PlayerEntity.empty
+    ]);
+
+    const setEntity = (index: number) => () =>
+        setPlayersEntity(
+            playersEntity.map((entity: PlayerEntity, i) =>
+                i === index ? nextStatus(entity) : entity
+            )
+        );
+
+    const nextStatus = (status: PlayerEntity): PlayerEntity =>
+        typeof PlayerEntity[status + 1] === 'string'
+            ? status + 1
+            : PlayerEntity.empty;
 
     function submit() {
         if (
-            playersStatuses.filter(pStat => pStat[0] !== PlayerStatus.none)
-                .length > 1
+            playersEntity.filter(pStat => pStat !== PlayerEntity.empty).length >
+            1
         ) {
             onSubmit(
-                form.map((player, i) => ({
-                    ...form[i],
-                    status: playersStatuses[i][0]
+                players.map((player, i) => ({
+                    player: player,
+                    entity: {
+                        playerEntity: playersEntity[i],
+                        id:
+                            playersEntity[i] === PlayerEntity.android
+                                ? AI.getRandonBot('normal')
+                                : ''
+                    }
                 }))
             );
         }
@@ -38,14 +55,14 @@ const PlayersForm: FC<Props> = ({ onSubmit, form, children }) => {
                 <div className={stl.row}>
                     <ChosePlayerButton
                         key={0}
-                        player={form[0].player}
-                        playerStatus={playersStatuses[0]}
+                        player={players[0]}
+                        playerEntity={[playersEntity[0], setEntity(0)]}
                         position={'up'}
                     />
                     <ChosePlayerButton
                         key={1}
-                        player={form[1].player}
-                        playerStatus={playersStatuses[1]}
+                        player={players[1]}
+                        playerEntity={[playersEntity[1], setEntity(1)]}
                         position={'up'}
                     />
                 </div>
@@ -53,14 +70,14 @@ const PlayersForm: FC<Props> = ({ onSubmit, form, children }) => {
                 <div className={stl.row}>
                     <ChosePlayerButton
                         key={2}
-                        player={form[2].player}
-                        playerStatus={playersStatuses[2]}
+                        player={players[2]}
+                        playerEntity={[playersEntity[2], setEntity(2)]}
                         position={'down'}
                     />
                     <ChosePlayerButton
                         key={3}
-                        player={form[3].player}
-                        playerStatus={playersStatuses[3]}
+                        player={players[3]}
+                        playerEntity={[playersEntity[3], setEntity(3)]}
                         position={'down'}
                     />
                 </div>

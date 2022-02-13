@@ -1,5 +1,4 @@
 import { isExist } from '../logic/common';
-import { Player } from '../types';
 import { GameActions, GameActionType } from './types';
 
 const defaultState = (): GameState => ({
@@ -27,7 +26,7 @@ export const gameStateReducer = (
         case GameActionType.NEW_MOVE:
             return actionNewMove(state, action.payload);
         case GameActionType.NEXT_MOVER:
-            return actionNextMover(state, action.payload);
+            return nextMover(state, action.payload);
         case GameActionType.PLAYER_MOVE:
             return { ...state, moveBlock: true };
         case GameActionType.START_GAME:
@@ -41,20 +40,10 @@ export const gameStateReducer = (
     }
 };
 
-function actionNextMover(state: GameState, field: Cell[][]) {
-    const leftPlayers = [...state.players].filter(player =>
-        isExist.playerOnField(field, player)
-    );
-    const currentMoverIndex = leftPlayers.indexOf(state.mover);
-    const nextMoverIndex =
-        currentMoverIndex + 1 < leftPlayers.length ? currentMoverIndex + 1 : 0;
-    const newMover = leftPlayers[nextMoverIndex];
-    return { ...state, mover: newMover, players: leftPlayers };
-}
 function actionNewMove(state: GameState, field: Cell[][]) {
     if (state.moveBlock && state.gameStarted && !state.endGame) {
         const newState = {
-            ...actionNextMover(state, field),
+            ...nextMover(state, field),
             moveNumber: state.moveNumber + 1,
             moveBlock: false
         };
@@ -67,13 +56,26 @@ function actionNewMove(state: GameState, field: Cell[][]) {
         return state;
     }
 }
-function actionStartGame(state: GameState, templete: FieldTemplate) {
-    const players: Player[] = templete.spawns.map(spawn => spawn.player);
+function actionStartGame(state: GameState, gameSettings: GameSettings) {
     return {
         ...state,
         moveBlock: false,
         gameStarted: true,
-        mover: players[0],
-        players: players
+        mover: gameSettings.playersProfiles[0].player,
+        players: gameSettings.playersProfiles
     };
+}
+
+function nextMover(state: GameState, field: Cell[][]) {
+    const leftPlayers = state.players.filter(profile =>
+        isExist.playerOnField(field, profile.player)
+    );
+    const currentMoverIndex = state.players.findIndex(
+        profile => profile.player === state.mover
+    );
+
+    const nextMoverIndex =
+        currentMoverIndex + 1 < leftPlayers.length ? currentMoverIndex + 1 : 0;
+    const newMover = leftPlayers[nextMoverIndex].player;
+    return { ...state, mover: newMover, players: leftPlayers };
 }

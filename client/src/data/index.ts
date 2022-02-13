@@ -1,5 +1,4 @@
 import { Player } from '../types';
-import AI from '../logic/AI';
 
 export const fieldTemplates: FieldTemplate[] = [
     {
@@ -118,19 +117,7 @@ export const fieldTemplates: FieldTemplate[] = [
     }
 ];
 
-export const gameSettings: GameSettings = {
-    template: fieldTemplates[3],
-    playersProfiles: [],
-    bots: {
-        red: AI.getRandonBot('normal'),
-        orange: AI.getRandonBot('normal'),
-        green: AI.getRandonBot('normal'),
-        blue: AI.getRandonBot('normal')
-    },
-    botsImplementations: {
-        red: () => undefined,
-        orange: () => undefined,
-        green: () => undefined,
-        blue: () => undefined
-    }
-};
+// export const gameSettings: GameSettings = {
+//     template: fieldTemplates[3],
+//     playersProfiles: []
+// };

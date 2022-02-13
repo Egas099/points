@@ -1,8 +1,5 @@
 import { FIELD_WIDTH } from '../data/constants'
-import { Player } from '../types'
 import { trying } from './common'
-
-export const nextMover = (player: Player) => (Player[player + 1] ? ++player : 0)
 
 export const cellPositionById = (number: number) => [
     Math.floor(number / FIELD_WIDTH),

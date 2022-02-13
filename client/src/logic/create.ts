@@ -1,5 +1,5 @@
 import { FIELD_HEIGHT, FIELD_WIDTH } from '../data/constants';
-import { PlayerStatus } from '../types';
+import { findTemplateById } from './common';
 
 export const cell = (id: number) => ({
     id: id,
@@ -43,8 +43,9 @@ export const fieldByTemplate = (fieldTemplate: FieldTemplate) => {
     }
     return newField;
 };
-export const createPlayersForm = (spawns: SpawnPoint[]): PlayerProfile[] =>
-    spawns.map(spawn => ({
-        player: spawn.player,
-        status: PlayerStatus.none
-    }));
+
+export const createFieldByTemplateId = (templateId: number): Cell[][] => {
+    const template = findTemplateById(templateId);
+    const field = spawnPoint(fieldByTemplate(template), template.spawns);
+    return field;
+};

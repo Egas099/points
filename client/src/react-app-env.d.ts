@@ -6,18 +6,18 @@ type Cell = {
     count: number;
     player: Player | null;
     allow: boolean;
-}
+};
 
 interface GameState {
     mover: Player;
     moveBlock: boolean;
     endGame: boolean;
     gameStarted: boolean;
-    players: Player[];
+    players: PlayerProfile[];
     moveNumber: number;
 }
 interface GameField {
-    field: Cell[][],
+    field: Cell[][];
 }
 
 interface SpawnPoint {
@@ -26,7 +26,7 @@ interface SpawnPoint {
     player: Player;
 }
 
-type Vector2 = [x, y]
+type Vector2 = [x, y];
 type x = number;
 type y = number;
 
@@ -36,32 +36,28 @@ interface FieldTemplate {
 }
 interface PlayerProfile {
     player: Player;
-    status: PlayerStatus;
+    entity: EmptyPlayer | LocalPlayer | AndroidPlayer;
+}
+interface EmptyPlayer {
+    playerEntity: PlayerEntity.empty;
+    id: string;
+}
+interface LocalPlayer {
+    playerEntity: PlayerEntity.localPlayer;
+    id: string;
 }
 
+interface AndroidPlayer {
+    playerEntity: PlayerEntity.android;
+    id: string;
+}
 interface GameSettings {
-    template: FieldTemplate,
-    playersProfiles: PlayerProfile[],
-    bots: Bots,
-    botsImplementations: BotsImplementations
-}
-
-interface Bots {
-    red: string;
-    orange: string;
-    green: string;
-    blue: string;
-}
-
-interface BotsImplementations {
-    red: Function;
-    orange: Function;
-    green: Function;
-    blue: Function;
+    templateId: number;
+    playersProfiles: PlayerProfile[];
 }
 
 interface Save {
-    date: number,
-    appVersion: string,
-    state: RootState
+    date: number;
+    appVersion: string;
+    state: RootState;
 }
