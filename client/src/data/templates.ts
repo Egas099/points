@@ -116,8 +116,3 @@ export const fieldTemplates: FieldTemplate[] = [
         ]
     }
 ];
-
-// export const gameSettings: GameSettings = {
-//     template: fieldTemplates[3],
-//     playersProfiles: []
-// };

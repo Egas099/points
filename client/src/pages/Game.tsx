@@ -10,10 +10,11 @@ import { Player, PlayerEntity } from '../types';
 import { filterEmptyPlayers, findTemplateById, upFirst } from '../logic/common';
 import { emit } from '../socketWorker';
 // import { init as socketInit } from '../socketWorker';
-import { APP_VERSION, BOT_MOVING_INTERVAL } from '../data/constants';
+import { BOT_MOVING_INTERVAL } from '../data/constants';
 import MenuPopup from '../components/ModalWindow/MenuPopup';
 import MainMenu from '../components/MainMenu/MainMenu';
 import { createFieldByTemplateId } from '../logic/create';
+import { useSaves } from '../hooks/useSaves';
 
 interface GameProps {
     type: 'single' | 'multiplayer';
@@ -32,6 +33,7 @@ const Game: FC<GameProps> = ({ type }) => {
     const state = useTypedSelector(state => state);
     const [timer, setTimer] = useState<NodeJS.Timeout>(setTimeout(() => 0, 0));
     const [title, setTitle] = useState('User win');
+    const savesStorage = useSaves();
 
     useEffect(() => {
         if (state.gameState.gameStarted && state.gameState.moveBlock) {
@@ -92,25 +94,14 @@ const Game: FC<GameProps> = ({ type }) => {
         clearTimeout(timer);
         dispatch(actionCreator.restartGame());
     }
-    const createSave = (): Save => ({
-        date: Date.now(),
-        appVersion: APP_VERSION,
-        state: state
-    });
     function gameSaving() {
-        let saves = JSON.parse(localStorage.getItem('saves') || '[]');
-        if (Array.isArray(saves)) {
-            saves.push(createSave());
-        } else {
-            saves = [createSave()];
-        }
-        localStorage.setItem('saves', JSON.stringify(saves));
+        savesStorage.save(state);
+        gameRestarting();
     }
     function loadGame() {
-        const save: Save =
-            JSON.parse(localStorage.getItem('saves') || '[]')[0] || [];
-        if (save.state) {
-            dispatch(actionCreator.loadGame(save.state));
+        const saving = savesStorage.load();
+        if (saving) {
+            dispatch(actionCreator.loadGame(saving.state));
         }
     }
     return (

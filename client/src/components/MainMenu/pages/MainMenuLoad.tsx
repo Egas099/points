@@ -1,31 +1,32 @@
 import { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSaves } from '../../../hooks/useSaves';
 import SavesList from '../components/SavesList';
 
 const MainMenuLoad: FC = () => {
-    const [saves, setSaves] = useState([]);
+    const [savesList, setSavesList] = useState([]);
+    const { getSaves, setSaves } = useSaves();
 
     useEffect(loadSaves, []);
 
     function loadSaves() {
-        setSaves(JSON.parse(localStorage.getItem('saves') || '[]'));
+        setSavesList(getSaves());
     }
 
     function clearSaves() {
-        localStorage.setItem('saves', JSON.stringify([]));
+        setSaves([]);
         loadSaves();
     }
-
+    const savesExist =
+        Array.isArray(savesList) && savesList.length > 0 ? false : true;
     return (
         <div>
             <h2>Loading</h2>
-            <SavesList saves={saves} />
+            <SavesList saves={savesList} />
             <button
                 className="menu__btn"
                 onClick={clearSaves}
-                disabled={
-                    Array.isArray(saves) && saves.length > 0 ? false : true
-                }
+                disabled={savesExist}
             >
                 Clear all
             </button>

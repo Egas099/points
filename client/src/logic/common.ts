@@ -1,6 +1,6 @@
 import { Player, PlayerEntity } from '../types';
 import colors from '../css/colors.module.css';
-import { fieldTemplates } from '../data';
+import { fieldTemplates } from '../data/templates';
 
 export const find = {
     overflowingCell: (field: Cell[][]) => {
