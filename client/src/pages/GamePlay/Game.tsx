@@ -1,20 +1,28 @@
 import { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useTypedSelector } from '../hooks/useTypedSelector';
-import GameField from '../components/GameField/GameField';
-import ModalWimdow from '../components/ModalWindow/AlertPopup';
-import PlayersForm from '../components/PlayersForm/PlayersForm';
-import * as actionCreator from '../store/actionCreator';
-import { botMoving, checkCellsToOverflow, findProfileByPlayer } from '../logic';
-import { Player, PlayerEntity } from '../data/enums';
-import { filterEmptyPlayers, findTemplateById, upFirst } from '../logic/common';
-import { emit } from '../socketWorker';
+import GameField from '../../components/GameField/GameField';
+import ModalWimdow from '../../components/ModalWindow/AlertPopup';
+import MenuPopup from '../../components/ModalWindow/MenuPopup';
+import PlayersForm from '../../components/PlayersForm/PlayersForm';
 // import { init as socketInit } from '../socketWorker';
-import { BOT_MOVING_INTERVAL } from '../data/constants';
-import MenuPopup from '../components/ModalWindow/MenuPopup';
-import MainMenu from '../components/MainMenu/MainMenu';
-import { createFieldByTemplateId } from '../logic/create';
-import { useSaves } from '../hooks/useSaves';
+import { BOT_MOVING_INTERVAL, FIELD_TEMPLATE_ID } from '../../data/constants';
+import { Player, PlayerEntity } from '../../data/enums';
+import { useSaves } from '../../hooks/useSaves';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+import {
+    botMoving,
+    checkCellsToOverflow,
+    findProfileByPlayer
+} from '../../logic';
+import {
+    filterEmptyPlayers,
+    findTemplateById,
+    upFirst
+} from '../../logic/common';
+import { createFieldByTemplateId } from '../../logic/create';
+import MainMenu from '../../routes/MainMenuRouter';
+import { emit } from '../../socketWorker';
+import * as actionCreator from '../../store/actionCreator';
 
 interface GameProps {
     type: 'single' | 'multiplayer';
@@ -85,7 +93,7 @@ const Game: FC<GameProps> = ({ type }) => {
     function gameStarting(profiles: PlayerProfile[]) {
         dispatch(
             actionCreator.startGame({
-                templateId: 0,
+                templateId: FIELD_TEMPLATE_ID,
                 playersProfiles: filterEmptyPlayers(profiles)
             })
         );
@@ -112,9 +120,7 @@ const Game: FC<GameProps> = ({ type }) => {
                 buttonText="Restart"
                 callback={() => hideModal()}
             />
-            <MenuPopup show={showMenu}>
-                <MainMenu />
-            </MenuPopup>
+            <MenuPopup show={showMenu}>{/* <MainMenu /> */}</MenuPopup>
             {!state.gameState.gameStarted ? (
                 <>
                     <button className="btn" onClick={() => loadGame()}>
@@ -124,7 +130,9 @@ const Game: FC<GameProps> = ({ type }) => {
                         onSubmit={gameStarting}
                         players={findTemplateById(0).spawns.map(s => s.player)}
                     >
-                        <GameField field={createFieldByTemplateId(0)} />
+                        <GameField
+                            field={createFieldByTemplateId(FIELD_TEMPLATE_ID)}
+                        />
                     </PlayersForm>
                 </>
             ) : (

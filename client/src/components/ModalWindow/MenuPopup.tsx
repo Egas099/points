@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import stl from './Popup.module.css';
 import { CSSTransition } from 'react-transition-group';
-import '../../css/popup.css';
+import '../../css/popupTransitions.css';
 
 interface Props {
     show: boolean;

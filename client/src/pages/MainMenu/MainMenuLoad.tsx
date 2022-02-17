@@ -1,11 +1,13 @@
 import { FC, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useSaves } from '../../../hooks/useSaves';
-import SavesList from '../components/SavesList';
+import { useHistory } from 'react-router-dom';
+import SavesList from '../../components/MainMenu/components/SavesList';
+import { useSaves } from '../../hooks/useSaves';
+import styles from './MainMenu.module.css';
 
 const MainMenuLoad: FC = () => {
     const [savesList, setSavesList] = useState([]);
     const { getSaves, setSaves } = useSaves();
+    const { goBack } = useHistory();
 
     useEffect(loadSaves, []);
 
@@ -19,20 +21,21 @@ const MainMenuLoad: FC = () => {
     }
     const savesExist =
         Array.isArray(savesList) && savesList.length > 0 ? false : true;
+
     return (
-        <div>
+        <div className={styles.page__container}>
             <h2>Loading</h2>
             <SavesList saves={savesList} />
             <button
-                className="menu__btn"
+                className={styles.button}
                 onClick={clearSaves}
                 disabled={savesExist}
             >
                 Clear all
             </button>
-            <Link className="menu__btn" to="/menu/">
+            <button className={styles.button} onClick={goBack}>
                 Back
-            </Link>
+            </button>
         </div>
     );
 };
