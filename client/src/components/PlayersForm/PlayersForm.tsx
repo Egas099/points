@@ -1,91 +1,127 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import AI from '../../logic/AI';
 import { Player, PlayerEntity } from '../../data/enums';
 import ChosePlayerButton from './ChosePlayerButton/ChosePlayerButton';
-import stl from './PlayersForm.module.css';
+import styles from './PlayersForm.module.css';
+import GameField from '../GameField/GameField';
+import { fieldByTemplate } from '../../logic/create';
+import {
+    createProfile,
+    extractPlayersFromTemplate,
+    findTemplateById
+} from '../../logic/common';
 
 interface Props {
-    onSubmit: (form: PlayerProfile[]) => void;
-    players: Player[];
+    onSubmit: (form: GameSettings) => void;
+    templates: FieldTemplate[];
 }
 
-const PlayersForm: FC<Props> = ({ onSubmit, players, children }) => {
-    const [playersEntity, setPlayersEntity] = useState<PlayerEntity[]>([
-        PlayerEntity.empty,
-        PlayerEntity.empty,
-        PlayerEntity.empty,
-        PlayerEntity.empty
-    ]);
+const PlayersForm: FC<Props> = ({ onSubmit, templates }) => {
+    const [selectedTemplateId, setSelectedTemplateId] = useState(0);
+    const [profiles, setProfiles] = useState<PlayerProfile[]>([]);
 
-    const setEntity = (index: number) => () =>
-        setPlayersEntity(
-            playersEntity.map((entity: PlayerEntity, i) =>
-                i === index ? nextStatus(entity) : entity
-            )
-        );
+    useEffect(updateProfiles, [selectedTemplateId]);
 
-    const nextStatus = (status: PlayerEntity): PlayerEntity =>
-        typeof PlayerEntity[status + 1] === 'string'
-            ? status + 1
+    const nextEntity = (entity: PlayerEntity): PlayerEntity =>
+        typeof PlayerEntity[entity + 1] === 'string'
+            ? entity + 1
             : PlayerEntity.empty;
 
-    function submit() {
-        if (
-            playersEntity.filter(pStat => pStat !== PlayerEntity.empty).length >
-            1
-        ) {
-            onSubmit(
-                players.map((player, i) => ({
-                    player: player,
-                    entity: {
-                        playerEntity: playersEntity[i],
-                        id:
-                            playersEntity[i] === PlayerEntity.android
-                                ? AI.getRandonBot('normal')
-                                : ''
-                    }
-                }))
+    const filterExistingEntity = (prof: PlayerProfile[]) =>
+        prof.filter(e => e.entity.playerEntity !== PlayerEntity.empty);
+
+    function setTemplateId(count: number) {
+        const newTemplateIndex =
+            (selectedTemplateId + count + templates.length) % templates.length;
+
+        setSelectedTemplateId(newTemplateIndex);
+    }
+
+    function updateProfiles() {
+        const players = extractPlayersFromTemplate(selectedTemplateId);
+        const profiles = players.map(profile => createProfile(profile));
+        setProfiles(profiles);
+    }
+
+    function setEntity(index: number) {
+        return () => {
+            const newProfiles = [...profiles];
+            newProfiles[index].entity.playerEntity = nextEntity(
+                newProfiles[index].entity.playerEntity
             );
+            setProfiles(newProfiles);
+        };
+    }
+
+    function assignAI(profiles: PlayerProfile[]) {
+        return profiles.map(profile => {
+            if (profile.entity.playerEntity === PlayerEntity.android) {
+                const newProfile = profile;
+                newProfile.entity.id = AI.getRandonBot('normal');
+                return newProfile;
+            } else {
+                return profile;
+            }
+        });
+    }
+
+    function submit() {
+        let existPlayersProfiles = filterExistingEntity(profiles);
+        if (existPlayersProfiles.length > 1) {
+            existPlayersProfiles = assignAI(existPlayersProfiles);
+            onSubmit({
+                templateId: selectedTemplateId,
+                playersProfiles: existPlayersProfiles
+            });
         }
     }
 
     return (
-        <div className={stl.wrapper}>
-            <div className={stl.content}>
-                <div className={stl.row}>
+        <div className={styles.wrapper}>
+            <div className={styles.content}>
+                <div className={styles.row}>
                     <ChosePlayerButton
                         key={0}
-                        player={players[0]}
-                        playerEntity={[playersEntity[0], setEntity(0)]}
-                        position={'up'}
+                        profile={profiles[0]}
+                        changeEntity={setEntity(0)}
+                        position="up"
                     />
                     <ChosePlayerButton
                         key={1}
-                        player={players[1]}
-                        playerEntity={[playersEntity[1], setEntity(1)]}
+                        profile={profiles[1]}
+                        changeEntity={setEntity(1)}
                         position={'up'}
                     />
                 </div>
-                {children}
-                <div className={stl.row}>
+                <button
+                    className={styles.leftSwitch}
+                    onClick={() => setTemplateId(-1)}
+                >{`<`}</button>
+                <button
+                    className={styles.rightSwitch}
+                    onClick={() => setTemplateId(1)}
+                >{`>`}</button>
+                <GameField
+                    field={fieldByTemplate(
+                        findTemplateById(selectedTemplateId)
+                    )}
+                />
+                <div className={styles.row}>
                     <ChosePlayerButton
                         key={2}
-                        player={players[2]}
-                        playerEntity={[playersEntity[2], setEntity(2)]}
+                        profile={profiles[2]}
+                        changeEntity={setEntity(2)}
                         position={'down'}
                     />
                     <ChosePlayerButton
                         key={3}
-                        player={players[3]}
-                        playerEntity={[playersEntity[3], setEntity(3)]}
+                        profile={profiles[3]}
+                        changeEntity={setEntity(3)}
                         position={'down'}
                     />
                 </div>
-                <button
-                    className={['btn ', stl.button].join(' ')}
-                    onClick={() => submit()}
-                >
-                    Start!
+                <button className={styles.startButton} onClick={submit}>
+                    {filterExistingEntity(profiles).length > 1 ? '▶' : ''}
                 </button>
             </div>
         </div>

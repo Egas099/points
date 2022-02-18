@@ -1,16 +1,22 @@
-import { FC } from 'react';
-import { Player, PlayerEntity } from '../../../data/enums';
-import stl from './ChosePlayerButton.module.css';
+import { FC, useEffect, useState } from 'react';
+import { PlayerEntity } from '../../../data/enums';
+import styles from './ChosePlayerButton.module.css';
 import { getColorByPlayer } from '../../../logic/common';
 
 interface Props {
-    player: Player;
-    playerEntity: [PlayerEntity, () => void];
+    profile: PlayerProfile;
+    changeEntity: () => void;
     position: 'up' | 'down';
 }
 
-const ChosePlayerButton: FC<Props> = ({ player, playerEntity, position }) => {
-    const [entity, setEntity] = playerEntity;
+const ChosePlayerButton: FC<Props> = ({ profile, changeEntity, position }) => {
+    const [entity, setEntity] = useState(0);
+    useEffect(loadEntity);
+
+    function loadEntity() {
+        const newEntity = profile?.entity?.playerEntity;
+        setEntity(newEntity ? newEntity : 0);
+    }
 
     function getIcon() {
         switch (entity) {
@@ -23,15 +29,12 @@ const ChosePlayerButton: FC<Props> = ({ player, playerEntity, position }) => {
         }
     }
 
-    const getColorStyle = () =>
-        entity !== PlayerEntity.empty ? getColorByPlayer(player) : '';
+    const getColorClass = () =>
+        entity !== PlayerEntity.empty ? getColorByPlayer(profile.player) : '';
 
     return (
-        <div className={[stl[position], stl.wrapper].join(' ')}>
-            <button
-                className={[stl.content, getColorStyle()].join(' ')}
-                onClick={() => setEntity()}
-            >
+        <div className={styles[position]}>
+            <button className={getColorClass()} onClick={changeEntity}>
                 {getIcon()}
             </button>
         </div>

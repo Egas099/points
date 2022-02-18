@@ -1,4 +1,4 @@
-@keyframes go {
+@keyframes pointer {
     0% {
         transform: translate(0, 10px);
     }
@@ -15,7 +15,7 @@
     flex-direction: column;
 }
 
-.content {
+.wrapper > button {
     cursor: pointer;
     width: 40px;
     height: 40px;
@@ -26,12 +26,17 @@
     font-size: 120%;
 }
 
+.up,
+.down {
+    composes: wrapper;
+}
+
 .up::before {
     content: '👇';
-    animation: go 1s ease-out infinite;
+    animation: pointer 1s ease-out infinite;
 }
 
 .down::after {
     content: '👆';
-    animation: go 1s ease-out infinite;
+    animation: pointer 1s ease-out infinite;
 }

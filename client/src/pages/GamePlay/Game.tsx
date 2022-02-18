@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import GameField from '../../components/GameField/GameField';
 import ModalWimdow from '../../components/ModalWindow/AlertPopup';
 import MenuPopup from '../../components/ModalWindow/MenuPopup';
@@ -7,6 +8,7 @@ import PlayersForm from '../../components/PlayersForm/PlayersForm';
 // import { init as socketInit } from '../socketWorker';
 import { BOT_MOVING_INTERVAL, FIELD_TEMPLATE_ID } from '../../data/constants';
 import { Player, PlayerEntity } from '../../data/enums';
+import { fieldTemplates } from '../../data/fieldTemplates';
 import { useSaves } from '../../hooks/useSaves';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import {
@@ -14,12 +16,7 @@ import {
     checkCellsToOverflow,
     findProfileByPlayer
 } from '../../logic';
-import {
-    filterEmptyPlayers,
-    findTemplateById,
-    upFirst
-} from '../../logic/common';
-import { createFieldByTemplateId } from '../../logic/create';
+import { filterEmptyPlayers, upFirst } from '../../logic/common';
 import MainMenu from '../../routes/MainMenuRouter';
 import { emit } from '../../socketWorker';
 import * as actionCreator from '../../store/actionCreator';
@@ -90,13 +87,8 @@ const Game: FC<GameProps> = ({ type }) => {
             dispatch(actionCreator.playerMove(cell));
         }
     }
-    function gameStarting(profiles: PlayerProfile[]) {
-        dispatch(
-            actionCreator.startGame({
-                templateId: FIELD_TEMPLATE_ID,
-                playersProfiles: filterEmptyPlayers(profiles)
-            })
-        );
+    function gameStarting(form: GameSettings) {
+        dispatch(actionCreator.startGame(form));
     }
     function gameRestarting() {
         clearTimeout(timer);
@@ -120,7 +112,8 @@ const Game: FC<GameProps> = ({ type }) => {
                 buttonText="Restart"
                 callback={() => hideModal()}
             />
-            <MenuPopup show={showMenu}>{/* <MainMenu /> */}</MenuPopup>
+            <Link to="/menu">Menu</Link>
+            {/* <MenuPopup show={showMenu}><MainMenu /></MenuPopup> */}
             {!state.gameState.gameStarted ? (
                 <>
                     <button className="btn" onClick={() => loadGame()}>
@@ -128,21 +121,17 @@ const Game: FC<GameProps> = ({ type }) => {
                     </button>
                     <PlayersForm
                         onSubmit={gameStarting}
-                        players={findTemplateById(0).spawns.map(s => s.player)}
-                    >
-                        <GameField
-                            field={createFieldByTemplateId(FIELD_TEMPLATE_ID)}
-                        />
-                    </PlayersForm>
+                        templates={fieldTemplates}
+                    />
                 </>
             ) : (
                 <>
-                    <button
+                    {/* <button
                         className="btn"
                         onClick={() => setShowMenu(!showMenu)}
                     >
                         Menu
-                    </button>
+                    </button> */}
                     <button className="btn" onClick={() => gameSaving()}>
                         Save
                     </button>

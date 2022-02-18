@@ -63,11 +63,27 @@ export function getColorByPlayer(player: Player) {
 }
 
 export function findTemplateById(id: number) {
-    return fieldTemplates[id]
+    return fieldTemplates[id];
 }
 
 export function filterEmptyPlayers(profiles: PlayerProfile[]) {
     return profiles.filter(
         profile => profile.entity.playerEntity !== PlayerEntity.empty
     );
+}
+
+export function extractPlayersFromTemplate(templateId: number) {
+    return Array.from(
+        new Set(findTemplateById(templateId).spawns.map(spawn => spawn.player))
+    );
+}
+
+export function createProfile(player: Player): PlayerProfile {
+    return {
+        player: player,
+        entity: {
+            playerEntity: PlayerEntity.empty,
+            id: ''
+        }
+    };
 }

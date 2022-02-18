@@ -1,6 +1,3 @@
-.wrapper {
-}
-
 .content {
     display: flex;
     flex-direction: column;
@@ -14,4 +11,81 @@
 
 .button {
     margin: -60px auto 80px auto;
+}
+
+.switch {
+    width: 25px;
+    height: 30%;
+    position: fixed;
+    top: 35%;
+    background-color: #e6eaed;
+    border: none;
+    border-radius: 2px;
+}
+
+.switch:hover {
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+.leftSwitch {
+    composes: switch;
+    left: calc(50% - 210px);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1), 2px 0 5px rgba(0, 0, 0, 0.3) inset;
+}
+
+.rightSwitch {
+    composes: switch;
+    right: calc(50% - 210px);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1),
+        -2px 0 5px rgba(0, 0, 0, 0.3) inset;
+}
+
+.startButton {
+    --size: 80px;
+    --hover-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+    --hover-shadow-far: 1px 1px 5px rgba(124, 67, 67, 0.5);
+
+    position: fixed;
+    top: calc(50% - var(--size) / 2 + 15px);
+    left: calc(50% - var(--size) / 2);
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-size: var(--size);
+}
+
+.startButton:hover {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: var(--hover-shadow);
+    animation: pulse 1s ease-out infinite;
+}
+
+@keyframes pulse {
+    0% {
+        text-shadow: var(--hover-shadow);
+        transform: scale(1.2);
+    }
+    60% {
+        text-shadow: var(--hover-shadow);
+        transform: scale(1.2);
+    }
+    70% {
+        text-shadow: var(--hover-shadow-far);
+        transform: scale(1);
+    }
+    80% {
+        text-shadow: var(--hover-shadow);
+        transform: scale(1.2);
+    }
+    90% {
+        text-shadow: var(--hover-shadow-far);
+        transform: scale(1);
+    }
+    100% {
+        text-shadow: var(--hover-shadow);
+        transform: scale(1.2);
+    }
 }
