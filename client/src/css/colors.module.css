@@ -1,22 +1,55 @@
 .none {
     background-color: rgba(255, 255, 255, 0);
 }
-.red {
+
+.red-low {
+    background-color: rgb(255, 168, 168);
+}
+.red-medium {
+    background-color: rgb(255, 148, 148);
+}
+.red-high {
     background-color: rgb(255, 128, 128);
 }
+.red-overflow {
+    background-color: rgb(255, 108, 108);
+}
 
-.orange {
+.orange-low {
+    background-color: rgb(255, 209, 168);
+}
+.orange-medium {
+    background-color: rgb(255, 209, 148);
+}
+.orange-high {
     background-color: rgb(255, 189, 128);
 }
-
-.yellow {
-    background-color: rgb(255, 236, 128);
+.orange-overflow {
+    background-color: rgb(255, 169, 108);
 }
 
-.green {
-    background-color: rgb(164, 236, 155);
+.green-low {
+    background-color: rgb(180, 233, 173);
+}
+.green-medium {
+    background-color: rgb(152, 233, 141);
+}
+.green-high {
+    background-color: rgb(141, 233, 129);
+}
+.green-overflow {
+    background-color: rgb(125, 233, 112);
 }
 
-.blue {
+.blue-low {
+    background-color: rgb(178 178 255);
+}
+.blue-medium {
+    background-color: rgb(134 134 255);
+}
+.blue-high {
     background-color: rgb(118, 118, 255);
+}
+.blue-overflow {
+    background-color: rgb(97, 97, 255);
 }

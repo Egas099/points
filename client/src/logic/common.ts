@@ -1,6 +1,7 @@
 import { Player, PlayerEntity } from '../data/enums';
 import colors from '../css/colors.module.css';
 import { fieldTemplates } from '../data/fieldTemplates';
+import { COLOR_INTENSITIES } from '../data/constants';
 
 export const find = {
     overflowingCell: (field: Cell[][]) => {
@@ -58,8 +59,11 @@ export function cellIsExist(field: Cell[][], pos: Vector2) {
     else return false;
 }
 
-export function getColorByPlayer(player: Player) {
-    return colors[Player[player]];
+export function getColorByPlayer(player: Player, count = 3) {
+    const intensity = COLOR_INTENSITIES[count];
+    return intensity
+        ? colors[`${Player[player]}-${intensity}`]
+        : colors[Player[player]];
 }
 
 export function findTemplateById(id: number) {

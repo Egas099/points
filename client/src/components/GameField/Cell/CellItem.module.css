@@ -33,30 +33,6 @@ span::selection {
     background-color: rgba(0, 0, 0, 0);
 }
 
-.none {
-    background-color: #d8d8d8;
-}
-
-.red {
-    background-color: rgb(255, 128, 128);
-}
-
-.orange {
-    background-color: rgb(255, 189, 128);
-}
-
-.yellow {
-    background-color: rgb(255, 236, 128);
-}
-
-.green {
-    background-color: rgb(164, 236, 155);
-}
-
-.blue {
-    background-color: rgb(118, 118, 255);
-}
-
 .mover {
     background-color: rgba(255, 174, 0, 0.3);
     cursor: pointer;

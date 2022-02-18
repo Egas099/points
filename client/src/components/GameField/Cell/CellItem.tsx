@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
-import stl from './CellItem.module.css';
+import style from './CellItem.module.css';
 import { getColorByPlayer } from '../../../logic/common';
 
 interface Props {
@@ -47,13 +47,14 @@ const CellItem: FC<Props> = ({ cell, onMove }) => {
         }
     };
 
-    if (cell.count === 0) <div className={stl.wrapper} draggable="false"></div>;
+    if (cell.count === 0)
+        <div className={style.wrapper} draggable="false"></div>;
     return (
         <div
             className={[
-                stl.wrapper,
+                style.wrapper,
                 gameState.mover === cell.player && !gameState.moveBlock
-                    ? stl.mover
+                    ? style.mover
                     : ''
             ].join(' ')}
             draggable="false"
@@ -61,8 +62,8 @@ const CellItem: FC<Props> = ({ cell, onMove }) => {
             {cell.allow && (
                 <div
                     className={[
-                        stl.content,
-                        getColorByPlayer(cell.player)
+                        style.content,
+                        getColorByPlayer(cell.player, cell.count)
                     ].join(' ')}
                     onClick={onMove && (() => onMove(cell))}
                     draggable="false"
