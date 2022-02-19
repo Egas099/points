@@ -1,6 +1,6 @@
 export const SERVER_URL = 'http://localhost:5000';
-export const README_URL =
-    'https://raw.githubusercontent.com/Egas099/points/main/README.md';
+export const ABOUT_URL =
+    'https://raw.githubusercontent.com/Egas099/points/main/client/ABOUT.md';
 export const APP_VERSION = '1.0';
 export const FIELD_WIDTH = 9;
 export const FIELD_HEIGHT = 9;

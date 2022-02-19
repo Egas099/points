@@ -3,14 +3,12 @@
     justify-content: center;
     display: flex;
     flex-direction: column;
-    text-align: center;
     background-color: #e6eaed;
-    height: 100vh;
+    min-height: 100vh;
     color: rgb(45 45 45);
 }
 
 body {
-    width: 100vw;
     height: 100vh;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
@@ -23,7 +21,4 @@ body {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
-}
-h1, h2, h3, h4, h5, h6 {
-    margin: 0;
 }
