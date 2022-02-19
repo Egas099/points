@@ -1,9 +1,13 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
-import MainMenuHome from '../pages/MainMenu/MainMenuHome';
-import MainMenuLoad from '../pages/MainMenu/MainMenuLoad';
-import MainMenuPlay from '../pages/MainMenu/MainMenuPlay';
-import MainMenuSettings from '../pages/MainMenu/MainMenuSettings';
+
+const MainMenuHome = React.lazy(() => import('../pages/MainMenu/MainMenuHome'));
+const MainMenuLoad = React.lazy(() => import('../pages/MainMenu/MainMenuLoad'));
+const MainMenuPlay = React.lazy(() => import('../pages/MainMenu/MainMenuPlay'));
+const MainMenuSettings = React.lazy(
+    () => import('../pages/MainMenu/MainMenuSettings')
+);
+
 export const PLAY_MENU_PATH = 'play';
 
 const MainMenu: FC = () => {
@@ -12,7 +16,7 @@ const MainMenu: FC = () => {
         <>
             <Switch>
                 <Route
-                    path={`${path}${PLAY_MENU_PATH}/`}
+                    path={`${path}${PLAY_MENU_PATH}/*`}
                     component={MainMenuPlayRouter}
                 />
 

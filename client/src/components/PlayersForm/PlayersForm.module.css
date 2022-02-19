@@ -15,9 +15,9 @@
 
 .switch {
     width: 25px;
-    height: 30%;
+    height: 200px;
     position: fixed;
-    top: 35%;
+    top: calc(50% - 80px);
     background-color: #e6eaed;
     border: none;
     border-radius: 2px;

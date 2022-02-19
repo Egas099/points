@@ -3,14 +3,18 @@ import './css/index.css';
 import { Provider } from 'react-redux';
 import { store } from './store';
 
-import AppRouter from './routes/AppRouter';
-import React from 'react';
+const AppRouter = React.lazy(() => import('./routes/AppRouter'));
+
+import React, { Suspense } from 'react';
+import LoaderIndicator from './components/Loader/LoaderIndicator';
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
             <div className="App">
-                <AppRouter />
+                <Suspense fallback={<LoaderIndicator />}>
+                    <AppRouter />
+                </Suspense>
             </div>
         </Provider>
     </React.StrictMode>,

@@ -1,0 +1,37 @@
+.content {
+    width: 50px;
+    height: 50px;
+    border-top: 5px solid red;
+    border-radius: 100%;
+    animation: rotate 1s linear infinite, changeColor 5s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes changeColor {
+    0% {
+        border-right: red;
+    }
+    20% {
+        border-color: orange;
+    }
+    40% {
+        border-color: green;
+    }
+    60% {
+        border-color: blue;
+    }
+    80% {
+        border-color: purple;
+    }
+    100% {
+        border-color: red;
+    }
+}

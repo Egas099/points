@@ -1,10 +1,15 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import {
-    BrowserRouter as Router, Redirect, Route, Switch
+    BrowserRouter as Router,
+    Redirect,
+    Route,
+    Switch
 } from 'react-router-dom';
-import About from '../pages/About/About';
-import Game from '../pages/GamePlay/Game';
-import MainMenuRouter from './MainMenuRouter';
+
+const About = React.lazy(() => import('../pages/About/About'));
+const Game = React.lazy(() => import('../pages/GamePlay/Game'));
+const MainMenuRouter = React.lazy(() => import('./MainMenuRouter'));
+
 export const MENU_PATH = 'menu';
 
 const AppRouter: FC = () => {
@@ -21,7 +26,7 @@ const AppRouter: FC = () => {
                 </Route>
 
                 <Route path={`/${MENU_PATH}/`}>
-                    <MainMenuRouter/>
+                    <MainMenuRouter />
                 </Route>
 
                 <Route>
