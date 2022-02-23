@@ -4,12 +4,8 @@ import { PlayerEntity } from '../../data/enums';
 import ChosePlayerButton from './ChosePlayerButton/ChosePlayerButton';
 import styles from './PlayersForm.module.css';
 import GameField from '../GameField/GameField';
-import { fieldByTemplate } from '../../logic/create';
-import {
-    createProfile,
-    extractPlayersFromTemplate,
-    findTemplateById
-} from '../../logic/common';
+import { createProfile, fieldByTemplate } from '../../logic/create';
+import { getPlayersFromTemplate, getTemplateById } from '../../logic/common';
 
 interface Props {
     onSubmit: (form: GameSettings) => void;
@@ -38,7 +34,7 @@ const PlayersForm: FC<Props> = ({ onSubmit, templates }) => {
     }
 
     function updateProfiles() {
-        const players = extractPlayersFromTemplate(selectedTemplateId);
+        const players = getPlayersFromTemplate(selectedTemplateId);
         const profiles = players.map(profile => createProfile(profile));
         setProfiles(profiles);
     }
@@ -57,7 +53,7 @@ const PlayersForm: FC<Props> = ({ onSubmit, templates }) => {
         return profiles.map(profile => {
             if (profile.entity.playerEntity === PlayerEntity.android) {
                 const newProfile = profile;
-                newProfile.entity.id = AI.getRandonBot('normal');
+                newProfile.entity.id = AI.getRandomBot('normal');
                 return newProfile;
             } else {
                 return profile;
@@ -102,9 +98,7 @@ const PlayersForm: FC<Props> = ({ onSubmit, templates }) => {
                     onClick={() => setTemplateId(1)}
                 >{`>`}</button>
                 <GameField
-                    field={fieldByTemplate(
-                        findTemplateById(selectedTemplateId)
-                    )}
+                    field={fieldByTemplate(getTemplateById(selectedTemplateId))}
                 />
                 <div className={styles.row}>
                     <ChosePlayerButton

@@ -1,37 +1,27 @@
 import { BotProfile } from '.';
 import { RootState } from '../../store';
-import { amountEmptyNeighs } from '../calculate';
-import { filter, find, random } from '../common';
+import { filterCellsByCount, amountEmptyNeighs, randomElemetFrom } from '../aiHelpers';
 
 const simpleBots: BotProfile[] = [
     {
         name: 'a1',
         difficulty: 'simple',
         description: 'Random movement',
-        implementation: (state: RootState) => {
-            const cells = find.cellsByPlayer(
-                state.field,
-                state.gameState.mover
-            );
-
-            return random.elemetFrom(cells);
+        implementation: (state: RootState, ownCells: Cell[]) => {
+            return randomElemetFrom(ownCells);
         }
     },
     {
         name: 'a2',
         difficulty: 'simple',
         description: 'Three count priority mover',
-        implementation: (state: RootState) => {
-            const cells = find.cellsByPlayer(
-                state.field,
-                state.gameState.mover
-            );
-            const filteredCells = filter.cellsByCount(cells, 3);
+        implementation: (state: RootState, ownCells: Cell[]) => {
+            const filteredCells = filterCellsByCount(ownCells, 3);
 
             if (filteredCells.length > 0) {
-                return random.elemetFrom(filteredCells);
+                return randomElemetFrom(filteredCells);
             } else {
-                return random.elemetFrom(cells);
+                return randomElemetFrom(ownCells);
             }
         }
     },
@@ -39,45 +29,39 @@ const simpleBots: BotProfile[] = [
         name: 'a3',
         difficulty: 'simple',
         description: 'Expander & three point priority mover',
-        implementation: (state: RootState) => {
-            let cells = find.cellsByPlayer(state.field, state.gameState.mover);
-            const filteredCells = filter.cellsByCount(cells, 3);
-            if (filteredCells.length > 0) cells = filteredCells;
+        implementation: (state: RootState, ownCells: Cell[]) => {
+            const filteredCells = filterCellsByCount(ownCells, 3);
+            if (filteredCells.length > 0) ownCells = filteredCells;
 
             for (let i = 4; i > 0; i--) {
                 if (
-                    cells.some(
+                    ownCells.some(
                         cell => amountEmptyNeighs(state.field, cell) === i
                     )
                 ) {
-                    cells = cells.filter(
+                    ownCells = ownCells.filter(
                         cell => amountEmptyNeighs(state.field, cell) === i
                     );
                     break;
                 }
             }
 
-            return random.elemetFrom(cells);
+            return randomElemetFrom(ownCells);
         }
     },
     {
         name: 'a4',
         difficulty: 'simple',
         description: 'Accumulator, big Bang',
-        implementation: (state: RootState) => {
-            const cells = find.cellsByPlayer(
-                state.field,
-                state.gameState.mover
-            );
-
+        implementation: (state: RootState, ownCells: Cell[]) => {
             for (let i = 1; i < 3; i++) {
-                const filteredCells = filter.cellsByCount(cells, i);
+                const filteredCells = filterCellsByCount(ownCells, i);
                 if (filteredCells.length > 0) {
-                    return random.elemetFrom(filteredCells);
+                    return randomElemetFrom(filteredCells);
                 }
             }
 
-            return random.elemetFrom(cells);
+            return randomElemetFrom(ownCells);
         }
     }
 ];

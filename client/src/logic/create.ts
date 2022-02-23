@@ -1,6 +1,6 @@
 import { FIELD_HEIGHT, FIELD_WIDTH } from '../data/constants';
-import { Player } from '../data/enums';
-import { findTemplateById } from './common';
+import { Player, PlayerEntity } from '../data/enums';
+import { getTemplateById } from './common';
 
 export const cell = (id: number) => ({
     id: id,
@@ -50,16 +50,24 @@ export const fieldByTemplate = (
 };
 
 export const createFieldByTemplateId = (templateId: number): Cell[][] => {
-    const template = findTemplateById(templateId);
+    const template = getTemplateById(templateId);
     return fieldByTemplate(template);
 };
 
 export const assembleField = (gameSettings: GameSettings): Cell[][] => {
-    const template = findTemplateById(gameSettings.templateId);
+    const template = getTemplateById(gameSettings.templateId);
     const existPlayers = gameSettings.playersProfiles.map(
         player => player.player
     );
     return fieldByTemplate(template, existPlayers);
 };
 
-
+export function createProfile(player: Player): PlayerProfile {
+    return {
+        player: player,
+        entity: {
+            playerEntity: PlayerEntity.empty,
+            id: ''
+        }
+    };
+}

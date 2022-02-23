@@ -1,7 +1,10 @@
 import { BotProfile } from '.';
 import { RootState } from '../../store';
-import { maxNeighsEnemiesCount } from '../calculate';
-import { filter, find, random } from '../common';
+import {
+    filterCellsByCount,
+    maxNeighsEnemiesCount,
+    randomElemetFrom
+} from '../aiHelpers';
 
 const normalBots: BotProfile[] = [
     {
@@ -9,49 +12,39 @@ const normalBots: BotProfile[] = [
         difficulty: 'normal',
         description:
             'Priority for capturing enemy cells with three dots, if they are next to their own cells with three dots.',
-        implementation: (state: RootState): Cell => {
-            const cells = find.cellsByPlayer(
-                state.field,
-                state.gameState.mover
-            );
-
-            let filteredCells = filter.cellsByCount(cells, 3);
+        implementation: (state: RootState, ownCells: Cell[]): Cell => {
+            let filteredCells = filterCellsByCount(ownCells, 3);
             filteredCells = filteredCells.filter(cell =>
                 maxNeighsEnemiesCount(state.field, cell) === 3 ? true : false
             );
 
             if (filteredCells.length > 0) {
-                return random.elemetFrom(filteredCells);
+                return randomElemetFrom(filteredCells);
             }
 
-            return random.elemetFrom(cells);
+            return randomElemetFrom(ownCells);
         }
     },
     {
         name: 'b2',
         difficulty: 'normal',
         description: '',
-        implementation: (state: RootState) => {
-            const cells = find.cellsByPlayer(
-                state.field,
-                state.gameState.mover
-            );
-
-            let filteredCells = filter.cellsByCount(cells, 3);
+        implementation: (state: RootState, ownCells: Cell[]) => {
+            let filteredCells = filterCellsByCount(ownCells, 3);
             filteredCells = filteredCells.filter(cell =>
                 maxNeighsEnemiesCount(state.field, cell) === 3 ? 1 : 0
             );
 
             if (filteredCells.length > 0) {
-                return random.elemetFrom(filteredCells);
+                return randomElemetFrom(filteredCells);
             }
 
-            filteredCells = filter.cellsByCount(cells, 3);
+            filteredCells = filterCellsByCount(ownCells, 3);
 
             if (filteredCells.length > 0) {
-                return random.elemetFrom(filteredCells);
+                return randomElemetFrom(filteredCells);
             } else {
-                return random.elemetFrom(cells);
+                return randomElemetFrom(ownCells);
             }
         }
     }

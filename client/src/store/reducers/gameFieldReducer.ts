@@ -1,5 +1,5 @@
 import { cellPositionById } from '../../logic/calculate';
-import { cellIsExist } from '../../logic/common';
+import { isExistCell } from '../../logic/common';
 import { assembleField } from '../../logic/create';
 import { Player } from '../../data/enums';
 import {
@@ -85,16 +85,16 @@ function actionCloneCell(state: Cell[][], action: CellCloning) {
         newState[x][y] = { ...newState[x][y], count: 0, player: null };
     }
 
-    if (cellIsExist(newState, [x + 1, y]))
+    if (isExistCell(newState, [x + 1, y]))
         newState[x + 1][y] = cellIncAndCapture(newState[x + 1][y], cell.player);
 
-    if (cellIsExist(newState, [x, y + 1]))
+    if (isExistCell(newState, [x, y + 1]))
         newState[x][y + 1] = cellIncAndCapture(newState[x][y + 1], cell.player);
 
-    if (cellIsExist(newState, [x - 1, y]))
+    if (isExistCell(newState, [x - 1, y]))
         newState[x - 1][y] = cellIncAndCapture(newState[x - 1][y], cell.player);
 
-    if (cellIsExist(newState, [x, y - 1]))
+    if (isExistCell(newState, [x, y - 1]))
         newState[x][y - 1] = cellIncAndCapture(newState[x][y - 1], cell.player);
 
     return newState;

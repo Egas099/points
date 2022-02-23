@@ -1,37 +1,48 @@
+import { Player } from '../../data/enums';
 import { RootState } from '../../store';
-import { random } from '../common';
+import { randomElemetFrom } from '../aiHelpers';
 import normalBots from './normal';
 import simpleBots from './simple';
 
 type Difficulty = 'simple' | 'normal';
 export interface BotProfile {
     name: string;
-    implementation: (state: RootState) => Cell;
+    implementation: (state: RootState, ownCells: Cell[]) => Cell;
     description: string;
     difficulty: Difficulty;
 }
 
 const AI = {
-    getRandonBot: function (difficulty: Difficulty): string {
-        return random.elemetFrom(
+    getRandomBot: function (difficulty: Difficulty): string {
+        return randomElemetFrom(
             AI_PROFILES.filter(bot => bot.difficulty === difficulty)
         ).name;
     },
     getBotById: function (id: string): BotProfile | undefined {
         return AI_PROFILES.find(bot => bot.name === id);
     },
-    getBotImplementationById: function (
-        id: string
-    ): (state: RootState) => Cell {
+    getBotMoveById: function (id: string, state: RootState) {
         const botImplementation = AI_PROFILES.find(
             bot => bot.name === id
         )?.implementation;
 
+        const ownCells = () =>
+            findCellsByPlayer(state.field, state.gameState.mover);
+
         return botImplementation
-            ? botImplementation
-            : random.elemetFrom(AI_PROFILES).implementation;
+            ? botImplementation(state, ownCells())
+            : randomElemetFrom(AI_PROFILES).implementation(state, ownCells());
     }
 };
 export default AI;
 
 const AI_PROFILES: BotProfile[] = [simpleBots, normalBots].flat();
+
+function findCellsByPlayer(field: Cell[][], player: Player) {
+    let responce: Cell[] = [];
+    for (const row of field) {
+        const cell = row.filter(cell => cell.player === player);
+        if (cell.length > 0) responce = responce.concat(cell);
+    }
+    return responce;
+}

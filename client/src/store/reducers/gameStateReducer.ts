@@ -1,5 +1,5 @@
-import { isExist } from "../../logic/common";
-import { GameActions, GameActionType } from "../types";
+import { isExistPlayerOnField } from '../../logic/common';
+import { GameActions, GameActionType } from '../types';
 
 const defaultState = (): GameState => ({
     gameStarted: false,
@@ -68,7 +68,7 @@ function actionStartGame(state: GameState, gameSettings: GameSettings) {
 
 function nextMover(state: GameState, field: Cell[][]) {
     const leftPlayers = state.players.filter(profile =>
-        isExist.playerOnField(field, profile.player)
+        isExistPlayerOnField(field, profile.player)
     );
     const currentMoverIndex = state.players.findIndex(
         profile => profile.player === state.mover

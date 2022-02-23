@@ -27,13 +27,14 @@ const SavesList: FC<Props> = ({ saves, deleteSave, loadSave }) => {
                 </thead>
                 <tbody>
                     {saves.map(save => (
-                        <tr
-                            key={save.date}
-                            onClick={() => loadSave(save.state)}
-                        >
-                            <td>{getDate(save.date)}</td>
-                            <td>{save.state.gameState.moveNumber}</td>
-                            <td>
+                        <tr key={save.date}>
+                            <td onClick={() => loadSave(save.state)}>
+                                {getDate(save.date)}
+                            </td>
+                            <td onClick={() => loadSave(save.state)}>
+                                {save.state.gameState.moveNumber}
+                            </td>
+                            <td onClick={() => loadSave(save.state)}>
                                 <div className={styles.icon_conteiner}>
                                     {save.state.gameState.players.map(
                                         (profile: PlayerProfile) => (
