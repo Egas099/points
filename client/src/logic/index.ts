@@ -3,6 +3,7 @@ import { find } from './common';
 import * as aC from '../store/actionCreator';
 import { RootState } from '../store';
 import AI from './AI';
+import { CELL_CLONING_INTERVAL } from '../data/constants';
 
 export const checkCellsToOverflow = (
     field: Cell[][],
@@ -12,7 +13,7 @@ export const checkCellsToOverflow = (
 
     if (cell) {
         dispatch(aC.CellCloning(cell));
-        setTimeout(() => checkCellsToOverflow(field, dispatch), 0);
+        setTimeout(() => checkCellsToOverflow(field, dispatch), CELL_CLONING_INTERVAL);
     } else {
         dispatch(aC.newMove(field));
     }
