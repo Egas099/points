@@ -1,0 +1,13 @@
+.page_wrapper {
+    composes: page_wrapper from '../MainMenu.module.css';
+    justify-content: space-between;
+}
+.title {
+    composes: title from '../MainMenu.module.css';
+}
+.button {
+    composes: button from '../../../css/components.module.css';
+}
+.empty {
+    text-align: center;
+}

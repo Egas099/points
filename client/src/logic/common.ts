@@ -91,3 +91,14 @@ export function createProfile(player: Player): PlayerProfile {
         }
     };
 }
+
+export function getIconByPlayerEntity(entity: PlayerEntity): string {
+    switch (entity) {
+        case PlayerEntity.empty:
+            return '?';
+        case PlayerEntity.localPlayer:
+            return '🙂';
+        default:
+            return '🤖';
+    }
+}

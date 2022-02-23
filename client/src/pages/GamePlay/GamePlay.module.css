@@ -1,0 +1,20 @@
+.wrapper {
+    /* min-height: 100vh; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: 0.5s all;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 767px) {
+    .wrapper {
+        justify-content: start;
+    }
+}

@@ -1,0 +1,24 @@
+.wrapper {
+    --header-height: 50px;
+
+    height: var(--header-height);
+    background-color: var(--header-bg-color);
+    margin-bottom: 10px;
+}
+.content {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.button {
+    font-size: large;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    text-align: center;
+    width: 100%;
+    line-height: var(--header-height);
+    color: white;
+    text-decoration: none;
+}

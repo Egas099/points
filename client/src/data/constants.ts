@@ -13,3 +13,4 @@ export const COLOR_INTENSITIES = [
     'overflow',
     'overflow'
 ];
+export const POPUP_TIMEOUT = 500;

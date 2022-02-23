@@ -1,7 +1,6 @@
 import { FC } from 'react';
-import stl from './Popup.module.css';
-import { CSSTransition } from 'react-transition-group';
-import '../../css/popupTransitions.css';
+import styles from './Popup.module.css';
+import PopupWrapper from './PopupWrapper';
 
 interface Props {
     show: boolean;
@@ -11,32 +10,25 @@ interface Props {
     buttonText?: string;
 }
 
-const ModalWimdow: FC<Props> = ({
-    show,
-    title,
-    text,
-    callback,
-    buttonText
-}) => {
+const AlertPopup: FC<Props> = ({ show, title, text, callback, buttonText }) => {
     return (
-        <CSSTransition unmountOnExit in={show} timeout={500} classNames="mask">
-            <div className={stl.mask}>
-                <CSSTransition in={show} timeout={500} classNames="popup">
-                    <div className={stl.wrapper}>
-                        <div className={stl.content}>
-                            <div className={stl.main}>
-                                <h2>{title}</h2>
-                                {text && <p>{text}</p>}
-                            </div>
-                            <button className="btn" onClick={() => callback()}>
-                                {buttonText ? buttonText : 'Ok'}
-                            </button>
-                        </div>
+        <PopupWrapper show={show}>
+            <div className={styles.wrapper}>
+                <div className={styles.content}>
+                    <div className={styles.main}>
+                        <h2>{title}</h2>
+                        {text && <p>{text}</p>}
                     </div>
-                </CSSTransition>
+                    <button
+                        className={styles.button}
+                        onClick={() => callback()}
+                    >
+                        {buttonText ? buttonText : 'Ok'}
+                    </button>
+                </div>
             </div>
-        </CSSTransition>
+        </PopupWrapper>
     );
 };
 
-export default ModalWimdow;
+export default AlertPopup;

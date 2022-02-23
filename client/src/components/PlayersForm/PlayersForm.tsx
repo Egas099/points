@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import AI from '../../logic/AI';
-import { Player, PlayerEntity } from '../../data/enums';
+import { PlayerEntity } from '../../data/enums';
 import ChosePlayerButton from './ChosePlayerButton/ChosePlayerButton';
 import styles from './PlayersForm.module.css';
 import GameField from '../GameField/GameField';
@@ -108,15 +108,15 @@ const PlayersForm: FC<Props> = ({ onSubmit, templates }) => {
                 />
                 <div className={styles.row}>
                     <ChosePlayerButton
-                        key={2}
-                        profile={profiles[2]}
-                        changeEntity={setEntity(2)}
-                        position={'down'}
-                    />
-                    <ChosePlayerButton
                         key={3}
                         profile={profiles[3]}
                         changeEntity={setEntity(3)}
+                        position={'down'}
+                    />
+                    <ChosePlayerButton
+                        key={2}
+                        profile={profiles[2]}
+                        changeEntity={setEntity(2)}
                         position={'down'}
                     />
                 </div>

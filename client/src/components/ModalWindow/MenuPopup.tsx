@@ -1,23 +1,54 @@
 import { FC } from 'react';
-import stl from './Popup.module.css';
-import { CSSTransition } from 'react-transition-group';
-import '../../css/popupTransitions.css';
+import styles from './Popup.module.css';
+import { Link } from 'react-router-dom';
+import PopupWrapper from './PopupWrapper';
 
+export interface MenuPopupActions {
+    continue: () => void;
+    save?: () => void;
+    reset?: () => void;
+}
 interface Props {
     show: boolean;
+    actions: MenuPopupActions;
 }
 
-const MenuPopup: FC<Props> = ({ show, children }) => {
+const MenuPopup: FC<Props> = ({ show, actions }) => {
     return (
-        <CSSTransition unmountOnExit in={show} timeout={500} classNames="mask">
-            <div className={stl.mask}>
-                <CSSTransition in={show} timeout={500} classNames="popup">
-                    <div className={stl.wrapper}>
-                        <div className={stl.content}>{children}</div>
-                    </div>
-                </CSSTransition>
+        <PopupWrapper show={show}>
+            <div className={styles.wrapper}>
+                <div className={styles.content}>
+                    <h2>Pause</h2>
+                    <button
+                        className={styles.button}
+                        onClick={actions.continue}
+                    >
+                        Continie
+                    </button>
+
+                    <button
+                        className={styles.button}
+                        disabled={actions.save === undefined}
+                        onClick={actions.save}
+                    >
+                        Save
+                    </button>
+                    <Link to="/menu/play/load" className={styles.button}>
+                        Load
+                    </Link>
+                    <button
+                        className={styles.button}
+                        disabled={actions.reset === undefined}
+                        onClick={actions.reset}
+                    >
+                        Reset
+                    </button>
+                    <Link to="/menu/" className={styles.button}>
+                        Main menu
+                    </Link>
+                </div>
             </div>
-        </CSSTransition>
+        </PopupWrapper>
     );
 };
 

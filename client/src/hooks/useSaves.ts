@@ -6,8 +6,7 @@ export function useSaves() {
         save: (state: RootState) => {
             let saves = JSON.parse(localStorage.getItem('saves') || '[]');
             if (Array.isArray(saves)) {
-                saves.pop();
-                saves.push(createSave(state));
+                saves.unshift(createSave(state));
             } else {
                 saves = [createSave(state)];
             }

@@ -10,9 +10,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 }
 
 .wrapper {
+    z-index: 2;
     max-width: var(--modal-width);
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -22,16 +24,17 @@
 }
 
 .content {
-    text-align: center;
-    box-sizing: border-box;
-    height: inherit;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+    text-align: center;
+    padding: 15px 20px;
 }
 
 .main {
     flex-grow: 1;
     margin: 0 2em;
+}
+
+.button {
+    composes: button from '../../css/components.module.css';
 }

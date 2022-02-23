@@ -2,10 +2,10 @@ import React, { FC } from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 const MainMenuHome = React.lazy(() => import('../pages/MainMenu/MainMenuHome'));
-const MainMenuLoad = React.lazy(() => import('../pages/MainMenu/MainMenuLoad'));
-const MainMenuPlay = React.lazy(() => import('../pages/MainMenu/MainMenuPlay'));
+const MainMenuLoad = React.lazy(() => import('../pages/MainMenu/Loading/MainMenuLoad'));
+const MainMenuPlay = React.lazy(() => import('../pages/MainMenu/Play/MainMenuPlay'));
 const MainMenuSettings = React.lazy(
-    () => import('../pages/MainMenu/MainMenuSettings')
+    () => import('../pages/MainMenu/Settings/MainMenuSettings')
 );
 
 export const PLAY_MENU_PATH = 'play';

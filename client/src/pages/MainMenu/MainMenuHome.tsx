@@ -6,7 +6,7 @@ import styles from './MainMenu.module.css';
 const MainMenuHome: FC = () => {
     const { url } = useRouteMatch();
     return (
-        <div className={styles.page__container}>
+        <div className={styles.page_wrapper}>
             <Link className={styles.button} to={`${url}${PLAY_MENU_PATH}/`}>
                 Play
             </Link>

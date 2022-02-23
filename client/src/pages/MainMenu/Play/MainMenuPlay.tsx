@@ -1,13 +1,13 @@
 import { FC } from 'react';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
-import styles from './MainMenu.module.css';
+import styles from '../MainMenu.module.css';
 
 const MainMenuPlay: FC = () => {
     const { goBack } = useHistory();
     const { url } = useRouteMatch();
 
     return (
-        <div className={styles.page__container}>
+        <div className={styles.page_wrapper}>
             <Link className={styles.button} to="/single">
                 Single
             </Link>

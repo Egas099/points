@@ -1,9 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import GameField from '../../components/GameField/GameField';
-import ModalWimdow from '../../components/ModalWindow/AlertPopup';
-// import MenuPopup from '../../components/ModalWindow/MenuPopup';
+import HeaderButtonPanel from '../../components/HeaderPanel/HeaderPanel';
+import AlertPopup from '../../components/ModalWindow/AlertPopup';
+import MenuPopup, {
+    MenuPopupActions
+} from '../../components/ModalWindow/MenuPopup';
 import PlayersForm from '../../components/PlayersForm/PlayersForm';
 // import { init as socketInit } from '../socketWorker';
 import { BOT_MOVING_INTERVAL } from '../../data/constants';
@@ -19,7 +21,7 @@ import {
 import { upFirst } from '../../logic/common';
 import { emit } from '../../socketWorker';
 import * as actionCreator from '../../store/actionCreator';
-
+import styles from './GamePlay.module.css';
 interface GameProps {
     type: 'single' | 'multiplayer';
 }
@@ -32,10 +34,10 @@ const Game: FC<GameProps> = ({ type }) => {
     // });
 
     const dispatch = useDispatch();
-    const savesStorage = useSaves();
+    const localStorage = useSaves();
     const state = useTypedSelector(state => state);
-    const [showModal, setShowModal] = useState<boolean>(false);
-    // const [showMenu, setShowMenu] = useState<boolean>(false);
+    const [showAlert, setShowAlert] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
     const [timer, setTimer] = useState<NodeJS.Timeout>(setTimeout(() => 0, 0));
     const [title, setTitle] = useState('User win');
 
@@ -66,13 +68,14 @@ const Game: FC<GameProps> = ({ type }) => {
                 `${upFirst(Player[state.gameState.players[0].player])}
                 одержал победу за ${state.gameState.moveNumber} ходов`
             );
-            setShowModal(true);
+            setShowAlert(true);
+            setShowMenu(false);
         }
     }, [state.gameState.endGame]);
 
     function hideModal() {
         clearTimeout(timer);
-        setShowModal(false);
+        setShowAlert(false);
         dispatch(actionCreator.restartGame());
     }
     function move(cell: Cell) {
@@ -92,55 +95,41 @@ const Game: FC<GameProps> = ({ type }) => {
     function gameRestarting() {
         clearTimeout(timer);
         dispatch(actionCreator.restartGame());
+        setShowMenu(false);
     }
     function gameSaving() {
-        savesStorage.save(state);
-        gameRestarting();
+        localStorage.save(state);
+        setShowMenu(false);
     }
-    function loadGame() {
-        const saving = savesStorage.load();
-        if (saving) {
-            dispatch(actionCreator.loadGame(saving.state));
-        }
-    }
+
+    const menuActions: MenuPopupActions = {
+        continue: () => setShowMenu(false),
+        reset: state.gameState.gameStarted ? gameRestarting : undefined,
+        save: state.gameState.gameStarted ? gameSaving : undefined
+    };
+
     return (
-        <>
-            <ModalWimdow
-                show={showModal}
+        <div className={styles.wrapper}>
+            <AlertPopup
+                show={showAlert}
                 title={title}
                 buttonText="Restart"
                 callback={() => hideModal()}
             />
-            <Link to="/menu/">Menu</Link>
-            {/* <MenuPopup show={showMenu}><MainMenu /></MenuPopup> */}
-            {!state.gameState.gameStarted ? (
-                <>
-                    <button className="btn" onClick={() => loadGame()}>
-                        Load
-                    </button>
+            <MenuPopup show={showMenu} actions={menuActions}></MenuPopup>
+            <HeaderButtonPanel showMenu={() => setShowMenu(!showMenu)} />
+
+            <div className={styles.content}>
+                {!state.gameState.gameStarted ? (
                     <PlayersForm
                         onSubmit={gameStarting}
                         templates={fieldTemplates}
                     />
-                </>
-            ) : (
-                <>
-                    {/* <button
-                        className="btn"
-                        onClick={() => setShowMenu(!showMenu)}
-                    >
-                        Menu
-                    </button> */}
-                    <button className="btn" onClick={() => gameSaving()}>
-                        Save
-                    </button>
+                ) : (
                     <GameField field={state.field} onMove={move} />
-                    <button className="btn" onClick={() => gameRestarting()}>
-                        Restart
-                    </button>
-                </>
-            )}
-        </>
+                )}
+            </div>
+        </div>
     );
 };
 
