@@ -16,8 +16,27 @@ export const fieldTemplates: FieldTemplate[] = [
         spawns: [
             { x: 1, y: 1, player: Player.red },
             { x: 7, y: 1, player: Player.orange },
-            { x: 1, y: 7, player: Player.blue },
-            { x: 7, y: 7, player: Player.green }
+            { x: 7, y: 7, player: Player.green },
+            { x: 1, y: 7, player: Player.blue }
+        ]
+    },
+    {
+        field: [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1]
+        ],
+        spawns: [
+            { x: 4, y: 2, player: Player.red },
+            { x: 6, y: 4, player: Player.orange },
+            { x: 4, y: 6, player: Player.green },
+            { x: 2, y: 4, player: Player.blue }
         ]
     },
     {
@@ -35,8 +54,8 @@ export const fieldTemplates: FieldTemplate[] = [
         spawns: [
             { x: 2, y: 2, player: Player.red },
             { x: 6, y: 2, player: Player.orange },
-            { x: 2, y: 6, player: Player.blue },
-            { x: 6, y: 6, player: Player.green }
+            { x: 6, y: 6, player: Player.green },
+            { x: 2, y: 6, player: Player.blue }
         ]
     },
     {
@@ -54,8 +73,8 @@ export const fieldTemplates: FieldTemplate[] = [
         spawns: [
             { x: 1, y: 1, player: Player.red },
             { x: 7, y: 1, player: Player.orange },
-            { x: 1, y: 7, player: Player.blue },
-            { x: 7, y: 7, player: Player.green }
+            { x: 7, y: 7, player: Player.green },
+            { x: 1, y: 7, player: Player.blue }
         ]
     },
     {
@@ -73,8 +92,8 @@ export const fieldTemplates: FieldTemplate[] = [
         spawns: [
             { x: 1, y: 1, player: Player.red },
             { x: 7, y: 1, player: Player.orange },
-            { x: 1, y: 7, player: Player.blue },
-            { x: 7, y: 7, player: Player.green }
+            { x: 7, y: 7, player: Player.green },
+            { x: 1, y: 7, player: Player.blue }
         ]
     },
     {
@@ -92,8 +111,8 @@ export const fieldTemplates: FieldTemplate[] = [
         spawns: [
             { x: 1, y: 1, player: Player.red },
             { x: 7, y: 1, player: Player.orange },
-            { x: 1, y: 7, player: Player.blue },
-            { x: 7, y: 7, player: Player.green }
+            { x: 7, y: 7, player: Player.green },
+            { x: 1, y: 7, player: Player.blue }
         ]
     },
     {
@@ -111,8 +130,27 @@ export const fieldTemplates: FieldTemplate[] = [
         spawns: [
             { x: 1, y: 1, player: Player.red },
             { x: 7, y: 1, player: Player.orange },
-            { x: 1, y: 7, player: Player.blue },
-            { x: 7, y: 7, player: Player.green }
+            { x: 7, y: 7, player: Player.green },
+            { x: 1, y: 7, player: Player.blue }
+        ]
+    },
+    {
+        field: [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 0, 0, 1, 0, 0, 1, 1],
+            [1, 1, 0, 0, 1, 0, 0, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 0, 0, 1, 0, 0, 1, 1],
+            [1, 1, 0, 0, 1, 0, 0, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1]
+        ],
+        spawns: [
+            { x: 1, y: 1, player: Player.red },
+            { x: 7, y: 1, player: Player.orange },
+            { x: 7, y: 7, player: Player.green },
+            { x: 1, y: 7, player: Player.blue }
         ]
     }
 ];

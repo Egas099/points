@@ -21,9 +21,12 @@
     height: 40px;
     border-radius: 20px;
     border: 1px black solid;
-    box-shadow: 0 0 3px black;
+    box-shadow: var(--button-shadow);
     margin: 5px 0;
     font-size: 120%;
+}
+.wrapper > button:hover {
+    box-shadow: var(--button-shadow--hover);
 }
 
 .up,

@@ -1,0 +1,46 @@
+:root {
+    /* Colors */
+    --app-bg-color: rgb(230, 234, 237);
+    --main-menu-bg-color: rgba(255, 255, 255, 0.1);
+
+    --header-bg-color: rgb(36, 41, 47);
+
+    --button-bg-color: rgb(113, 187, 187);
+    --button-bg-color--hover: rgb(130, 202, 202);
+    --button-bg-color--disabled: rgb(87 161 161);
+    --button-text-color: rgb(45 45 45);
+    --button-text-color--disabled: rgb(112 112 112);
+
+    --popup-bg-color: rgb(230, 234, 237);
+    --popup-mask-bg-color: rgba(0, 0, 0, 0.5);
+
+    --red-low: rgb(255, 168, 168);
+    --red-medium: rgb(255, 148, 148);
+    --red-high: rgb(255, 128, 128);
+    --red-overflow: rgb(255, 108, 108);
+    --orange-low: rgb(255, 209, 168);
+    --orange-medium: rgb(255, 209, 148);
+    --orange-high: rgb(255, 189, 128);
+    --orange-overflow: rgb(255, 169, 108);
+    --green-low: rgb(180, 233, 173);
+    --green-medium: rgb(152, 233, 141);
+    --green-high: rgb(141, 233, 129);
+    --green-overflow: rgb(125, 233, 112);
+    --blue-low: rgb(178 178 255);
+    --blue-medium: rgb(134 134 255);
+    --blue-high: rgb(118, 118, 255);
+    --blue-overflow: rgb(97, 97, 255);
+
+    /* Shadows */
+    --game-field-cell-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7),
+        -1px -1px 2px rgba(255, 255, 255),
+        3px 3px 7px rgba(255, 255, 255, 0.4) inset,
+        -5px -5px 10px rgba(0, 0, 0, 0.2) inset;
+
+    --button-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    --button-shadow--hover: 0 0 3px rgba(0, 0, 0, 0.5);
+    --button-shadow--disabled: 0 0 5px rgba(0, 0, 0, 0.5);
+
+    --popup-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5),
+        0 0 10px rgba(0, 0, 0, 0.2) inset;
+}

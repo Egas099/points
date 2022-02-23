@@ -14,7 +14,7 @@ tr {
     transition: all 0.3s;
 }
 thead tr {
-    background-color: var(--menu-button-bg-color);
+    background-color: var(--button-bg-color);
 }
 tbody tr {
     cursor: pointer;

@@ -6,11 +6,11 @@
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1;
+    background-color: var(--popup-mask-bg-color);
 }
 
 .wrapper {
@@ -18,9 +18,8 @@
     max-width: var(--modal-width);
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    background-color: #e6eaed;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5),
-        0 0 10px rgba(0, 0, 0, 0.2) inset;
+    background-color: var(--popup-bg-color);
+    box-shadow: var(--popup-shadow);
 }
 
 .content {

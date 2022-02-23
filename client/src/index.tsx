@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom';
 import './css/index.css';
+import './css/variables.module.css';
 import { Provider } from 'react-redux';
 import { store } from './store';
 

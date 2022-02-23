@@ -3,7 +3,7 @@
     height: 50px;
     border-top: 5px solid red;
     border-radius: 100%;
-    animation: rotate 1s linear infinite, changeColor 5s linear infinite;
+    animation: rotate 0.5s linear infinite, changeColor 5s linear infinite;
 }
 
 @keyframes rotate {

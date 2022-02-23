@@ -1,62 +1,51 @@
-:root {
-    --app-bg-color: rgb(230, 234, 237);
-    --menu-button-bg-color: rgb(113, 187, 187);
-    --menu-button-text-color: rgb(45 45 45);
-    --header-bg-color: rgb(36, 41, 47);
-}
-
-.none {
-    background-color: transparent;
-}
-
 .red-low {
-    background-color: rgb(255, 168, 168);
+    background-color: var(--red-low);
 }
 .red-medium {
-    background-color: rgb(255, 148, 148);
+    background-color: var(--red-medium);
 }
 .red-high {
-    background-color: rgb(255, 128, 128);
+    background-color: var(--red-high);
 }
 .red-overflow {
-    background-color: rgb(255, 108, 108);
+    background-color: var(--red-overflow);
 }
 
 .orange-low {
-    background-color: rgb(255, 209, 168);
+    background-color: var(--orange-low);
 }
 .orange-medium {
-    background-color: rgb(255, 209, 148);
+    background-color: var(--orange-medium);
 }
 .orange-high {
-    background-color: rgb(255, 189, 128);
+    background-color: var(--orange-high);
 }
 .orange-overflow {
-    background-color: rgb(255, 169, 108);
+    background-color: var(--orange-overflow);
 }
 
 .green-low {
-    background-color: rgb(180, 233, 173);
+    background-color: var(--green-low);
 }
 .green-medium {
-    background-color: rgb(152, 233, 141);
+    background-color: var(--green-medium);
 }
 .green-high {
-    background-color: rgb(141, 233, 129);
+    background-color: var(--green-high);
 }
 .green-overflow {
-    background-color: rgb(125, 233, 112);
+    background-color: var(--green-overflow);
 }
 
 .blue-low {
-    background-color: rgb(178 178 255);
+    background-color: var(--blue-low);
 }
 .blue-medium {
-    background-color: rgb(134 134 255);
+    background-color: var(--blue-medium);
 }
 .blue-high {
-    background-color: rgb(118, 118, 255);
+    background-color: var(--blue-high);
 }
 .blue-overflow {
-    background-color: rgb(97, 97, 255);
+    background-color: var(--blue-overflow);
 }
