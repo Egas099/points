@@ -43,7 +43,7 @@ const Game: FC<GameProps> = ({ type }) => {
         }
     }
 
-    function gameStarting(form: GameSettings) {
+    function gameStarting(form: GameForm) {
         gamePlay.start(form);
     }
     function gameRestarting() {

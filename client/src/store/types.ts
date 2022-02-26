@@ -1,4 +1,3 @@
-import { RootState } from '.';
 import { Player } from '../data/enums';
 
 export enum GameActionType {
@@ -30,9 +29,16 @@ export type GameActions =
     | BlockMoving
     | AllowMoving;
 
+export enum SettingActionType {
+    RESET_TO_DEFAULT = 'RESET_TO_DEFAULT',
+    SET_SETTING = 'SET_SETTING',
+}
+export type SettingActions = ResetToDefault | SetSetting;
+
 /**
  * Interfaces of actions
  */
+//gameStateReducer and gameFieldReducer
 export interface PlayerMove {
     type: GameActionType.PLAYER_MOVE;
     payload: Cell;
@@ -79,14 +85,25 @@ export interface RestartGame {
 }
 export interface LoadGame {
     type: GameActionType.LOAD_GAME;
-    payload: RootState;
+    payload: SaveData;
 }
 export interface StartGame {
     type: GameActionType.START_GAME;
-    payload: GameSettings;
+    payload: GameForm;
 }
 
 export interface playerMoving {
     cellId: number;
     player: Player;
+}
+
+// gameSettingReducer
+export interface ResetToDefault {
+    type: SettingActionType.RESET_TO_DEFAULT;
+    payload: undefined;
+}
+
+export interface SetSetting {
+    type: SettingActionType.SET_SETTING;
+    payload: GameSettings;
 }

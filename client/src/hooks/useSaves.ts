@@ -1,30 +1,38 @@
-import { APP_VERSION } from '../data/constants';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import useLocalStorage from 'use-local-storage';
+import { createSave } from '../logic/create';
 import { RootState } from '../store';
+import * as actionCreator from '../store/actionCreator';
 
 export function useSaves() {
+    const [savesList, setSavesList] = useLocalStorage<Save[]>('saves', []);
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    useEffect(() => {
+        if (!Array.isArray(savesList)) setSavesList([]);
+    }, [savesList]);
+
     return {
-        save: (state: RootState) => {
-            let saves = JSON.parse(localStorage.getItem('saves') || '[]');
-            if (Array.isArray(saves)) {
-                saves.unshift(createSave(state));
+        savesList: savesList,
+        saveGame: (state: RootState) => {
+            console.log('saveGame');
+            const save = createSave(state);
+            setSavesList([save, ...savesList]);
+        },
+        deleteSave: (id: number) =>
+            setSavesList(savesList.filter(save => save.date !== id)),
+        deleteAllSaves: () => setSavesList([]),
+        loadSave: (id: number) => {
+            const save = savesList.find(save => save.date !== id);
+            if (save) {
+                dispatch(actionCreator.loadGame(save.state));
+                history.push('/single');
             } else {
-                saves = [createSave(state)];
+                console.error('The save requested for loading was not found.');
             }
-            localStorage.setItem('saves', JSON.stringify(saves));
-        },
-        load: (id = 0) => {
-            const save: Save =
-                JSON.parse(localStorage.getItem('saves') || '[]')[id] || [];
-            return save;
-        },
-        getSaves: () => JSON.parse(localStorage.getItem('saves') || '[]'),
-        setSaves: (saves: Save[]) =>
-            localStorage.setItem('saves', JSON.stringify(saves))
+        }
     };
 }
-
-const createSave = (state: RootState): Save => ({
-    date: Date.now(),
-    appVersion: APP_VERSION,
-    state: state
-});

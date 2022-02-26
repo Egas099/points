@@ -16,9 +16,6 @@ interface GameState {
     players: PlayerProfile[];
     moveNumber: number;
 }
-interface GameField {
-    field: Cell[][];
-}
 
 interface SpawnPoint {
     x: number;
@@ -51,7 +48,7 @@ interface AndroidPlayer {
     playerEntity: PlayerEntity.android;
     id: string;
 }
-interface GameSettings {
+interface GameForm {
     templateId: number;
     playersProfiles: PlayerProfile[];
 }
@@ -59,5 +56,15 @@ interface GameSettings {
 interface Save {
     date: number;
     appVersion: string;
-    state: RootState;
+    state: SaveData;
+}
+
+interface GameSettings {
+    botMovingDelay: number;
+    cellCloningDelay: number;
+}
+
+interface SaveData {
+    field: Cell[][];
+    gameState: GameState;
 }

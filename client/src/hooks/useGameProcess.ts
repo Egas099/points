@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { BOT_MOVING_INTERVAL, CELL_CLONING_INTERVAL } from '../data/constants';
 import { PlayerEntity } from '../data/enums';
 import { useTypedSelector } from './useTypedSelector';
 import * as actionCreator from '../store/actionCreator';
@@ -9,11 +8,13 @@ import { findOverflowingCell } from '../logic/common';
 import AI from '../logic/AI';
 
 export function useGameProcess() {
-    const savesStorage = useSaves();
+    const settings = useTypedSelector(state => state.settings);
+
+    const {saveGame} = useSaves();
     const [botMovingDelayTimer, setBotMovingDelayTimer] = useState(
         setTimeout(() => 0, 0)
     );
-    const [cellCloningTimer, setCellCloningTimer] = useState(
+    const [cellCloningDelayTimer, setCellCloningDelayTimer] = useState(
         setTimeout(() => 0, 0)
     );
     const dispatch = useDispatch();
@@ -37,14 +38,14 @@ export function useGameProcess() {
 
             if (cell) {
                 dispatch(actionCreator.CellCloning(cell));
-                setCellCloningTimer(
-                    setTimeout(() => moveProcessing(), CELL_CLONING_INTERVAL)
+                setCellCloningDelayTimer(
+                    setTimeout(() => moveProcessing(), settings.cellCloningDelay)
                 );
             } else {
                 dispatch(actionCreator.newMove(state.field));
             }
         }
-        return () => clearTimeout(cellCloningTimer);
+        return () => clearTimeout(cellCloningDelayTimer);
     }
 
     function botMove() {
@@ -60,7 +61,7 @@ export function useGameProcess() {
             const botMove = AI.getBotMoveById(profile.entity.id, state);
             if (botMove) {
                 setBotMovingDelayTimer(
-                    setTimeout(() => move(botMove), BOT_MOVING_INTERVAL)
+                    setTimeout(() => move(botMove), settings.botMovingDelay)
                 );
             }
         }
@@ -78,14 +79,14 @@ export function useGameProcess() {
         }
     }
     function gameSaving() {
-        savesStorage.save(state);
+        saveGame(state);
     }
     function gameRestarting() {
         clearTimeout(botMovingDelayTimer);
-        clearTimeout(cellCloningTimer);
+        clearTimeout(cellCloningDelayTimer);
         dispatch(actionCreator.restartGame());
     }
-    function gameStarting(form: GameSettings) {
+    function gameStarting(form: GameForm) {
         dispatch(actionCreator.startGame(form));
     }
     return {

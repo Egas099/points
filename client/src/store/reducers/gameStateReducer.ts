@@ -56,13 +56,13 @@ function actionNewMove(state: GameState, field: Cell[][]) {
         return state;
     }
 }
-function actionStartGame(state: GameState, gameSettings: GameSettings) {
+function actionStartGame(state: GameState, gameForm: GameForm) {
     return {
         ...state,
         moveBlock: false,
         gameStarted: true,
-        mover: gameSettings.playersProfiles[0].player,
-        players: gameSettings.playersProfiles
+        mover: gameForm.playersProfiles[0].player,
+        players: gameForm.playersProfiles
     };
 }
 

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import style from './CellItem.module.css';
-import { getColorByPlayer } from '../../../logic/common';
+import { getColorClassByPlayer } from '../../../logic/common';
 
 interface Props {
     cell: Cell;
@@ -63,7 +63,7 @@ const CellItem: FC<Props> = ({ cell, onMove }) => {
                 <div
                     className={[
                         style.content,
-                        getColorByPlayer(cell.player, cell.count)
+                        getColorClassByPlayer(cell.player, cell.count)
                     ].join(' ')}
                     onClick={onMove && (() => onMove(cell))}
                     draggable="false"

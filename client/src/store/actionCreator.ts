@@ -1,6 +1,21 @@
 import { RootState } from '.';
-import { GameActions, GameActionType, playerMoving } from './types';
+import { GameActions, GameActionType, playerMoving, SettingActions, SettingActionType } from './types';
 
+// common
+export const loadGame = (payload: SaveData): GameActions => ({
+    type: GameActionType.LOAD_GAME,
+    payload: payload
+});
+export const restartGame = (): GameActions => ({
+    type: GameActionType.RESTART_GAME,
+    payload: undefined
+});
+export const startGame = (payload: GameForm): GameActions => ({
+    type: GameActionType.START_GAME,
+    payload: payload
+});
+
+// gameFieldReducer
 export const cellIncrement = (payload: number): GameActions => ({
     type: GameActionType.CELL_INCREMENT,
     payload: payload
@@ -18,6 +33,7 @@ export const CellCloning = (payload: Cell): GameActions => ({
     payload: payload
 });
 
+// gameStateReducer
 export const nextMover = (payload: Cell[][]): GameActions => ({
     type: GameActionType.NEXT_MOVER,
     payload: payload
@@ -39,15 +55,12 @@ export const playerMove = (payload: Cell): GameActions => ({
     payload: payload
 });
 
-export const loadGame = (payload: RootState): GameActions => ({
-    type: GameActionType.LOAD_GAME,
-    payload: payload
-});
-export const restartGame = (): GameActions => ({
-    type: GameActionType.RESTART_GAME,
+// gameSettingReducer
+export const resetSettings = (): SettingActions => ({
+    type: SettingActionType.RESET_TO_DEFAULT,
     payload: undefined
 });
-export const startGame = (payload: GameSettings): GameActions => ({
-    type: GameActionType.START_GAME,
+export const setSettings = (payload: GameSettings): SettingActions => ({
+    type: SettingActionType.SET_SETTING,
     payload: payload
 });

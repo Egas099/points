@@ -1,5 +1,6 @@
-import { FIELD_HEIGHT, FIELD_WIDTH } from '../data/constants';
+import { APP_VERSION, FIELD_HEIGHT, FIELD_WIDTH } from '../data/constants';
 import { Player, PlayerEntity } from '../data/enums';
+import { RootState } from '../store';
 import { getTemplateById } from './common';
 
 export const cell = (id: number) => ({
@@ -54,11 +55,9 @@ export const createFieldByTemplateId = (templateId: number): Cell[][] => {
     return fieldByTemplate(template);
 };
 
-export const assembleField = (gameSettings: GameSettings): Cell[][] => {
-    const template = getTemplateById(gameSettings.templateId);
-    const existPlayers = gameSettings.playersProfiles.map(
-        player => player.player
-    );
+export const assembleField = (gameForm: GameForm): Cell[][] => {
+    const template = getTemplateById(gameForm.templateId);
+    const existPlayers = gameForm.playersProfiles.map(player => player.player);
     return fieldByTemplate(template, existPlayers);
 };
 
@@ -71,3 +70,22 @@ export function createProfile(player: Player): PlayerProfile {
         }
     };
 }
+
+export function createGameSettings(
+    botMovingDelay: number,
+    cellCloningDelay: number
+) {
+    return {
+        botMovingDelay: botMovingDelay,
+        cellCloningDelay: cellCloningDelay
+    };
+}
+
+export const createSave = (state: RootState): Save => ({
+    date: Date.now(),
+    appVersion: APP_VERSION,
+    state: {
+        field: state.field,
+        gameState: state.gameState
+    }
+});

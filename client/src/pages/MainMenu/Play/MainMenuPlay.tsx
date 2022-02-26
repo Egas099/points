@@ -11,12 +11,12 @@ const MainMenuPlay: FC = () => {
             <Link className={styles.button} to="/single">
                 Single
             </Link>
+            <button className={styles.button} disabled title="In developing">
+                Multiplayer
+            </button>
             <Link className={styles.button} to={`${url}load`}>
                 Loading
             </Link>
-            {/* <Link className={styles.button}  to="/multiplayer">
-                Multiplayer
-            </Link> */}
             <button className={styles.button} onClick={goBack}>
                 Back
             </button>

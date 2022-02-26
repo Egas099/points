@@ -1,22 +1,44 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import {
-    BOT_MOVING_INTERVAL,
-    CELL_CLONING_INTERVAL
-} from '../../../data/constants';
+import { useTypedSelector } from '../../../hooks/useTypedSelector';
+import { objectEquals } from '../../../logic/common';
+import { createGameSettings } from '../../../logic/create';
+import { resetSettings, setSettings } from '../../../store/actionCreator';
+import { defaultSettings } from '../../../store/reducers/gameSettingReducer';
 import styles from './MainMenuSettings.module.css';
 
 const MainMenuSettings: FC = () => {
-    const [botMovingInterval, setBotMovingInterval] =
-        useState(BOT_MOVING_INTERVAL);
-    const [cellCloningInterval, setCellCloningInterval] = useState(
-        CELL_CLONING_INTERVAL
-    );
     const { goBack } = useHistory();
+    const settings = useTypedSelector(state => state.settings);
+    const dispatch = useDispatch();
+    const [botMovingDelay, setBotMovingDelay] = useState(0);
+    const [cellCloningDelay, setCellCloningDelay] = useState(0);
+
+    const isDefaultSetting = () => objectEquals(defaultSettings, settings);
+    const existUnappliedChanges = () =>
+        objectEquals(
+            createGameSettings(botMovingDelay, cellCloningDelay),
+            settings
+        );
+        
+    useEffect(() => {
+        setBotMovingDelay(settings.botMovingDelay);
+    }, [settings.botMovingDelay]);
+    useEffect(() => {
+        setCellCloningDelay(settings.cellCloningDelay);
+    }, [settings.cellCloningDelay]);
 
     function resetToDefault() {
-        setBotMovingInterval(BOT_MOVING_INTERVAL);
-        setCellCloningInterval(CELL_CLONING_INTERVAL);
+        dispatch(resetSettings());
+    }
+
+    function applyChanges() {
+        const newSettings = {
+            botMovingDelay: botMovingDelay,
+            cellCloningDelay: cellCloningDelay
+        };
+        dispatch(setSettings(newSettings));
     }
 
     return (
@@ -30,13 +52,13 @@ const MainMenuSettings: FC = () => {
                             type="range"
                             min="0"
                             max="500"
-                            value={botMovingInterval}
+                            value={botMovingDelay}
                             onChange={event =>
-                                setBotMovingInterval(+event.target.value)
+                                setBotMovingDelay(+event.target.value)
                             }
                         />
                         <div className={styles.interval_value}>
-                            {botMovingInterval}
+                            {botMovingDelay}
                         </div>
                     </div>
                 </div>
@@ -49,22 +71,33 @@ const MainMenuSettings: FC = () => {
                             type="range"
                             min="0"
                             max="500"
-                            value={cellCloningInterval}
+                            value={cellCloningDelay}
                             onChange={event =>
-                                setCellCloningInterval(+event.target.value)
+                                setCellCloningDelay(+event.target.value)
                             }
                         />
                         <div className={styles.interval_value}>
-                            {cellCloningInterval}
+                            {cellCloningDelay}
                         </div>
                     </div>
                 </div>
             </div>
-            <button className={styles.button} onClick={resetToDefault}>
+            <button
+                className={styles.button}
+                onClick={resetToDefault}
+                disabled={isDefaultSetting()}
+            >
                 Default
             </button>
+            <button
+                className={styles.button}
+                onClick={applyChanges}
+                disabled={existUnappliedChanges()}
+            >
+                Apply
+            </button>
             <button className={styles.button} onClick={goBack}>
-                Back
+                {!existUnappliedChanges() ? 'Cancel' : 'Back'}
             </button>
         </div>
     );

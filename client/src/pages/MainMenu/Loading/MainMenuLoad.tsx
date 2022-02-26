@@ -1,37 +1,12 @@
-import { FC, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import SavesList from '../../../components/SavesList/SavesList';
 import { useSaves } from '../../../hooks/useSaves';
-import { RootState } from '../../../store';
-import * as actionCreator from '../../../store/actionCreator';
 import styles from './MainMenuLoad.module.css';
 
 const MainMenuLoad: FC = () => {
-    const [savesList, setSavesList] = useState<Save[]>([]);
-    const { getSaves, setSaves } = useSaves();
+    const { savesList, loadSave, deleteSave, deleteAllSaves } = useSaves();
     const { goBack } = useHistory();
-    const dispatch = useDispatch();
-    const history = useHistory();
-
-    useEffect(loadSaves, []);
-
-    function loadSaves() {
-        setSavesList(getSaves());
-    }
-
-    function clearSaves() {
-        setSaves([]);
-        loadSaves();
-    }
-    const deleteSave = (id: number) => {
-        setSaves(savesList.filter(save => save.date !== id));
-        loadSaves();
-    };
-    function loadGame(state: RootState) {
-        dispatch(actionCreator.loadGame(state));
-        history.push('/single');
-    }
 
     const savesExist = savesList.length > 0 ? false : true;
 
@@ -42,7 +17,7 @@ const MainMenuLoad: FC = () => {
                 <SavesList
                     saves={savesList}
                     deleteSave={deleteSave}
-                    loadSave={loadGame}
+                    loadSave={loadSave}
                 />
             ) : (
                 <div className={styles.empty}>Empty</div>
@@ -50,7 +25,7 @@ const MainMenuLoad: FC = () => {
             <div>
                 <button
                     className={styles.button}
-                    onClick={clearSaves}
+                    onClick={deleteAllSaves}
                     disabled={savesExist}
                 >
                     Clear all

@@ -2,6 +2,7 @@ import { FC } from 'react';
 import styles from './Popup.module.css';
 import { Link } from 'react-router-dom';
 import PopupWrapper from './PopupWrapper';
+import { useSaves } from '../../hooks/useSaves';
 
 export interface MenuPopupActions {
     continue: () => void;
@@ -35,6 +36,9 @@ const MenuPopup: FC<Props> = ({ show, actions }) => {
                     </button>
                     <Link to="/menu/play/load" className={styles.button}>
                         Load
+                    </Link>
+                    <Link to="/menu/settings" className={styles.button}>
+                        Settings
                     </Link>
                     <button
                         className={styles.button}

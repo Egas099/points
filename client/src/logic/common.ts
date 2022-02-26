@@ -1,5 +1,5 @@
 import { Player, PlayerEntity } from '../data/enums';
-import colors from '../css/colors.module.css';
+import colors from '../css/colorClasses.module.css';
 import { fieldTemplates } from '../data/fieldTemplates';
 import { COLOR_INTENSITIES } from '../data/constants';
 
@@ -11,9 +11,7 @@ export function findOverflowingCell(field: Cell[][]) {
 }
 
 export function isExistPlayerOnField(field: Cell[][], player: Player) {
-    return field.some(row =>
-        row.some(cell => cell.player === player)
-    );
+    return field.some(row => row.some(cell => cell.player === player));
 }
 
 export function trying(func: () => any, onCatch: any) {
@@ -34,7 +32,7 @@ export function isExistCell(field: Cell[][], pos: Vector2) {
     else return false;
 }
 
-export function getColorByPlayer(player: Player, count = 3) {
+export function getColorClassByPlayer(player: Player, count = 3) {
     const intensity = COLOR_INTENSITIES[count];
     return intensity
         ? colors[`${Player[player]}-${intensity}`]
@@ -60,4 +58,12 @@ export function getIconByPlayerEntity(entity: PlayerEntity): string {
         default:
             return '🤖';
     }
+}
+
+export function objectEquals(objA: object, objB: object): boolean{
+    return JSON.stringify(objA) === JSON.stringify(objB);
+}
+
+export function getFormattedDate(time: number) {
+    return new Date(time).toLocaleString().split(', ').reverse().join(', ');
 }

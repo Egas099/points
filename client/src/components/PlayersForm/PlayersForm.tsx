@@ -8,7 +8,7 @@ import { createProfile, fieldByTemplate } from '../../logic/create';
 import { getPlayersFromTemplate, getTemplateById } from '../../logic/common';
 
 interface Props {
-    onSubmit: (form: GameSettings) => void;
+    onSubmit: (form: GameForm) => void;
     templates: FieldTemplate[];
 }
 
