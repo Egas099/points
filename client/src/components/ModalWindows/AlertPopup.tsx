@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import styles from './Popup.module.css';
-import PopupWrapper from './PopupWrapper';
+import PopupWrapper from './PopupWrapper/PopupWrapper';
 
 interface Props {
     show: boolean;

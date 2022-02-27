@@ -1,6 +1,6 @@
 import { BOT_MOVING_DELAY, CELL_CLONING_DELAY } from '../../data/constants';
-import { createGameSettings } from '../../logic/create';
-import { localStorageWrapper } from '../../logic/localStorage';
+import { createGameSettings } from '../../functions/create';
+import { localStorageWrapper } from '../../functions/localStorage';
 import { SettingActions, SettingActionType } from '../types';
 
 export const defaultSettings = createGameSettings(

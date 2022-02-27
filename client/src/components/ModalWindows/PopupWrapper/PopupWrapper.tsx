@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { POPUP_TIMEOUT } from '../../data/constants';
-import styles from './Popup.module.css';
+import { POPUP_TIMEOUT } from '../../../data/constants';
+import styles from '../Popup.module.css';
 import './popupTransitions.css';
 
 interface Props {
@@ -22,9 +22,9 @@ const PopupWrapper: FC<Props> = ({
             classNames="mask"
         >
             <div className={styles.mask}>
-                <CSSTransition in={show} timeout={timeout} classNames="popup">
-                    {children}
-                </CSSTransition>
+            <CSSTransition in={show} timeout={timeout} classNames="popup">
+                {children}
+            </CSSTransition>
             </div>
         </CSSTransition>
     );

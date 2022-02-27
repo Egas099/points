@@ -1,6 +1,6 @@
-import { cellPositionById } from '../../logic/calculate';
-import { isExistCell } from '../../logic/common';
-import { assembleField } from '../../logic/create';
+import { cellPositionById } from '../../functions/calculate';
+import { isExistCell } from '../../functions/common';
+import { assembleField } from '../../functions/create';
 import { Player } from '../../data/enums';
 import {
     GameActions,

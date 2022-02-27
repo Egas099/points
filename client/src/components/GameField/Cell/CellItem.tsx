@@ -1,14 +1,15 @@
 import { FC } from 'react';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import style from './CellItem.module.css';
-import { getColorClassByPlayer } from '../../../logic/common';
+import { getColorClassByPlayer } from '../../../functions/common';
+import { PlayerEntity } from '../../../data/enums';
 
 interface Props {
     cell: Cell;
-    onMove?: (cell: Cell) => void;
+    move?: (cell: Cell) => void;
 }
 
-const CellItem: FC<Props> = ({ cell, onMove }) => {
+const CellItem: FC<Props> = ({ cell, move }) => {
     const gameState = useTypedSelector(state => state.gameState);
 
     const createPoints = (count: number) => {
@@ -43,29 +44,40 @@ const CellItem: FC<Props> = ({ cell, onMove }) => {
                     </>
                 );
             default:
-                return '';
+                return '!';
         }
     };
 
-    if (cell.count === 0)
-        <div className={style.wrapper} draggable="false"></div>;
+    function onClick() {
+        const profile = gameState.players.find(
+            profile => profile.player === cell.player
+        );
+        if (
+            profile?.entity.playerEntity === PlayerEntity.localPlayer &&
+            !gameState.moveBlock &&
+            gameState.gameStarted &&
+            gameState.mover === cell.player
+        ) {
+            move && move(cell);
+        }
+    }
+
+    const wrapperClasses = `${style.wrapper} 
+    ${
+        gameState.mover === cell.player && !gameState.moveBlock
+            ? style.mover
+            : ''
+    }`;
+
+    const contentClasses = `${style.content}
+    ${getColorClassByPlayer(cell.player, cell.count)}`;
+
     return (
-        <div
-            className={[
-                style.wrapper,
-                gameState.mover === cell.player && !gameState.moveBlock
-                    ? style.mover
-                    : ''
-            ].join(' ')}
-            draggable="false"
-        >
+        <div className={wrapperClasses} draggable="false">
             {cell.allow && (
                 <div
-                    className={[
-                        style.content,
-                        getColorClassByPlayer(cell.player, cell.count)
-                    ].join(' ')}
-                    onClick={onMove && (() => onMove(cell))}
+                    className={contentClasses}
+                    onClick={onClick}
                     draggable="false"
                 >
                     <span>{createPoints(cell.count)}</span>

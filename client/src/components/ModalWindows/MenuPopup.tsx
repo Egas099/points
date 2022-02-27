@@ -1,8 +1,7 @@
 import { FC } from 'react';
 import styles from './Popup.module.css';
 import { Link } from 'react-router-dom';
-import PopupWrapper from './PopupWrapper';
-import { useSaves } from '../../hooks/useSaves';
+import PopupWrapper from './PopupWrapper/PopupWrapper';
 
 export interface MenuPopupActions {
     continue: () => void;

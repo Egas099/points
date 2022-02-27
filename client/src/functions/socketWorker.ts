@@ -1,5 +1,5 @@
 import io, { Socket } from 'socket.io-client';
-import { SERVER_URL } from './data/constants';
+import { SERVER_URL } from '../data/constants';
 let socket: Socket | undefined;
 
 export const init = () => {

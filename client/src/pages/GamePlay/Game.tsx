@@ -1,17 +1,17 @@
 import { FC, useEffect, useState } from 'react';
 import GameField from '../../components/GameField/GameField';
 import HeaderButtonPanel from '../../components/HeaderPanel/HeaderPanel';
-import AlertPopup from '../../components/ModalWindow/AlertPopup';
+import AlertPopup from '../../components/ModalWindows/AlertPopup';
 import MenuPopup, {
     MenuPopupActions
-} from '../../components/ModalWindow/MenuPopup';
+} from '../../components/ModalWindows/MenuPopup';
 import PlayersForm from '../../components/PlayersForm/PlayersForm';
 import { Player } from '../../data/enums';
 // import { init as socketInit } from '../socketWorker';
 import { fieldTemplates } from '../../data/fieldTemplates';
 import { useGameProcess } from '../../hooks/useGameProcess';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { upFirst } from '../../logic/common';
+import { upFirst } from '../../functions/common';
 import styles from './GamePlay.module.css';
 interface GameProps {
     type: 'single' | 'multiplayer';
@@ -79,10 +79,7 @@ const Game: FC<GameProps> = ({ type }) => {
                         templates={fieldTemplates}
                     />
                 ) : (
-                    <GameField
-                        field={state.field}
-                        onMove={gamePlay.playerMove}
-                    />
+                    <GameField field={state.field} move={gamePlay.playerMove} />
                 )}
             </div>
         </div>

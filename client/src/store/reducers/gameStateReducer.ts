@@ -1,4 +1,4 @@
-import { isExistPlayerOnField } from '../../logic/common';
+import { isExistPlayerOnField } from '../../functions/common';
 import { GameActions, GameActionType } from '../types';
 
 const defaultState = (): GameState => ({

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import useLocalStorage from 'use-local-storage';
-import { createSave } from '../logic/create';
+import { createSave } from '../functions/create';
 import { RootState } from '../store';
 import * as actionCreator from '../store/actionCreator';
 
@@ -18,7 +18,6 @@ export function useSaves() {
     return {
         savesList: savesList,
         saveGame: (state: RootState) => {
-            console.log('saveGame');
             const save = createSave(state);
             setSavesList([save, ...savesList]);
         },

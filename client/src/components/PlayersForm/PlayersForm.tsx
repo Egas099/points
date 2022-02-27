@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from 'react';
-import AI from '../../logic/AI';
+import AI from '../../functions/AI';
 import { PlayerEntity } from '../../data/enums';
 import ChosePlayerButton from './ChosePlayerButton/ChosePlayerButton';
 import styles from './PlayersForm.module.css';
 import GameField from '../GameField/GameField';
-import { createProfile, fieldByTemplate } from '../../logic/create';
-import { getPlayersFromTemplate, getTemplateById } from '../../logic/common';
+import { createProfile, fieldByTemplate } from '../../functions/create';
+import { getPlayersFromTemplate, getTemplateById } from '../../functions/common';
 
 interface Props {
     onSubmit: (form: GameForm) => void;

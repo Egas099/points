@@ -3,31 +3,27 @@ import { Player, PlayerEntity } from '../data/enums';
 import { RootState } from '../store';
 import { getTemplateById } from './common';
 
-export const cell = (id: number) => ({
+const cell = (id: number) => ({
     id: id,
     count: 0,
     player: null,
     allow: true
 });
-export const emptyCell = (id: number) => ({
+const emptyCell = (id: number) => ({
     id: id,
     count: 0,
     player: null,
     allow: false
 });
-export const emptyField = (width: number, height: number): Cell[][] =>
-    new Array(height)
-        .fill(1)
-        .map((a, i) =>
-            new Array(width).fill(1).map((b, j) => cell(i * width + j))
-        );
+const emptyField = (width: number, height: number): Cell[][] =>
+    new Array(height).fill(0).map(() => new Array(width).fill(0));
 
 export const fieldByTemplate = (
     fieldTemplate: FieldTemplate,
-    players: Player[] | false = false
+    players: Player[] = []
 ) => {
     const newField = emptyField(FIELD_WIDTH, FIELD_HEIGHT);
-    const spawnPoints = players
+    const spawnPoints = players.length
         ? fieldTemplate.spawns.filter(spawn =>
               players.some(player => spawn.player === player)
           )
@@ -48,11 +44,6 @@ export const fieldByTemplate = (
     });
 
     return newField;
-};
-
-export const createFieldByTemplateId = (templateId: number): Cell[][] => {
-    const template = getTemplateById(templateId);
-    return fieldByTemplate(template);
 };
 
 export const assembleField = (gameForm: GameForm): Cell[][] => {

@@ -4,8 +4,8 @@ import { PlayerEntity } from '../data/enums';
 import { useTypedSelector } from './useTypedSelector';
 import * as actionCreator from '../store/actionCreator';
 import { useSaves } from './useSaves';
-import { findOverflowingCell } from '../logic/common';
-import AI from '../logic/AI';
+import { findOverflowingCell } from '../functions/common';
+import AI from '../functions/AI';
 
 export function useGameProcess() {
     const settings = useTypedSelector(state => state.settings);

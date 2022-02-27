@@ -4,7 +4,7 @@ import styles from './ChosePlayerButton.module.css';
 import {
     getColorClassByPlayer,
     getIconByPlayerEntity
-} from '../../../logic/common';
+} from '../../../functions/common';
 
 interface Props {
     profile: PlayerProfile;

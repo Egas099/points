@@ -3,7 +3,7 @@ import {
     getColorClassByPlayer,
     getFormattedDate,
     getIconByPlayerEntity
-} from '../../logic/common';
+} from '../../functions/common';
 import styles from './SavesList.module.css';
 
 interface Props {
@@ -14,6 +14,14 @@ interface Props {
 
 const SavesList: FC<Props> = ({ saves, deleteSave, loadSave }) => {
     try {
+        const getIconClass = (profile: PlayerProfile) => {
+            return `${styles.player_icon} ${getColorClassByPlayer(
+                profile.player
+            )}`;
+        };
+        const getIcon = (profile: PlayerProfile) =>
+            getIconByPlayerEntity(profile.entity.playerEntity);
+
         return (
             <div className={styles.wrapper}>
                 <table>
@@ -40,16 +48,11 @@ const SavesList: FC<Props> = ({ saves, deleteSave, loadSave }) => {
                                             (profile: PlayerProfile) => (
                                                 <div
                                                     key={profile.player}
-                                                    className={`${
-                                                        styles.player_icon
-                                                    } ${getColorClassByPlayer(
-                                                        profile.player
-                                                    )}`}
-                                                >
-                                                    {getIconByPlayerEntity(
-                                                        profile.entity
-                                                            .playerEntity
+                                                    className={getIconClass(
+                                                        profile
                                                     )}
+                                                >
+                                                    {getIcon(profile)}
                                                 </div>
                                             )
                                         )}
