@@ -25,7 +25,7 @@ export function useSaves() {
             setSavesList(savesList.filter(save => save.date !== id)),
         deleteAllSaves: () => setSavesList([]),
         loadSave: (id: number) => {
-            const save = savesList.find(save => save.date !== id);
+            const save = savesList.find(save => save.date === id);
             if (save) {
                 dispatch(actionCreator.loadGame(save.state));
                 history.push('/single');

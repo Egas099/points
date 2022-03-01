@@ -5,7 +5,10 @@ import ChosePlayerButton from './ChosePlayerButton/ChosePlayerButton';
 import styles from './PlayersForm.module.css';
 import GameField from '../GameField/GameField';
 import { createProfile, fieldByTemplate } from '../../functions/create';
-import { getPlayersFromTemplate, getTemplateById } from '../../functions/common';
+import {
+    getPlayersFromTemplate,
+    getTemplateById
+} from '../../functions/common';
 
 interface Props {
     onSubmit: (form: GameForm) => void;
@@ -14,7 +17,7 @@ interface Props {
 
 const PlayersForm: FC<Props> = ({ onSubmit, templates }) => {
     const [selectedTemplateId, setSelectedTemplateId] = useState(0);
-    const [profiles, setProfiles] = useState<PlayerProfile[]>([]);
+    const [profiles, setProfiles] = useState<PlayerProfile[]>(loadProfiles());
 
     useEffect(updateProfiles, [selectedTemplateId]);
 
@@ -33,10 +36,14 @@ const PlayersForm: FC<Props> = ({ onSubmit, templates }) => {
         setSelectedTemplateId(newTemplateIndex);
     }
 
-    function updateProfiles() {
+    function loadProfiles() {
         const players = getPlayersFromTemplate(selectedTemplateId);
         const profiles = players.map(profile => createProfile(profile));
-        setProfiles(profiles);
+        return profiles;
+    }
+
+    function updateProfiles() {
+        setProfiles(loadProfiles());
     }
 
     function setEntity(index: number) {
@@ -78,13 +85,15 @@ const PlayersForm: FC<Props> = ({ onSubmit, templates }) => {
                 <div className={styles.row}>
                     <ChosePlayerButton
                         key={0}
-                        profile={profiles[0]}
+                        player={profiles[0].player}
+                        entity={profiles[0].entity.playerEntity}
                         changeEntity={setEntity(0)}
                         position="up"
                     />
                     <ChosePlayerButton
                         key={1}
-                        profile={profiles[1]}
+                        player={profiles[1].player}
+                        entity={profiles[1].entity.playerEntity}
                         changeEntity={setEntity(1)}
                         position={'up'}
                     />
@@ -103,13 +112,15 @@ const PlayersForm: FC<Props> = ({ onSubmit, templates }) => {
                 <div className={styles.row}>
                     <ChosePlayerButton
                         key={3}
-                        profile={profiles[3]}
+                        player={profiles[3].player}
+                        entity={profiles[3].entity.playerEntity}
                         changeEntity={setEntity(3)}
                         position={'down'}
                     />
                     <ChosePlayerButton
                         key={2}
-                        profile={profiles[2]}
+                        player={profiles[2].player}
+                        entity={profiles[2].entity.playerEntity}
                         changeEntity={setEntity(2)}
                         position={'down'}
                     />

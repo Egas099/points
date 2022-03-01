@@ -10,7 +10,7 @@ import AI from '../functions/AI';
 export function useGameProcess() {
     const settings = useTypedSelector(state => state.settings);
 
-    const {saveGame} = useSaves();
+    const { saveGame } = useSaves();
     const [botMovingDelayTimer, setBotMovingDelayTimer] = useState(
         setTimeout(() => 0, 0)
     );
@@ -39,7 +39,10 @@ export function useGameProcess() {
             if (cell) {
                 dispatch(actionCreator.CellCloning(cell));
                 setCellCloningDelayTimer(
-                    setTimeout(() => moveProcessing(), settings.cellCloningDelay)
+                    setTimeout(
+                        () => moveProcessing(),
+                        settings.cellCloningDelay
+                    )
                 );
             } else {
                 dispatch(actionCreator.newMove(state.field));
@@ -63,6 +66,8 @@ export function useGameProcess() {
                 setBotMovingDelayTimer(
                     setTimeout(() => move(botMove), settings.botMovingDelay)
                 );
+            } else {
+                console.error("Can't get bot moving");
             }
         }
         return () => clearTimeout(botMovingDelayTimer);
@@ -76,6 +81,8 @@ export function useGameProcess() {
             state.gameState.mover === cell.player
         ) {
             dispatch(actionCreator.playerMove(cell));
+        } else {
+            console.error("Can't move");
         }
     }
     function gameSaving() {

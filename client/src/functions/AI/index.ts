@@ -1,13 +1,13 @@
 import { Player } from '../../data/enums';
 import { RootState } from '../../store';
-import { randomElemetFrom } from '../aiHelpers';
+import { randomElemetFrom } from './aiHelpers';
 import normalBots from './normal';
 import simpleBots from './simple';
 
 type Difficulty = 'simple' | 'normal';
 export interface BotProfile {
     name: string;
-    implementation: (state: RootState, ownCells: Cell[]) => Cell;
+    implementation: (state: RootState, ownCells: Cell[]) => Cell | void;
     description: string;
     difficulty: Difficulty;
 }
@@ -25,13 +25,24 @@ const AI = {
         const botImplementation = AI_PROFILES.find(
             bot => bot.name === id
         )?.implementation;
+        const ownCells = findCellsByPlayer(state.field, state.gameState.mover);
 
-        const ownCells = () =>
-            findCellsByPlayer(state.field, state.gameState.mover);
-
-        return botImplementation
-            ? botImplementation(state, ownCells())
-            : randomElemetFrom(AI_PROFILES).implementation(state, ownCells());
+        let botMove;
+        if (botImplementation) {
+            botMove = botImplementation(state, ownCells);
+        } else {
+            console.error(
+                'The requested bot implementation was not found. Random implementation will be chosen.'
+            );
+            botMove = randomElemetFrom(AI_PROFILES).implementation(
+                state,
+                ownCells
+            );
+        }
+        if (botMove) {
+            return botMove;
+        }
+        return randomElemetFrom(ownCells);
     }
 };
 export default AI;

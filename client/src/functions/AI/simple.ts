@@ -1,6 +1,11 @@
 import { BotProfile } from '.';
 import { RootState } from '../../store';
-import { filterCellsByCount, amountEmptyNeighs, randomElemetFrom } from '../aiHelpers';
+import {
+    accumulate,
+    chooseRandomCellFrom,
+    expand,
+    threePointPriorityMove
+} from './aiBehavior';
 
 const simpleBots: BotProfile[] = [
     {
@@ -8,7 +13,7 @@ const simpleBots: BotProfile[] = [
         difficulty: 'simple',
         description: 'Random movement',
         implementation: (state: RootState, ownCells: Cell[]) => {
-            return randomElemetFrom(ownCells);
+            return chooseRandomCellFrom(ownCells);
         }
     },
     {
@@ -16,12 +21,10 @@ const simpleBots: BotProfile[] = [
         difficulty: 'simple',
         description: 'Three count priority mover',
         implementation: (state: RootState, ownCells: Cell[]) => {
-            const filteredCells = filterCellsByCount(ownCells, 3);
+            const threePoint = threePointPriorityMove(ownCells);
 
-            if (filteredCells.length > 0) {
-                return randomElemetFrom(filteredCells);
-            } else {
-                return randomElemetFrom(ownCells);
+            if (threePoint.length > 0) {
+                return chooseRandomCellFrom(threePoint);
             }
         }
     },
@@ -30,23 +33,17 @@ const simpleBots: BotProfile[] = [
         difficulty: 'simple',
         description: 'Expander & three point priority mover',
         implementation: (state: RootState, ownCells: Cell[]) => {
-            const filteredCells = filterCellsByCount(ownCells, 3);
-            if (filteredCells.length > 0) ownCells = filteredCells;
+            const threePoint = threePointPriorityMove(ownCells);
 
-            for (let i = 4; i > 0; i--) {
-                if (
-                    ownCells.some(
-                        cell => amountEmptyNeighs(state.field, cell) === i
-                    )
-                ) {
-                    ownCells = ownCells.filter(
-                        cell => amountEmptyNeighs(state.field, cell) === i
-                    );
-                    break;
-                }
+            if (threePoint.length > 0) {
+                return chooseRandomCellFrom(threePoint);
+            }
+            const canExpand = expand(state, ownCells);
+            if (canExpand.length) {
+                return chooseRandomCellFrom(canExpand);
             }
 
-            return randomElemetFrom(ownCells);
+            return chooseRandomCellFrom(ownCells);
         }
     },
     {
@@ -54,14 +51,11 @@ const simpleBots: BotProfile[] = [
         difficulty: 'simple',
         description: 'Accumulator, big Bang',
         implementation: (state: RootState, ownCells: Cell[]) => {
-            for (let i = 1; i < 3; i++) {
-                const filteredCells = filterCellsByCount(ownCells, i);
-                if (filteredCells.length > 0) {
-                    return randomElemetFrom(filteredCells);
-                }
+            const canAccumulate = accumulate(ownCells);
+            if (canAccumulate.length) {
+                return chooseRandomCellFrom(canAccumulate);
             }
-
-            return randomElemetFrom(ownCells);
+            return chooseRandomCellFrom(ownCells);
         }
     }
 ];

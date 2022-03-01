@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { PlayerEntity } from '../../../data/enums';
+import { Player, PlayerEntity } from '../../../data/enums';
 import styles from './ChosePlayerButton.module.css';
 import {
     getColorClassByPlayer,
@@ -7,24 +7,20 @@ import {
 } from '../../../functions/common';
 
 interface Props {
-    profile: PlayerProfile;
+    player: Player;
+    entity: PlayerEntity;
     changeEntity: () => void;
     position: 'up' | 'down';
 }
 
-const ChosePlayerButton: FC<Props> = ({ profile, changeEntity, position }) => {
-    const [entity, setEntity] = useState(0);
-    useEffect(loadEntity);
-
-    function loadEntity() {
-        const newEntity = profile?.entity?.playerEntity;
-        setEntity(newEntity ? newEntity : 0);
-    }
-
+const ChosePlayerButton: FC<Props> = ({
+    player,
+    entity,
+    changeEntity,
+    position
+}) => {
     const getColorClass = () =>
-        entity !== PlayerEntity.empty
-            ? getColorClassByPlayer(profile.player)
-            : '';
+        entity !== PlayerEntity.empty ? getColorClassByPlayer(player) : '';
 
     return (
         <div className={styles[position]}>
