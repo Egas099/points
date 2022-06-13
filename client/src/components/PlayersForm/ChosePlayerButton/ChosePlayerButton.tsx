@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC} from 'react';
 import { Player, PlayerEntity } from '../../../data/enums';
 import styles from './ChosePlayerButton.module.css';
 import {

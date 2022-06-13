@@ -14,7 +14,7 @@ export const MENU_PATH = 'menu';
 
 const AppRouter: FC = () => {
     return (
-        <Router>
+        <Router basename="/points">
             <Switch>
                 <Route path="/about" exact component={About} />
 
