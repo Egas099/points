@@ -23,6 +23,10 @@
     border-radius: inherit;
 }
 
+.error {
+    padding: 30px;
+}
+
 @media (max-width: 800px) {
     .content {
         margin-top: 0;
@@ -30,6 +34,9 @@
         border-radius: 0;
     }
     .content :first-child {
+        padding: 15px;
+    }
+    .error {
         padding: 15px;
     }
 }
