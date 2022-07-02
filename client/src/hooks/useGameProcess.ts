@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { PlayerEntity } from '../data/enums';
 import { useTypedSelector } from './useTypedSelector';
@@ -8,8 +8,6 @@ import { findOverflowingCell } from '../functions/common';
 import AI from '../functions/AI';
 
 export function useGameProcess() {
-    const settings = useTypedSelector(state => state.settings);
-
     const { saveGame } = useSaves();
     const [botMovingDelayTimer, setBotMovingDelayTimer] = useState(
         setTimeout(() => 0, 0)
@@ -41,7 +39,7 @@ export function useGameProcess() {
                 setCellCloningDelayTimer(
                     setTimeout(
                         () => moveProcessing(),
-                        settings.cellCloningDelay
+                        state.settings.cellCloningDelay
                     )
                 );
             } else {
@@ -64,7 +62,10 @@ export function useGameProcess() {
             const botMove = AI.getBotMoveById(profile.entity.id, state);
             if (botMove) {
                 setBotMovingDelayTimer(
-                    setTimeout(() => move(botMove), settings.botMovingDelay)
+                    setTimeout(
+                        () => move(botMove),
+                        state.settings.botMovingDelay
+                    )
                 );
             } else {
                 console.error("Can't get bot moving");
@@ -73,18 +74,10 @@ export function useGameProcess() {
         return () => clearTimeout(botMovingDelayTimer);
     }
 
-    function move(cell: Cell) {
-        if (
-            cell &&
-            state.gameState.gameStarted &&
-            !state.gameState.moveBlock &&
-            state.gameState.mover === cell.player
-        ) {
-            dispatch(actionCreator.playerMove(cell));
-        } else {
-            console.error("Can't move");
-        }
-    }
+    const move = useCallback((cell: Cell) => {
+        dispatch(actionCreator.playerMove(cell));
+    }, []);
+
     function gameSaving() {
         saveGame(state);
     }

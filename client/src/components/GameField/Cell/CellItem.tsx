@@ -1,90 +1,39 @@
-import { FC } from 'react';
-import { useTypedSelector } from '../../../hooks/useTypedSelector';
+import React, { FC } from 'react';
 import style from './CellItem.module.css';
-import { getColorClassByPlayer } from '../../../functions/common';
-import { PlayerEntity } from '../../../data/enums';
+import { getColorClassByPlayer as getCellColor } from '../../../functions/common';
+import { Player} from '../../../data/enums';
+import points from './points';
 
 interface Props {
-    cell: Cell;
-    move?: (cell: Cell) => void;
+    id: number;
+    count: number;
+    player: Player;
+    allow: boolean;
+    isMover: boolean;
+    move: (cell: Cell) => void;
 }
 
-const CellItem: FC<Props> = ({ cell, move }) => {
-    const gameState = useTypedSelector(state => state.gameState);
+const CellItem: FC<Props> = ({ id, count, player, allow, isMover, move }) => {
+    const wrapperClasses = `${style.wrapper} ${isMover ? style.mover : ''}`;
+    const contentClasses = `${style.content} ${getCellColor(player, count)}`;
 
-    const createPoints = (count: number) => {
-        switch (count) {
-            case 0:
-                return '';
-            case 1:
-                return <>•</>;
-            case 2:
-                return <>•&nbsp;•</>;
-            case 3:
-                return (
-                    <>
-                        •<br />
-                        •&nbsp;•
-                    </>
-                );
-            case 4:
-                return (
-                    <>
-                        •&nbsp;•
-                        <br />
-                        •&nbsp;•
-                    </>
-                );
-            case 5:
-                return (
-                    <>
-                        •&nbsp;•
-                        <br />•<br />
-                        •&nbsp;•
-                    </>
-                );
-            default:
-                return '!';
-        }
-    };
-
-    function onClick() {
-        const profile = gameState.players.find(
-            profile => profile.player === cell.player
-        );
-        if (
-            profile?.entity.playerEntity === PlayerEntity.localPlayer &&
-            !gameState.moveBlock &&
-            gameState.gameStarted &&
-            gameState.mover === cell.player
-        ) {
-            move && move(cell);
-        }
+    function onPlayerClick() {
+        isMover && move({ id, player, count, allow });
     }
-
-    const wrapperClasses = `${style.wrapper} 
-    ${
-        gameState.mover === cell.player && !gameState.moveBlock
-            ? style.mover
-            : ''
-    }`;
-
-    const contentClasses = `${style.content}
-    ${getColorClassByPlayer(cell.player, cell.count)}`;
 
     return (
         <div className={wrapperClasses} draggable="false">
-            {cell.allow && (
+            {allow && (
                 <div
                     className={contentClasses}
-                    onClick={onClick}
+                    onClick={onPlayerClick}
                     draggable="false"
                 >
-                    <span>{createPoints(cell.count)}</span>
+                    <span>{points[count]}</span>
                 </div>
             )}
         </div>
     );
 };
 
-export default CellItem;
+export default React.memo(CellItem);

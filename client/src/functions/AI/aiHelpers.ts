@@ -48,7 +48,8 @@ export function getNeighbors(field: Cell[][], cell: Cell): Cell[] {
     ].filter(Boolean);
 }
 
-export function randomElemetFrom(array: Array<any>) {
+type T = any;
+export function randomElemetFrom(array: Array<T>): T {
     if (Array.isArray(array))
         return array[Math.floor(Math.random() * array.length)];
     throw new Error('The argument is not an array.');

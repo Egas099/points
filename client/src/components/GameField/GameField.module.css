@@ -1,6 +1,4 @@
-.wrapper {}
-
-.content {
+.wrapper {
     flex-direction: column;
     display: flex;
 }

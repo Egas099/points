@@ -108,6 +108,7 @@ const PlayersForm: FC<Props> = ({ onSubmit, templates }) => {
                 >{`>`}</button>
                 <GameField
                     field={fieldByTemplate(getTemplateById(selectedTemplateId))}
+                    move={() => undefined}
                 />
                 <div className={styles.row}>
                     <ChosePlayerButton
