@@ -1,5 +1,10 @@
-import { RootState } from '.';
-import { GameActions, GameActionType, playerMoving, SettingActions, SettingActionType } from './types';
+import {
+    GameActions,
+    GameActionType,
+    playerMoving,
+    SettingActions,
+    SettingActionType
+} from './types';
 
 // common
 export const loadGame = (payload: SaveData): GameActions => ({
@@ -28,7 +33,7 @@ export const cellCapture = (payload: playerMoving): GameActions => ({
     type: GameActionType.CELL_CAPTURE,
     payload: payload
 });
-export const CellCloning = (payload: Cell): GameActions => ({
+export const cellCloning = (payload: Cell): GameActions => ({
     type: GameActionType.CELL_CLONING,
     payload: payload
 });

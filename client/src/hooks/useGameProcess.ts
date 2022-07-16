@@ -28,50 +28,56 @@ export function useGameProcess() {
         state.gameState.gameStarted
     ]);
 
+    // TODO: rename, decomposition
     function moveProcessing() {
-        const moveCompleted =
+        const isMoveCompleted =
             state.gameState.gameStarted && state.gameState.moveBlock;
-        if (moveCompleted) {
-            const cell = findOverflowingCell(state.field);
-
-            if (cell) {
-                dispatch(actionCreator.CellCloning(cell));
-                setCellCloningDelayTimer(
-                    setTimeout(
-                        () => moveProcessing(),
-                        state.settings.cellCloningDelay
-                    )
-                );
-            } else {
-                dispatch(actionCreator.newMove(state.field));
-            }
+        if (!isMoveCompleted) {
+            return;
         }
+
+        const overflowingCell = findOverflowingCell(state.field);
+        if (!overflowingCell) {
+            dispatch(actionCreator.newMove(state.field));
+            return;
+        }
+
+        dispatch(actionCreator.cellCloning(overflowingCell));
+
+        const cloningTimer = setTimeout(
+            moveProcessing,
+            state.settings.cellCloningDelay
+        );
+        setCellCloningDelayTimer(cloningTimer);
         return () => clearTimeout(cellCloningDelayTimer);
     }
 
     function botMove() {
-        const profile = state.gameState.players.find(
+        const currentMoverProfile = state.gameState.players.find(
             profile => profile.player === state.gameState.mover
         );
-
-        if (
-            profile?.entity.playerEntity === PlayerEntity.android &&
+        const shouldBotMove =
+            currentMoverProfile?.entity.playerEntity === PlayerEntity.android &&
             !state.gameState.moveBlock &&
-            state.gameState.gameStarted
-        ) {
-            const botMove = AI.getBotMoveById(profile.entity.id, state);
-            if (botMove) {
-                setBotMovingDelayTimer(
-                    setTimeout(
-                        () => move(botMove),
-                        state.settings.botMovingDelay
-                    )
-                );
-            } else {
-                console.error("Can't get bot moving");
-            }
+            state.gameState.gameStarted;
+        if (!shouldBotMove) {
+            return;
         }
-        return () => clearTimeout(botMovingDelayTimer);
+
+        const botTurn = AI.getBotMoveById(currentMoverProfile.entity.id, state);
+        if (!botTurn) {
+            console.error("Can't get bot turn");
+            return;
+        }
+        if (state.settings.botMovingDelay) {
+            const botMovingTimer = setTimeout(
+                () => move(botTurn),
+                state.settings.botMovingDelay
+            );
+            setBotMovingDelayTimer(botMovingTimer);
+            return () => clearTimeout(botMovingDelayTimer);
+        }
+        move(botTurn);
     }
 
     const move = useCallback((cell: Cell) => {
