@@ -26,7 +26,7 @@ const Game: FC<GameProps> = ({ type }) => {
 
     const state = useTypedSelector(state => state);
     const [showAlert, setShowAlert] = useState(false);
-    const [showMenu, setShowMenu] = useState(false);
+    const [isMenuDisplayed, setMenuDisplay] = useState(false);
     const [title, setTitle] = useState('User win');
     const gamePlay = useGameProcess();
 
@@ -38,7 +38,6 @@ const Game: FC<GameProps> = ({ type }) => {
                 `${upFirst(Player[state.gameState.players[0].player])}
                 won in ${state.gameState.moveNumber} moves`
             );
-            setShowMenu(false);
             setShowAlert(true);
         }
     }
@@ -47,17 +46,25 @@ const Game: FC<GameProps> = ({ type }) => {
         gamePlay.start(form);
     }
     function gameRestarting() {
+        continueGame();
         gamePlay.reset();
-        setShowMenu(false);
         setShowAlert(false);
     }
     function gameSaving() {
         gamePlay.save();
-        setShowMenu(false);
+        continueGame();
     }
 
+    function continueGame() {
+        gamePlay.continue();
+        setMenuDisplay(false);
+    }
+    function showMenu() {
+        gamePlay.pause();
+        setMenuDisplay(true);
+    }
     const menuActions: MenuPopupActions = {
-        continue: () => setShowMenu(false),
+        continue: continueGame,
         reset: state.gameState.gameStarted ? gameRestarting : undefined,
         save: state.gameState.gameStarted ? gameSaving : undefined
     };
@@ -70,8 +77,8 @@ const Game: FC<GameProps> = ({ type }) => {
                 buttonText="Restart"
                 callback={gameRestarting}
             />
-            <MenuPopup show={showMenu} actions={menuActions} />
-            <HeaderButtonPanel showMenu={() => setShowMenu(!showMenu)} />
+            <MenuPopup show={isMenuDisplayed} actions={menuActions} />
+            <HeaderButtonPanel showMenu={showMenu} />
             <div className={styles.content}>
                 {!state.gameState.gameStarted ? (
                     <PlayersForm

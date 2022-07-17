@@ -8,12 +8,12 @@ const MainMenuLoad: FC = () => {
     const { savesList, loadSave, deleteSave, deleteAllSaves } = useSaves();
     const { goBack } = useHistory();
 
-    const savesExist = savesList.length > 0 ? false : true;
+    const savesExist = savesList.length > 0 ? true : false;
 
     return (
         <div className={styles.page_wrapper}>
             <h2 className={styles.title}>Loading</h2>
-            {!savesExist ? (
+            {savesExist ? (
                 <SavesList
                     saves={savesList}
                     deleteSave={deleteSave}
@@ -26,7 +26,7 @@ const MainMenuLoad: FC = () => {
                 <button
                     className={styles.button}
                     onClick={deleteAllSaves}
-                    disabled={savesExist}
+                    disabled={!savesExist}
                 >
                     Clear all
                 </button>

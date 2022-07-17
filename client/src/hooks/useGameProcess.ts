@@ -9,6 +9,7 @@ import AI from '../functions/AI';
 
 export function useGameProcess() {
     const { saveGame } = useSaves();
+    const [pause, setPause] = useState(false);
     const [botMovingDelayTimer, setBotMovingDelayTimer] = useState(
         setTimeout(() => 0, 0)
     );
@@ -20,16 +21,21 @@ export function useGameProcess() {
 
     useEffect(moveProcessing, [
         state.gameState.gameStarted,
-        state.gameState.moveBlock
+        state.gameState.moveBlock,
+        pause
     ]);
 
     useEffect(botMove, [
         state.gameState.moveNumber,
-        state.gameState.gameStarted
+        state.gameState.gameStarted,
+        pause
     ]);
 
     // TODO: rename, decomposition
     function moveProcessing() {
+        if (pause) {
+            return;
+        }
         const isMoveCompleted =
             state.gameState.gameStarted && state.gameState.moveBlock;
         if (!isMoveCompleted) {
@@ -53,6 +59,9 @@ export function useGameProcess() {
     }
 
     function botMove() {
+        if (pause) {
+            return;
+        }
         const currentMoverProfile = state.gameState.players.find(
             profile => profile.player === state.gameState.mover
         );
@@ -83,22 +92,25 @@ export function useGameProcess() {
     const move = useCallback((cell: Cell) => {
         dispatch(actionCreator.playerMove(cell));
     }, []);
-
-    function gameSaving() {
-        saveGame(state);
-    }
-    function gameRestarting() {
+    const gameSaving = () => saveGame(state);
+    const gameRestarting = useCallback(() => {
         clearTimeout(botMovingDelayTimer);
         clearTimeout(cellCloningDelayTimer);
         dispatch(actionCreator.restartGame());
-    }
-    function gameStarting(form: GameForm) {
-        dispatch(actionCreator.startGame(form));
-    }
+    }, []);
+    const gameStarting = useCallback(
+        (form: GameForm) => dispatch(actionCreator.startGame(form)),
+        []
+    );
+    const pauseGame = useCallback(() => setPause(true), []);
+    const continueGame = useCallback(() => setPause(false), []);
+
     return {
         playerMove: move,
         start: gameStarting,
         reset: gameRestarting,
-        save: gameSaving
+        save: gameSaving,
+        pause: pauseGame,
+        continue: continueGame
     };
 }
