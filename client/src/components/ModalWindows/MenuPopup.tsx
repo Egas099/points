@@ -23,7 +23,7 @@ const MenuPopup: FC<Props> = ({ show, actions }) => {
                         className={styles.button}
                         onClick={actions.continue}
                     >
-                        Continie
+                        Continue
                     </button>
 
                     <button

@@ -85,7 +85,7 @@ const normalBots: BotProfile[] = [
     {
         name: 'b5',
         difficulty: 'normal',
-        description: 'Agressive',
+        description: 'Aggressive',
         implementation: (state: RootState, ownCells: Cell[]): Cell | void => {
             const threePoint = threePointPriorityMove(ownCells);
             if (threePoint.length) {
@@ -107,7 +107,7 @@ const normalBots: BotProfile[] = [
     {
         name: 'b6',
         difficulty: 'normal',
-        description: 'dontPickBattles & agressive',
+        description: 'dontPickBattles & aggressive',
         implementation: (state: RootState, ownCells: Cell[]): Cell | void => {
             const threePoint = threePointPriorityMove(ownCells);
             if (threePoint.length) {
@@ -132,7 +132,7 @@ const normalBots: BotProfile[] = [
     {
         name: 'b7',
         difficulty: 'normal',
-        description: 'dontPickBattles & agressive',
+        description: 'dontPickBattles & aggressive',
         implementation: (state: RootState, ownCells: Cell[]): Cell | void => {
             const threePoint = threePointPriorityMove(ownCells);
             if (threePoint.length) {
@@ -168,7 +168,7 @@ const normalBots: BotProfile[] = [
     {
         name: 'b7',
         difficulty: 'normal',
-        description: 'dontPickBattles & agressive',
+        description: 'dontPickBattles & aggressive',
         implementation: (state: RootState, ownCells: Cell[]): Cell | void => {
             const threePoint = threePointPriorityMove(ownCells);
             if (threePoint.length) {

@@ -1,6 +1,6 @@
 import { Player } from '../../data/enums';
 import { RootState } from '../../store';
-import { randomElemetFrom } from './aiHelpers';
+import { randomElementFrom } from './aiHelpers';
 import normalBots from './normal';
 import simpleBots from './simple';
 
@@ -14,7 +14,7 @@ export interface BotProfile {
 
 const AI = {
     getRandomBot: function (difficulty: Difficulty): string {
-        return randomElemetFrom(
+        return randomElementFrom(
             AI_PROFILES.filter(bot => bot.difficulty === difficulty)
         ).name;
     },
@@ -34,7 +34,7 @@ const AI = {
             console.error(
                 'The requested bot implementation was not found. Random implementation will be chosen.'
             );
-            botMove = randomElemetFrom(AI_PROFILES).implementation(
+            botMove = randomElementFrom(AI_PROFILES).implementation(
                 state,
                 ownCells
             );
@@ -42,7 +42,7 @@ const AI = {
         if (botMove) {
             return botMove;
         }
-        return randomElemetFrom(ownCells);
+        return randomElementFrom(ownCells);
     }
 };
 export default AI;
@@ -50,10 +50,10 @@ export default AI;
 const AI_PROFILES: BotProfile[] = [simpleBots, normalBots].flat();
 
 function findCellsByPlayer(field: Cell[][], player: Player) {
-    let responce: Cell[] = [];
+    let response: Cell[] = [];
     for (const row of field) {
         const cell = row.filter(cell => cell.player === player);
-        if (cell.length > 0) responce = responce.concat(cell);
+        if (cell.length > 0) response = response.concat(cell);
     }
-    return responce;
+    return response;
 }

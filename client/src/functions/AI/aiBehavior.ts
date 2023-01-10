@@ -4,16 +4,16 @@ import {
     amountEnemyNeighs,
     filterCellsByCount,
     maxNeighsEnemiesCount,
-    randomElemetFrom
+    randomElementFrom
 } from './aiHelpers';
 
 //
 export function chooseRandomCellFrom(ownCells: Cell[]): Cell {
-    return randomElemetFrom(ownCells);
+    return randomElementFrom(ownCells);
 }
 
 export function chooseMaxCountRandomCellFrom(ownCells: Cell[]): Cell {
-    return randomElemetFrom(maxCountCellMove(ownCells));
+    return randomElementFrom(maxCountCellMove(ownCells));
 }
 
 //

@@ -14,7 +14,7 @@ export function isExistPlayerOnField(field: Cell[][], player: Player) {
     return field.some(row => row.some(cell => cell.player === player));
 }
 
-export function trying(func: () => any, onCatch: any) {
+export function trying<A,T>(func: () => A, onCatch: T) {
     try {
         return func();
     } catch (e) {
