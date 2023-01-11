@@ -1,4 +1,4 @@
-import { isExistPlayerOnField } from '../../functions/common';
+import { isExistPlayerOnField } from '../../utils/common';
 import { GameActions, GameActionType } from '../types';
 
 const defaultState = (): GameState => ({

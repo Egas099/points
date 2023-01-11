@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import style from './CellItem.module.css';
-import { getColorClassByPlayer as getCellColor } from '../../../functions/common';
-import { Player} from '../../../data/enums';
+import { getColorClassByPlayer as getCellColor } from '../../../utils/common';
+import { Player } from '../../../data/enums';
 import points from './points';
 
 interface Props {

@@ -11,7 +11,7 @@ import { Player } from '../../data/enums';
 import { fieldTemplates } from '../../data/fieldTemplates';
 import { useGameProcess } from '../../hooks/useGameProcess';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { upFirst } from '../../functions/common';
+import { upFirst } from '../../utils/common';
 import styles from './GamePlay.module.css';
 interface GameProps {
     type: 'single' | 'multiplayer';

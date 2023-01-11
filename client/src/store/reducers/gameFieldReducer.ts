@@ -1,6 +1,6 @@
-import { cellPositionById } from '../../functions/calculate';
-import { isExistCell } from '../../functions/common';
-import { assembleField } from '../../functions/create';
+import { cellPositionById } from '../../utils/calculate';
+import { isExistCell } from '../../utils/common';
+import { assembleField } from '../../utils/create';
 import { Player } from '../../data/enums';
 import {
     GameActions,

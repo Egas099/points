@@ -2,8 +2,8 @@ import { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
-import { objectEquals } from '../../../functions/common';
-import { createGameSettings } from '../../../functions/create';
+import { objectEquals } from '../../../utils/common';
+import { createGameSettings } from '../../../utils/create';
 import { resetSettings, setSettings } from '../../../store/actionCreator';
 import { defaultSettings } from '../../../store/reducers/gameSettingReducer';
 import styles from './MainMenuSettings.module.css';
@@ -21,7 +21,7 @@ const MainMenuSettings: FC = () => {
             createGameSettings(botMovingDelay, cellCloningDelay),
             settings
         );
-        
+
     useEffect(() => {
         setBotMovingDelay(settings.botMovingDelay);
     }, [settings.botMovingDelay]);

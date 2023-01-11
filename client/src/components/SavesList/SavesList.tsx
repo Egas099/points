@@ -3,7 +3,7 @@ import {
     getColorClassByPlayer,
     getFormattedDate,
     getIconByPlayerEntity
-} from '../../functions/common';
+} from '../../utils/common';
 import styles from './SavesList.module.css';
 
 interface Props {
