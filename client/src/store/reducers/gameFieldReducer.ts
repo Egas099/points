@@ -1,6 +1,3 @@
-import { cellPositionById } from '../../utils/calculate';
-import { isExistCell } from '../../utils/common';
-import { assembleField } from '../../utils/create';
 import { Player } from '../../data/enums';
 import {
     GameActions,
@@ -8,6 +5,9 @@ import {
     CellCloning,
     playerMoving
 } from '../types';
+import { getCellPositionById } from '../../utils/core/getCellPositionById';
+import { isExistCellAtPosition } from '../../utils/core/predicates/isExistCellAtPosition';
+import { assembleField } from '../../utils/core/constructors/assembleField';
 
 const defaultState = (): Cell[][] => [];
 
@@ -42,7 +42,7 @@ export const gameFieldReducer = (
 function actionCellCapture(state: Cell[][], captureInfo: playerMoving) {
     if (!state.length) return state;
 
-    const [x, y] = cellPositionById(captureInfo.cellId);
+    const [x, y] = getCellPositionById(captureInfo.cellId);
     const newState = Array.from(state);
 
     newState[x][y] = { ...state[x][y], player: captureInfo.player };
@@ -54,7 +54,7 @@ function actionCellIncrement(state: Cell[][], cellId: number) {
     if (!state.length) return state;
 
     const newState = Array.from(state);
-    const [x, y] = cellPositionById(cellId);
+    const [x, y] = getCellPositionById(cellId);
 
     newState[x][y] = { ...state[x][y], count: newState[x][y].count + 1 };
 
@@ -65,7 +65,7 @@ function actionCellZeroing(state: Cell[][], cellId: number) {
     if (!state.length) return state;
 
     const newState = Array.from(state);
-    const [x, y] = cellPositionById(cellId);
+    const [x, y] = getCellPositionById(cellId);
 
     newState[x][y] = { ...state[x][y], count: 0, player: null };
 
@@ -77,7 +77,7 @@ function actionCloneCell(state: Cell[][], action: CellCloning) {
 
     const newState = Array.from(state);
     const cell = action.payload;
-    const [x, y] = cellPositionById(cell.id);
+    const [x, y] = getCellPositionById(cell.id);
 
     if (cell.count === 5) {
         newState[x][y] = { ...newState[x][y], count: 1 };
@@ -85,16 +85,16 @@ function actionCloneCell(state: Cell[][], action: CellCloning) {
         newState[x][y] = { ...newState[x][y], count: 0, player: null };
     }
 
-    if (isExistCell(newState, [x + 1, y]))
+    if (isExistCellAtPosition(newState, [x + 1, y]))
         newState[x + 1][y] = cellIncAndCapture(newState[x + 1][y], cell.player);
 
-    if (isExistCell(newState, [x, y + 1]))
+    if (isExistCellAtPosition(newState, [x, y + 1]))
         newState[x][y + 1] = cellIncAndCapture(newState[x][y + 1], cell.player);
 
-    if (isExistCell(newState, [x - 1, y]))
+    if (isExistCellAtPosition(newState, [x - 1, y]))
         newState[x - 1][y] = cellIncAndCapture(newState[x - 1][y], cell.player);
 
-    if (isExistCell(newState, [x, y - 1]))
+    if (isExistCellAtPosition(newState, [x, y - 1]))
         newState[x][y - 1] = cellIncAndCapture(newState[x][y - 1], cell.player);
 
     return newState;

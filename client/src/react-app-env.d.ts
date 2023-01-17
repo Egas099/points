@@ -5,7 +5,7 @@ type Cell = {
     id: number;
     count: number;
     player: Player | null;
-    allow: boolean;
+    exist: boolean;
 };
 
 interface GameState {

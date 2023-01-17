@@ -1,5 +1,5 @@
-import { cellPositionById } from '../calculate';
-import { trying } from '../common';
+import { getCellPositionById } from '../core/getCellPositionById';
+import { trying } from '../helpers/trying';
 
 export function filterCellsByCount(cells: Cell[], count: number) {
     return cells.filter(cell => cell.count === count);
@@ -41,12 +41,12 @@ export function maxNeighsEnemiesCount(field: Cell[][], cell: Cell) {
 }
 
 export function getNeighbors(field: Cell[][], cell: Cell): Cell[] {
-    const [x, y] = cellPositionById(cell.id);
+    const [x, y] = getCellPositionById(cell.id);
     return [
-        trying(() => field[x + 1][y], null),
-        trying(() => field[x][y + 1], null),
-        trying(() => field[x - 1][y], null),
-        trying(() => field[x][y - 1], null)
+        trying(() => field[x + 1][y]),
+        trying(() => field[x][y + 1]),
+        trying(() => field[x - 1][y]),
+        trying(() => field[x][y - 1])
     ].filter(Boolean) as Cell[];
 }
 

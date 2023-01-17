@@ -2,11 +2,11 @@ import { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
-import { objectEquals } from '../../../utils/common';
-import { createGameSettings } from '../../../utils/create';
 import { resetSettings, setSettings } from '../../../store/actionCreator';
 import { defaultSettings } from '../../../store/reducers/gameSettingReducer';
 import styles from './MainMenuSettings.module.css';
+import { objectsEqual } from '../../../utils/helpers/objectsEqual';
+import { createGameSettings } from '../../../utils/core/constructors/createGameSettings';
 
 const MainMenuSettings: FC = () => {
     const { goBack } = useHistory();
@@ -15,9 +15,9 @@ const MainMenuSettings: FC = () => {
     const [botMovingDelay, setBotMovingDelay] = useState(0);
     const [cellCloningDelay, setCellCloningDelay] = useState(0);
 
-    const isDefaultSetting = () => objectEquals(defaultSettings, settings);
+    const isDefaultSetting = () => objectsEqual(defaultSettings, settings);
     const existUnappliedChanges = () =>
-        objectEquals(
+        objectsEqual(
             createGameSettings(botMovingDelay, cellCloningDelay),
             settings
         );

@@ -1,6 +1,6 @@
 import { BOT_MOVING_DELAY, CELL_CLONING_DELAY } from '../../data/constants';
-import { createGameSettings } from '../../utils/create';
-import { localStorageWrapper } from '../../utils/localStorage';
+import { webStorage } from '../../utils/adapters/webStorage';
+import { createGameSettings } from '../../utils/core/constructors/createGameSettings';
 import { SettingActions, SettingActionType } from '../types';
 
 export const defaultSettings = createGameSettings(
@@ -8,9 +8,9 @@ export const defaultSettings = createGameSettings(
     CELL_CLONING_DELAY
 );
 
-const settings = localStorageWrapper.getItem('settings', defaultSettings);
+const settings = webStorage.getItem('settings', defaultSettings);
 function setSettings(state: GameSettings) {
-    localStorageWrapper.setItem('settings', state);
+    webStorage.setItem('settings', state);
 }
 
 export const gameSettingReducer = (

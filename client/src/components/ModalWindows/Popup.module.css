@@ -34,6 +34,13 @@
     margin: 0 2em;
 }
 
+#title {
+}
+
+#title::first-letter {
+    text-transform: uppercase;
+}
+
 .button {
     composes: button from '../../css/components.module.css';
 }

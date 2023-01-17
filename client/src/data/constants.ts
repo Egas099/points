@@ -1,3 +1,5 @@
+import { PlayerEntity } from "./enums";
+
 export const SERVER_URL = 'http://localhost:5000';
 export const ABOUT_URL =
     'https://raw.githubusercontent.com/Egas099/points/main/client/ABOUT.md';
@@ -15,3 +17,9 @@ export const COLOR_INTENSITIES = [
     'overflow'
 ];
 export const POPUP_TIMEOUT = 300;
+
+export const ENTITY_ICONS = {
+    [PlayerEntity.empty]: '?',
+    [PlayerEntity.localPlayer]: '🙂',
+    [PlayerEntity.android]: '🤖'
+}

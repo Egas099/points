@@ -1,9 +1,8 @@
 import { FC } from 'react';
-import {
-    getColorClassByPlayer,
-    getFormattedDate,
-    getIconByPlayerEntity
-} from '../../utils/common';
+import { ENTITY_ICONS } from '../../data/constants';
+import { PlayerEntity } from '../../data/enums';
+import { getColorClassByPlayer } from '../../utils/helpers/getColorClassByPlayer';
+import { getFormattedDate } from '../../utils/helpers/getFormattedDate';
 import styles from './SavesList.module.css';
 
 interface Props {
@@ -19,8 +18,10 @@ const SavesList: FC<Props> = ({ saves, deleteSave, loadSave }) => {
                 profile.player
             )}`;
         };
-        const getIcon = (profile: PlayerProfile) =>
-            getIconByPlayerEntity(profile.entity.playerEntity);
+        const getIcon = (profile: PlayerProfile) => {
+            const entity = profile.entity.playerEntity as PlayerEntity;
+            return ENTITY_ICONS[entity];
+        };
 
         return (
             <div className={styles.wrapper}>
@@ -43,7 +44,7 @@ const SavesList: FC<Props> = ({ saves, deleteSave, loadSave }) => {
                                     {save.state.gameState.moveNumber}
                                 </td>
                                 <td onClick={() => loadSave(save.date)}>
-                                    <div className={styles.icon_conteiner}>
+                                    <div className={styles.icon_container}>
                                         {save.state.gameState.players.map(
                                             (profile: PlayerProfile) => (
                                                 <div

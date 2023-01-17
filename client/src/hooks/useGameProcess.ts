@@ -4,8 +4,8 @@ import { PlayerEntity } from '../data/enums';
 import { useTypedSelector } from './useTypedSelector';
 import * as actionCreator from '../store/actionCreator';
 import { useSaves } from './useSaves';
-import { findOverflowingCell } from '../utils/common';
 import AI from '../utils/AI';
+import { findOverflowCell } from '../utils/core/findOverflowCell';
 
 export function useGameProcess() {
     const { saveGame } = useSaves();
@@ -42,7 +42,7 @@ export function useGameProcess() {
             return;
         }
 
-        const overflowingCell = findOverflowingCell(state.field);
+        const overflowingCell = findOverflowCell(state.field);
         if (!overflowingCell) {
             dispatch(actionCreator.newMove(state.field));
             return;

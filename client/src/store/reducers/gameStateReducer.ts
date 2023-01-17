@@ -1,4 +1,4 @@
-import { isExistPlayerOnField } from '../../utils/common';
+import { isExistPlayerOnField } from '../../utils/core/predicates/isExistPlayerOnField';
 import { GameActions, GameActionType } from '../types';
 
 const defaultState = (): GameState => ({

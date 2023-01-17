@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import useLocalStorage from 'use-local-storage';
-import { createSave } from '../utils/create';
 import { RootState } from '../store';
 import * as actionCreator from '../store/actionCreator';
+import { createSave } from '../utils/core/constructors/createSave';
 
 export function useSaves() {
     const [savesList, setSavesList] = useLocalStorage<Save[]>('saves', []);

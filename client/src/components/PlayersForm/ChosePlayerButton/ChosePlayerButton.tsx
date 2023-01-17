@@ -1,10 +1,8 @@
 import { FC } from 'react';
 import { Player, PlayerEntity } from '../../../data/enums';
 import styles from './ChosePlayerButton.module.css';
-import {
-    getColorClassByPlayer,
-    getIconByPlayerEntity
-} from '../../../utils/common';
+import { getColorClassByPlayer } from '../../../utils/helpers/getColorClassByPlayer';
+import { ENTITY_ICONS } from '../../../data/constants';
 
 interface Props {
     player: Player;
@@ -25,7 +23,7 @@ const ChosePlayerButton: FC<Props> = ({
     return (
         <div className={styles[position]}>
             <button className={getColorClass()} onClick={changeEntity}>
-                {getIconByPlayerEntity(entity)}
+                {ENTITY_ICONS[entity]}
             </button>
         </div>
     );

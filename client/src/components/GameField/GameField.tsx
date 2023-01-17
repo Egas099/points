@@ -32,7 +32,7 @@ const GameField: FC<Props> = ({ field, move }) => {
                             id={cell.id}
                             count={cell.count}
                             player={cell.player}
-                            allow={cell.allow}
+                            exist={cell.exist}
                             isMover={isMoveAllowed(cell.player)}
                             move={move}
                         />

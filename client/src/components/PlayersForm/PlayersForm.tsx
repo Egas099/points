@@ -4,8 +4,10 @@ import { PlayerEntity } from '../../data/enums';
 import ChosePlayerButton from './ChosePlayerButton/ChosePlayerButton';
 import styles from './PlayersForm.module.css';
 import GameField from '../GameField/GameField';
-import { createProfile, fieldByTemplate } from '../../utils/create';
-import { getPlayersFromTemplate, getTemplateById } from '../../utils/common';
+import { fieldTemplates } from '../../data/fieldTemplates';
+import { getPlayersFromTemplate } from '../../utils/core/getPlayersFromTemplate';
+import { createProfile } from '../../utils/core/constructors/createProfile';
+import { fieldByTemplate } from '../../utils/core/constructors/fieldByTemplate';
 
 interface Props {
     onSubmit: (form: GameForm) => void;
@@ -34,7 +36,7 @@ const PlayersForm: FC<Props> = ({ onSubmit, templates }) => {
     }
 
     function loadProfiles() {
-        const players = getPlayersFromTemplate(selectedTemplateId);
+        const players = getPlayersFromTemplate(fieldTemplates[selectedTemplateId]);
         const profiles = players.map(profile => createProfile(profile));
         return profiles;
     }
@@ -104,7 +106,7 @@ const PlayersForm: FC<Props> = ({ onSubmit, templates }) => {
                     onClick={() => setTemplateId(1)}
                 >{`>`}</button>
                 <GameField
-                    field={fieldByTemplate(getTemplateById(selectedTemplateId))}
+                    field={fieldByTemplate(fieldTemplates[selectedTemplateId])}
                     move={() => undefined}
                 />
                 <div className={styles.row}>

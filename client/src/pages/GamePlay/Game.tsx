@@ -11,7 +11,7 @@ import { Player } from '../../data/enums';
 import { fieldTemplates } from '../../data/fieldTemplates';
 import { useGameProcess } from '../../hooks/useGameProcess';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
-import { upFirst } from '../../utils/common';
+import {} from '../../utils/helpers/getColorClassByPlayer';
 import styles from './GamePlay.module.css';
 interface GameProps {
     type: 'single' | 'multiplayer';
@@ -35,7 +35,7 @@ const Game: FC<GameProps> = ({ type }) => {
     function checkEndGame() {
         if (state.gameState.endGame) {
             setTitle(
-                `${upFirst(Player[state.gameState.players[0].player])}
+                `${Player[state.gameState.players[0].player]}
                 won in ${state.gameState.moveNumber} moves`
             );
             setShowAlert(true);

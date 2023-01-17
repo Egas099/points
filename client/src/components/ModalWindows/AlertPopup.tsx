@@ -16,7 +16,7 @@ const AlertPopup: FC<Props> = ({ show, title, text, callback, buttonText }) => {
             <div className={styles.wrapper}>
                 <div className={styles.content}>
                     <div className={styles.main}>
-                        <h2>{title}</h2>
+                        <h2 id={styles.title}>{title}</h2>
                         {text && <p>{text}</p>}
                     </div>
                     <button
