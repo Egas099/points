@@ -19,10 +19,10 @@ const AppRouter: FC = () => {
                 <Route path="/about" exact component={About} />
 
                 <Route path="/single" exact>
-                    <Game type="single" />
+                    <Game />
                 </Route>
                 <Route path="/multiplayer" exact>
-                    <Game type="multiplayer" />
+                    <Game />
                 </Route>
 
                 <Route path={`/${MENU_PATH}/`}>

@@ -7,23 +7,13 @@ import MenuPopup, {
 } from '../../components/ModalWindows/MenuPopup';
 import PlayersForm from '../../components/PlayersForm/PlayersForm';
 import { Player } from '../../data/enums';
-// import { init as socketInit } from '../socketWorker';
 import { fieldTemplates } from '../../data/fieldTemplates';
 import { useGameProcess } from '../../hooks/useGameProcess';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import {} from '../../utils/helpers/getColorClassByPlayer';
 import styles from './GamePlay.module.css';
-interface GameProps {
-    type: 'single' | 'multiplayer';
-}
 
-const Game: FC<GameProps> = ({ type }) => {
-    // useEffect(() => {
-    //     if (type === 'multiplayer') {
-    //         socketInit();
-    //     }
-    // });
-
+const Game: FC = () => {
     const state = useTypedSelector(state => state);
     const [showAlert, setShowAlert] = useState(false);
     const [isMenuDisplayed, setMenuDisplay] = useState(false);
