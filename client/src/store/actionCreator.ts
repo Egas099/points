@@ -1,7 +1,6 @@
 import {
     GameActions,
     GameActionType,
-    playerMoving,
     SettingActions,
     SettingActionType
 } from './types';
@@ -21,18 +20,6 @@ export const startGame = (payload: GameForm): GameActions => ({
 });
 
 // gameFieldReducer
-export const cellIncrement = (payload: number): GameActions => ({
-    type: GameActionType.CELL_INCREMENT,
-    payload: payload
-});
-export const cellZeroing = (payload: number): GameActions => ({
-    type: GameActionType.CELL_ZEROING,
-    payload: payload
-});
-export const cellCapture = (payload: playerMoving): GameActions => ({
-    type: GameActionType.CELL_CAPTURE,
-    payload: payload
-});
 export const cellCloning = (payload: Cell): GameActions => ({
     type: GameActionType.CELL_CLONING,
     payload: payload

@@ -8,14 +8,6 @@ export const FIELD_WIDTH = 9;
 export const FIELD_HEIGHT = 9;
 export const BOT_MOVING_DELAY = 0;
 export const CELL_CLONING_DELAY = 0;
-export const COLOR_INTENSITIES = [
-    '',
-    'low',
-    'medium',
-    'high',
-    'overflow',
-    'overflow'
-];
 export const POPUP_TIMEOUT = 300;
 
 export const ENTITY_ICONS = {

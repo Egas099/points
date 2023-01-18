@@ -1,5 +1,3 @@
-import { Player } from '../data/enums';
-
 export enum GameActionType {
     CELL_CAPTURE = 'CELL_CAPTURE',
     CELL_INCREMENT = 'CELL_INCREMENT',
@@ -16,14 +14,11 @@ export enum GameActionType {
 }
 
 export type GameActions =
-    | CellZeroing
     | PlayerMove
     | NewMove
     | StartGame
     | RestartGame
     | LoadGame
-    | CellIncrement
-    | CellCapture
     | CellCloning
     | NextMover
     | BlockMoving
@@ -46,19 +41,6 @@ export interface PlayerMove {
 export interface NewMove {
     type: GameActionType.NEW_MOVE;
     payload: Cell[][];
-}
-
-export interface CellCapture {
-    type: GameActionType.CELL_CAPTURE;
-    payload: playerMoving;
-}
-export interface CellIncrement {
-    type: GameActionType.CELL_INCREMENT;
-    payload: number;
-}
-export interface CellZeroing {
-    type: GameActionType.CELL_ZEROING;
-    payload: number;
 }
 
 export interface CellCloning {
@@ -90,11 +72,6 @@ export interface LoadGame {
 export interface StartGame {
     type: GameActionType.START_GAME;
     payload: GameForm;
-}
-
-export interface playerMoving {
-    cellId: number;
-    player: Player;
 }
 
 // gameSettingReducer
