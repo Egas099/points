@@ -3,7 +3,7 @@ export enum GameActionType {
     CELL_INCREMENT = 'CELL_INCREMENT',
     CELL_ZEROING = 'CELL_ZEROING',
     CELL_CLONING = 'CELL_CLONING',
-    NEW_MOVE = 'NEW_MOVE',
+    NEXT_MOVE = 'NEXT_MOVE',
     BLOCK_MOVING = 'BLOCK_MOVING',
     ALLOW_MOVING = 'ALLOW_MOVING',
     NEXT_MOVER = 'NEXT_MOVER',
@@ -20,13 +20,10 @@ export type GameActions =
     | RestartGame
     | LoadGame
     | CellCloning
-    | NextMover
-    | BlockMoving
-    | AllowMoving;
 
 export enum SettingActionType {
     RESET_TO_DEFAULT = 'RESET_TO_DEFAULT',
-    SET_SETTING = 'SET_SETTING',
+    SET_SETTING = 'SET_SETTING'
 }
 export type SettingActions = ResetToDefault | SetSetting;
 
@@ -39,7 +36,7 @@ export interface PlayerMove {
     payload: Cell;
 }
 export interface NewMove {
-    type: GameActionType.NEW_MOVE;
+    type: GameActionType.NEXT_MOVE;
     payload: Cell[][];
 }
 
@@ -48,19 +45,6 @@ export interface CellCloning {
     payload: Cell;
 }
 
-export interface BlockMoving {
-    type: GameActionType.BLOCK_MOVING;
-    payload: undefined;
-}
-
-export interface AllowMoving {
-    type: GameActionType.ALLOW_MOVING;
-    payload: undefined;
-}
-export interface NextMover {
-    type: GameActionType.NEXT_MOVER;
-    payload: Cell[][];
-}
 export interface RestartGame {
     type: GameActionType.RESTART_GAME;
     payload: undefined;

@@ -26,20 +26,8 @@ export const cellCloning = (payload: Cell): GameActions => ({
 });
 
 // gameStateReducer
-export const nextMover = (payload: Cell[][]): GameActions => ({
-    type: GameActionType.NEXT_MOVER,
-    payload: payload
-});
-export const blockMoving = (): GameActions => ({
-    type: GameActionType.BLOCK_MOVING,
-    payload: undefined
-});
-export const allowMoving = (): GameActions => ({
-    type: GameActionType.ALLOW_MOVING,
-    payload: undefined
-});
 export const newMove = (payload: Cell[][]): GameActions => ({
-    type: GameActionType.NEW_MOVE,
+    type: GameActionType.NEXT_MOVE,
     payload: payload
 });
 export const playerMove = (payload: Cell): GameActions => ({

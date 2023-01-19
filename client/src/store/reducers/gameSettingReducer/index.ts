@@ -1,7 +1,7 @@
-import { BOT_MOVING_DELAY, CELL_CLONING_DELAY } from '../../data/constants';
-import { webStorage } from '../../utils/adapters/webStorage';
-import { createGameSettings } from '../../utils/core/constructors/createGameSettings';
-import { SettingActions, SettingActionType } from '../types';
+import { BOT_MOVING_DELAY, CELL_CLONING_DELAY } from "../../../data/constants";
+import { webStorage } from "../../../utils/adapters/webStorage";
+import { createGameSettings } from "../../../utils/core/constructors/createGameSettings";
+import { SettingActions, SettingActionType } from "../../types";
 
 export const defaultSettings = createGameSettings(
     BOT_MOVING_DELAY,
