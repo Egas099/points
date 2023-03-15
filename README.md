@@ -1,4 +1,4 @@
-#The points
+# The points
 
 A simple Single-Page application in React.
 Server not yet implemented.
