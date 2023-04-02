@@ -53,3 +53,23 @@ Read about game [here](./client/ABOUT.md)
         height="40"
 /></a>&nbsp;
 </div>
+
+## Demo (see [live](https://egas099.github.io/points) demo)
+
+<div>
+    <a href=""
+        ><img
+        src="./media/demo_1.webp"
+        alt="Demo 1"
+        title="Play with bots"
+        width="300"
+    /></a
+    >&nbsp;
+    <a href=""
+        ><img
+        src="./media/demo_2.webp"
+        alt="Demo 2"
+        title="Or just watch the bots play"
+        width="300"
+    />
+</div>
