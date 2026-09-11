@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { POPUP_TIMEOUT } from '../../../data/constants';
 import styles from '../Popup.module.css';
@@ -7,6 +7,7 @@ import './popupTransitions.css';
 interface Props {
     show: boolean;
     timeout?: number;
+    children?: ReactNode;
 }
 
 const PopupWrapper: FC<Props> = ({

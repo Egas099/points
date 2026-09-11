@@ -1,39 +1,26 @@
-import React, { FC } from 'react';
-import {
-    BrowserRouter as Router,
-    Redirect,
-    Route,
-    Switch
-} from 'react-router-dom';
+import { FC, lazy } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-const About = React.lazy(() => import('../pages/About/About'));
-const Game = React.lazy(() => import('../pages/GamePlay/Game'));
-const MainMenuRouter = React.lazy(() => import('./MainMenuRouter'));
+const About = lazy(() => import('../pages/About/About'));
+const Game = lazy(() => import('../pages/GamePlay/Game'));
+const MainMenuRouter = lazy(() => import('./MainMenuRouter'));
 
 export const MENU_PATH = 'menu';
 
 const AppRouter: FC = () => {
     return (
-        <Router basename="/points">
-            <Switch>
-                <Route path="/about" exact component={About} />
-
-                <Route path="/single" exact>
-                    <Game />
-                </Route>
-                <Route path="/multiplayer" exact>
-                    <Game />
-                </Route>
-
-                <Route path={`/${MENU_PATH}/`}>
-                    <MainMenuRouter />
-                </Route>
-
-                <Route>
-                    <Redirect to={`/${MENU_PATH}/`} />
-                </Route>
-            </Switch>
-        </Router>
+        <BrowserRouter basename="/points">
+            <Routes>
+                <Route path="/about" element={<About />} />
+                <Route path="/single" element={<Game />} />
+                <Route path="/multiplayer" element={<Game />} />
+                <Route path={`/${MENU_PATH}/*`} element={<MainMenuRouter />} />
+                <Route
+                    path="*"
+                    element={<Navigate to={`/${MENU_PATH}`} replace />}
+                />
+            </Routes>
+        </BrowserRouter>
     );
 };
 

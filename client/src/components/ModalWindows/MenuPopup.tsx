@@ -46,7 +46,7 @@ const MenuPopup: FC<Props> = ({ show, actions }) => {
                     >
                         Reset
                     </button>
-                    <Link to="/menu/" className={styles.button}>
+                    <Link to="/menu" className={styles.button}>
                         Main menu
                     </Link>
                 </div>

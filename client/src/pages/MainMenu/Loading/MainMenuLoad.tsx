@@ -1,12 +1,12 @@
 import { FC } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SavesList from '../../../components/SavesList/SavesList';
 import { useSaves } from '../../../hooks/useSaves';
 import styles from './MainMenuLoad.module.css';
 
 const MainMenuLoad: FC = () => {
     const { savesList, loadSave, deleteSave, deleteAllSaves } = useSaves();
-    const { goBack } = useHistory();
+    const navigate = useNavigate();
 
     const savesExist = savesList.length > 0 ? true : false;
 
@@ -30,7 +30,7 @@ const MainMenuLoad: FC = () => {
                 >
                     Clear all
                 </button>
-                <button className={styles.button} onClick={goBack}>
+                <button className={styles.button} onClick={() => navigate(-1)}>
                     Back
                 </button>
             </div>

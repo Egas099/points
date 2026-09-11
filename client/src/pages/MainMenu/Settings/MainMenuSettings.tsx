@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTypedSelector } from '../../../hooks/useTypedSelector';
 import { resetSettings, setSettings } from '../../../store/actionCreator';
 import { defaultSettings } from '../../../store/reducers/gameSettingReducer';
@@ -9,7 +9,7 @@ import { objectsEqual } from '../../../utils/helpers/objectsEqual';
 import { createGameSettings } from '../../../utils/core/constructors/createGameSettings';
 
 const MainMenuSettings: FC = () => {
-    const { goBack } = useHistory();
+    const navigate = useNavigate();
     const settings = useTypedSelector(state => state.settings);
     const dispatch = useDispatch();
     const [botMovingDelay, setBotMovingDelay] = useState(0);
@@ -96,7 +96,7 @@ const MainMenuSettings: FC = () => {
             >
                 Apply
             </button>
-            <button className={styles.button} onClick={goBack}>
+            <button className={styles.button} onClick={() => navigate(-1)}>
                 {!existUnappliedChanges() ? 'Cancel' : 'Back'}
             </button>
         </div>

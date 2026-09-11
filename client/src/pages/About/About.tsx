@@ -19,11 +19,11 @@ const About: FC = () => {
                     Произошла ошибка при загрузке описания
                 </h3>
             ) : (
-                <ReactMarkdown className="markdown-body">
-                    {aboutContent}
-                </ReactMarkdown>
+                <div className="markdown-body">
+                    <ReactMarkdown>{aboutContent}</ReactMarkdown>
+                </div>
             )}
-            <Link className={styles.backLink} to="/menu/">
+            <Link className={styles.backLink} to="/menu">
                 Back
             </Link>
         </div>

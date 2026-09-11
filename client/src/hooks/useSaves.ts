@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useLocalStorage from 'use-local-storage';
 import { RootState } from '../store';
 import * as actionCreator from '../store/actionCreator';
@@ -9,7 +9,7 @@ import { createSave } from '../utils/core/constructors/createSave';
 export function useSaves() {
     const [savesList, setSavesList] = useLocalStorage<Save[]>('saves', []);
     const dispatch = useDispatch();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!Array.isArray(savesList)) setSavesList([]);
@@ -28,7 +28,7 @@ export function useSaves() {
             const save = savesList.find(save => save.date === id);
             if (save) {
                 dispatch(actionCreator.loadGame(save.state));
-                history.push('/single');
+                navigate('/single');
             } else {
                 console.error('The save requested for loading was not found.');
             }

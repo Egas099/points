@@ -1,7 +1,8 @@
-import { BOT_MOVING_DELAY, CELL_CLONING_DELAY } from "../../../data/constants";
-import { webStorage } from "../../../utils/adapters/webStorage";
-import { createGameSettings } from "../../../utils/core/constructors/createGameSettings";
-import { SettingActions, SettingActionType } from "../../types";
+import type { Action } from '@reduxjs/toolkit';
+import { BOT_MOVING_DELAY, CELL_CLONING_DELAY } from '../../../data/constants';
+import { webStorage } from '../../../utils/adapters/webStorage';
+import { createGameSettings } from '../../../utils/core/constructors/createGameSettings';
+import { SettingActions, SettingActionType } from '../../types';
 
 export const defaultSettings = createGameSettings(
     BOT_MOVING_DELAY,
@@ -15,15 +16,16 @@ function setSettings(state: GameSettings) {
 
 export const gameSettingReducer = (
     state = validateSettings(settings) ? settings : defaultSettings,
-    action: SettingActions
+    action: Action
 ): GameSettings => {
+    const settingAction = action as SettingActions;
     let newState = state;
-    switch (action.type) {
+    switch (settingAction.type) {
         case SettingActionType.RESET_TO_DEFAULT:
             newState = defaultSettings;
             break;
         case SettingActionType.SET_SETTING:
-            newState = action.payload;
+            newState = settingAction.payload;
             break;
     }
     setSettings(newState);
