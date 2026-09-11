@@ -1,4 +1,4 @@
-import { Player } from '../../data/enums';
+import { Player } from '../../types';
 import colors from '../../css/colorClasses.module.css';
 
 const COLOR_INTENSITIES = [

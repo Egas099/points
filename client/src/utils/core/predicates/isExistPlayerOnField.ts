@@ -1,4 +1,4 @@
-import { Player } from '../../../data/enums';
+import { Player } from '../../../types';
 
 interface CellWithPlayer {
     player: Player | null;

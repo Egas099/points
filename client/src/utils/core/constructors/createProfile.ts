@@ -1,4 +1,4 @@
-import { Player, PlayerEntity } from '../../../data/enums';
+import { Player, PlayerEntity } from '../../../types';
 
 export function createProfile(player: Player): PlayerProfile {
     return {

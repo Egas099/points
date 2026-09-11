@@ -1,4 +1,4 @@
-import { Player } from '../../data/enums';
+import { Player } from '../../types';
 import { RootState } from '../../store';
 import { randomElementFrom } from './aiHelpers';
 import normalBots from './normal';

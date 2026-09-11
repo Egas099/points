@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { PlayerEntity } from '../data/enums';
+import { PlayerEntity } from '../types';
 import { useTypedSelector } from './useTypedSelector';
 import * as actionCreator from '../store/actionCreator';
 import { useSaves } from './useSaves';

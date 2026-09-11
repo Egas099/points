@@ -1,5 +1,5 @@
 import { FIELD_WIDTH, FIELD_HEIGHT } from "../../../data/constants";
-import { Player } from "../../../data/enums";
+import { Player } from '../../../types';
 
 const createCell = (id: number) => ({
     id: id,

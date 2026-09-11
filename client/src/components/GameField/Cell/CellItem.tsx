@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Player } from '../../../data/enums';
+import { Player } from '../../../types';
 import { getColorClassByPlayer as getCellColor } from '../../../utils/helpers/getColorClassByPlayer';
 import style from './CellItem.module.css';
 import points from './points';

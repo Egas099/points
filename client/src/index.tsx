@@ -1,13 +1,12 @@
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import './css/index.css';
-import './css/variables.module.css';
 import { Provider } from 'react-redux';
+import LoaderIndicator from './components/Loader/LoaderIndicator';
+import './css/index.css';
+import './css/variables.css';
 import { store } from './store';
 
 const AppRouter = React.lazy(() => import('./routes/AppRouter'));
-
-import React, { Suspense } from 'react';
-import LoaderIndicator from './components/Loader/LoaderIndicator';
 
 ReactDOM.render(
     <React.StrictMode>

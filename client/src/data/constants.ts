@@ -1,4 +1,4 @@
-import { PlayerEntity } from "./enums";
+import { PlayerEntity } from '../types';
 
 export const SERVER_URL = 'http://localhost:5000';
 export const ABOUT_URL =

@@ -1,5 +1,5 @@
 import { CSSProperties, FC } from 'react';
-import { Player, PlayerEntity } from '../../data/enums';
+import { Player, PlayerEntity } from '../../types';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import CellItem from './Cell/CellItem';
 import styles from './GameField.module.css';

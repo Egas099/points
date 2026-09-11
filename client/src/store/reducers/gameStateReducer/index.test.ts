@@ -1,5 +1,5 @@
 import { defaultState, gameStateReducer } from '.';
-import { PlayerEntity } from '../../../data/enums';
+import { PlayerEntity } from '../../../types';
 import {
     loadGame,
     newMove,

@@ -6,7 +6,7 @@ import MenuPopup, {
     MenuPopupActions
 } from '../../components/ModalWindows/MenuPopup';
 import PlayersForm from '../../components/PlayersForm/PlayersForm';
-import { Player } from '../../data/enums';
+import { Player } from '../../types';
 import { fieldTemplates } from '../../data/fieldTemplates';
 import { useGameProcess } from '../../hooks/useGameProcess';
 import { useTypedSelector } from '../../hooks/useTypedSelector';

@@ -1,4 +1,4 @@
-import { Player } from '../../../data/enums';
+import { Player } from '../../../types';
 import { getCellPositionById } from '../../../utils/core/getCellPositionById';
 import { isExistCellAtPosition } from '../../../utils/core/predicates/isExistCellAtPosition';
 

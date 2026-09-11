@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ABOUT_URL } from '../../data/constants';
 import styles from './About.module.css';
 import ReactMarkdown from 'react-markdown';
-import '../../../node_modules/github-markdown-css/github-markdown.css';
+import 'github-markdown-css/github-markdown.css';
 import Loader from '../../components/Loader/LoaderIndicator';
 import { useFetch } from '../../hooks/useFetch';
 

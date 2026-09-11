@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { ENTITY_ICONS } from '../../data/constants';
-import { PlayerEntity } from '../../data/enums';
+import { PlayerEntity } from '../../types';
 import { getColorClassByPlayer } from '../../utils/helpers/getColorClassByPlayer';
 import { getFormattedDate } from '../../utils/helpers/getFormattedDate';
 import styles from './SavesList.module.css';

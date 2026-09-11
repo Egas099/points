@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import AI from '../../utils/AI';
-import { PlayerEntity } from '../../data/enums';
+import { PlayerEntity } from '../../types';
 import ChosePlayerButton from './ChosePlayerButton/ChosePlayerButton';
 import styles from './PlayersForm.module.css';
 import GameField from '../GameField/GameField';

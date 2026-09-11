@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Player, PlayerEntity } from '../../../data/enums';
+import { Player, PlayerEntity } from '../../../types';
 import styles from './ChosePlayerButton.module.css';
 import { getColorClassByPlayer } from '../../../utils/helpers/getColorClassByPlayer';
 import { ENTITY_ICONS } from '../../../data/constants';
