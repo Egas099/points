@@ -1,4 +1,14 @@
 .wrapper {
+    --field-cols: 9;
+    --field-rows: 9;
+    --cell-max: 40px;
+    --ui-offset: 60px;
+    --cell-size: min(
+        var(--cell-max),
+        calc((100vw - 8px) / var(--field-cols)),
+        calc((100vh - var(--ui-offset)) / var(--field-rows))
+    );
+
     flex-direction: column;
     display: flex;
 }

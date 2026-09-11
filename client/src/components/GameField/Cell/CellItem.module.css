@@ -1,7 +1,6 @@
 .wrapper {
-    --cell-size: 40px;
-    width: var(--cell-size);
-    height: var(--cell-size);
+    width: var(--cell-size, 40px);
+    height: var(--cell-size, 40px);
     background-color: rgb(230, 234, 237);
     cursor: default;
 }
@@ -22,7 +21,7 @@
 
 span {
     text-align: center;
-    font-size: 120%;
+    font-size: calc(var(--cell-size, 40px) * 0.48);
     color: black;
     text-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
 }
